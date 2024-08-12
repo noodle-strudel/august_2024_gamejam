@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_ti4d2"]
 [ext_resource type="Texture2D" uid="uid://dnld16eqsjbyb" path="res://icon.svg" id="2_jf44u"]
-[ext_resource type="Script" path="res://Ball.gd" id="3_uolrk"]
+[ext_resource type="Script" path="res://Scripts/Ball.gd" id="3_uolrk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q4fvd"]
 radius = 79.1581
