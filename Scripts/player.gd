@@ -18,12 +18,7 @@ func get_input():
 	
 	return input.normalized()
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+# Player Movement proccessing and collisions
 func _process(delta):
 # Player Input -> movement mapping
 	playerInput = get_input()

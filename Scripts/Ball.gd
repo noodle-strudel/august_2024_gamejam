@@ -1,21 +1,19 @@
 extends RigidBody2D
 
-@export var hitForce = 6
-var heldOwner = "none"
+@export var hitForce = 5
+var heldOwner = "none" # Unused from earlier Hold idea left in incase of remake
 var appliedForce = Vector2(0, 0)
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+# Physics Simulation
 func _process(delta):
 	var collision = move_and_collide(appliedForce * delta)
 	if collision:
+		# Inital force on first hit
 		if appliedForce == Vector2(0, 0):
 			appliedForce = Vector2(position.x - collision.get_position().x, position.y - collision.get_position().y) * hitForce
 			return
+			
+		# Wall Bounce (Player has ground group)
 		if collision.get_collider().is_in_group("ground"):
 			appliedForce = appliedForce.bounce(collision.get_normal())
 			return
