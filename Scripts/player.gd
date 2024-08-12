@@ -58,6 +58,5 @@ func _process(delta):
 		grounded = true
 		rotation_degrees = rad_to_deg(atan2(up_direction.y, up_direction.x)) + 90
 		up_direction = collision.get_normal()
-		
-		velocity += (up_direction * (speed / 0.9) )
+		velocity += (up_direction * (speed / 1.2) )
 

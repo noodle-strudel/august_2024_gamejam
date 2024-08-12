@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://c7hy3r6br2vo6"]
+[gd_scene load_steps=12 format=3 uid="uid://c7hy3r6br2vo6"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_ti4d2"]
 [ext_resource type="Texture2D" uid="uid://dnld16eqsjbyb" path="res://icon.svg" id="2_jf44u"]
+[ext_resource type="Script" path="res://Ball.gd" id="3_uolrk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q4fvd"]
 radius = 79.1581
@@ -11,20 +12,33 @@ radius = 168.0
 height = 816.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4mxpp"]
-size = Vector2(849, 339)
+size = Vector2(3946, 339)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ruvxh"]
+size = Vector2(3946, 339)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ldjes"]
+size = Vector2(656, 1805)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a3adf"]
 radius = 186.218
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8upkq"]
+size = Vector2(134, 390)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0fs64"]
+radius = 88.3629
+
 [node name="MainGame" type="Node2D"]
 
-[node name="Player" type="CharacterBody2D" parent="."]
+[node name="Player" type="CharacterBody2D" parent="." groups=["ground"]]
 position = Vector2(592, -180)
 floor_stop_on_slope = false
 floor_block_on_wall = false
 floor_max_angle = 3.14159
 floor_snap_length = 0.0
 script = ExtResource("1_ti4d2")
+speed = 1000
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
@@ -39,7 +53,7 @@ position = Vector2(-336, 248)
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.3, 0.3)
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+[node name="StaticBody2D2" type="StaticBody2D" parent="." groups=["ground"]]
 position = Vector2(1522, -577)
 metadata/_edit_group_ = true
 
@@ -50,19 +64,55 @@ shape = SubResource("CapsuleShape2D_7wkhh")
 scale = Vector2(2.46875, 2.71094)
 texture = ExtResource("2_jf44u")
 
-[node name="StaticBody2D3" type="StaticBody2D" parent="."]
-position = Vector2(-89, -571)
+[node name="StaticBody2D3" type="StaticBody2D" parent="." groups=["ground"]]
+position = Vector2(91, -931)
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
-position = Vector2(-23.5, -10.5)
+position = Vector2(-94, -10.5)
 shape = SubResource("RectangleShape2D_4mxpp")
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D3"]
 scale = Vector2(2.46875, 2.71094)
 texture = ExtResource("2_jf44u")
 
-[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+[node name="StaticBody2D6" type="StaticBody2D" parent="." groups=["ground"]]
+position = Vector2(100, 1068)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D6"]
+position = Vector2(-94, -10.5)
+shape = SubResource("RectangleShape2D_ruvxh")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D6"]
+scale = Vector2(2.46875, 2.71094)
+texture = ExtResource("2_jf44u")
+
+[node name="StaticBody2D7" type="StaticBody2D" parent="." groups=["ground"]]
+position = Vector2(-2280, 149)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D7"]
+position = Vector2(-7, -74.5)
+shape = SubResource("RectangleShape2D_ldjes")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D7"]
+scale = Vector2(2.46875, 2.71094)
+texture = ExtResource("2_jf44u")
+
+[node name="StaticBody2D8" type="StaticBody2D" parent="." groups=["ground"]]
+position = Vector2(2285, 127)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D8"]
+position = Vector2(-7, -74.5)
+shape = SubResource("RectangleShape2D_ldjes")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D8"]
+scale = Vector2(2.46875, 2.71094)
+texture = ExtResource("2_jf44u")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="." groups=["ground"]]
 position = Vector2(-655, 580)
 metadata/_edit_group_ = true
 
@@ -73,7 +123,7 @@ shape = SubResource("CircleShape2D_a3adf")
 scale = Vector2(2.46875, 2.71094)
 texture = ExtResource("2_jf44u")
 
-[node name="StaticBody2D5" type="StaticBody2D" parent="."]
+[node name="StaticBody2D5" type="StaticBody2D" parent="." groups=["ground"]]
 position = Vector2(-1159, -214)
 metadata/_edit_group_ = true
 
@@ -84,7 +134,7 @@ shape = SubResource("CircleShape2D_a3adf")
 scale = Vector2(2.46875, 2.71094)
 texture = ExtResource("2_jf44u")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["ground"]]
 position = Vector2(524, 309)
 metadata/_edit_group_ = true
 
@@ -94,3 +144,27 @@ shape = SubResource("CircleShape2D_a3adf")
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
 scale = Vector2(2.46875, 2.71094)
 texture = ExtResource("2_jf44u")
+
+[node name="Goal" type="StaticBody2D" parent="."]
+position = Vector2(-1754, -4)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal"]
+shape = SubResource("RectangleShape2D_8upkq")
+
+[node name="Enemy Goal" type="StaticBody2D" parent="."]
+position = Vector2(1819, 9)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy Goal"]
+shape = SubResource("RectangleShape2D_8upkq")
+
+[node name="Ball" type="RigidBody2D" parent="."]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("3_uolrk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("CircleShape2D_0fs64")
+
+[connection signal="body_entered" from="Ball" to="Ball" method="_on_body_entered"]
