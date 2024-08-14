@@ -17,6 +17,7 @@ theme = ExtResource("1_ncjaa")
 script = ExtResource("2_7ewnp")
 
 [node name="StartMenu" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -51,7 +52,6 @@ theme_override_fonts/font = ExtResource("3_7rc7r")
 text = "Quit"
 
 [node name="SettingsMenu" type="VBoxContainer" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -143,10 +143,10 @@ popup/item_2/id = 2
 popup/item_3/text = "Borderless Fullscreen"
 popup/item_3/id = 3
 
-[node name="Back" type="Button" parent="SettingsMenu"]
+[node name="SaveBack" type="Button" parent="SettingsMenu"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_7rc7r")
-text = "Back"
+text = "Save and Back"
 
 [node name="AudioStartMenu" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_jtwqk")
@@ -165,4 +165,4 @@ bus = &"sfx"
 [connection signal="value_changed" from="SettingsMenu/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
 [connection signal="item_selected" from="SettingsMenu/Resolution" to="." method="_on_resolution_item_selected"]
 [connection signal="item_selected" from="SettingsMenu/Display" to="." method="_on_display_item_selected"]
-[connection signal="pressed" from="SettingsMenu/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="SettingsMenu/SaveBack" to="." method="_on_back_pressed"]
