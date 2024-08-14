@@ -17,7 +17,6 @@ theme = ExtResource("1_ncjaa")
 script = ExtResource("2_7ewnp")
 
 [node name="StartMenu" type="VBoxContainer" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -52,6 +51,7 @@ theme_override_fonts/font = ExtResource("3_7rc7r")
 text = "Quit"
 
 [node name="SettingsMenu" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
