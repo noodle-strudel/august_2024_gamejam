@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dwkhrrvc8bqv5"]
+[gd_scene load_steps=5 format=3 uid="uid://dwkhrrvc8bqv5"]
 
 [ext_resource type="FontFile" uid="uid://dfynaome5886n" path="res://ui/kongtext.ttf" id="1_4v0nc"]
-[ext_resource type="Theme" uid="uid://7j0doc57277t" path="res://ui/base_theme.tres" id="1_euspe"]
+[ext_resource type="Theme" uid="uid://lqrgxsxs2fye" path="res://ui/base_theme.tres" id="1_euspe"]
 [ext_resource type="Script" path="res://ui/in_game_ui.gd" id="2_xt6we"]
+[ext_resource type="AudioStream" uid="uid://cupyros6jodq0" path="res://music/sfx/click.mp3" id="4_tyhoc"]
 
 [node name="inGameMenu" type="Control"]
 layout_mode = 3
@@ -15,6 +16,7 @@ theme = ExtResource("1_euspe")
 script = ExtResource("2_xt6we")
 
 [node name="inGameOptions" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -41,7 +43,6 @@ layout_mode = 2
 text = "Back to menu"
 
 [node name="SettingsMenu" type="VBoxContainer" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -63,6 +64,31 @@ text = "Volume
 fit_content = true
 
 [node name="VolumeSlider" type="HSlider" parent="SettingsMenu"]
+layout_mode = 2
+max_value = 1.0
+step = 0.0
+value = 0.5
+
+[node name="MusicLabel" type="RichTextLabel" parent="SettingsMenu"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_4v0nc")
+text = "Music
+"
+fit_content = true
+
+[node name="MusicSlider" type="HSlider" parent="SettingsMenu"]
+layout_mode = 2
+max_value = 1.0
+step = 0.0
+value = 0.5
+
+[node name="SFXLabel" type="RichTextLabel" parent="SettingsMenu"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_4v0nc")
+text = "Sound Effects"
+fit_content = true
+
+[node name="SFXSlider" type="HSlider" parent="SettingsMenu"]
 layout_mode = 2
 max_value = 1.0
 step = 0.0
@@ -153,9 +179,16 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.427451, 1, 0.490196, 1)
 text = "No"
 
+[node name="ClickSFX" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("4_tyhoc")
+bus = &"sfx"
+
 [connection signal="pressed" from="inGameOptions/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="inGameOptions/BackMenu" to="." method="_on_back_menu_pressed"]
 [connection signal="value_changed" from="SettingsMenu/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
 [connection signal="item_selected" from="SettingsMenu/Resolution" to="." method="_on_resolution_item_selected"]
 [connection signal="item_selected" from="SettingsMenu/Display" to="." method="_on_display_item_selected"]
 [connection signal="pressed" from="SettingsMenu/Back" to="." method="_on_back_pressed"]
