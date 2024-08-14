@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="August 2024 Gamejam"
-run/main_scene="res://ui/ui.tscn"
+run/main_scene="res://ui/start_ui.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 

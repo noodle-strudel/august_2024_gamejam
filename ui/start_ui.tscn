@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://8k0w0ikl007c"]
+[gd_scene load_steps=4 format=3 uid="uid://8k0w0ikl007c"]
 
-[ext_resource type="Script" path="res://ui/ui.gd" id="1_gdtir"]
-[ext_resource type="FontFile" uid="uid://dfynaome5886n" path="res://ui/kongtext.ttf" id="2_yy6xh"]
+[ext_resource type="Theme" uid="uid://7j0doc57277t" path="res://ui/base_theme.tres" id="1_ncjaa"]
+[ext_resource type="Script" path="res://ui/start_ui.gd" id="2_7ewnp"]
+[ext_resource type="FontFile" uid="uid://dfynaome5886n" path="res://ui/kongtext.ttf" id="3_7rc7r"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -10,7 +11,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_gdtir")
+theme = ExtResource("1_ncjaa")
+script = ExtResource("2_7ewnp")
 
 [node name="StartMenu" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -28,22 +30,22 @@ grow_vertical = 2
 
 [node name="Start" type="Button" parent="StartMenu"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_yy6xh")
+theme_override_fonts/font = ExtResource("3_7rc7r")
 text = "Start"
 
 [node name="Settings" type="Button" parent="StartMenu"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_yy6xh")
+theme_override_fonts/font = ExtResource("3_7rc7r")
 text = "Settings"
 
 [node name="Credits" type="Button" parent="StartMenu"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_yy6xh")
+theme_override_fonts/font = ExtResource("3_7rc7r")
 text = "Credits"
 
 [node name="Quit" type="Button" parent="StartMenu"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_yy6xh")
+theme_override_fonts/font = ExtResource("3_7rc7r")
 text = "Quit"
 
 [node name="SettingsMenu" type="VBoxContainer" parent="."]
@@ -63,7 +65,7 @@ grow_vertical = 2
 
 [node name="VolumeLabel" type="RichTextLabel" parent="SettingsMenu"]
 layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("2_yy6xh")
+theme_override_fonts/normal_font = ExtResource("3_7rc7r")
 text = "Volume
 "
 fit_content = true
@@ -76,12 +78,13 @@ value = 0.5
 
 [node name="ResolutionLabel" type="RichTextLabel" parent="SettingsMenu"]
 layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("2_yy6xh")
+theme_override_fonts/normal_font = ExtResource("3_7rc7r")
 text = "Resolution"
 fit_content = true
 
 [node name="Resolution" type="OptionButton" parent="SettingsMenu"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_7rc7r")
 item_count = 4
 selected = 3
 popup/item_0/text = "2560x1440"
@@ -95,12 +98,13 @@ popup/item_3/id = 3
 
 [node name="DisplayLabel" type="RichTextLabel" parent="SettingsMenu"]
 layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("2_yy6xh")
+theme_override_fonts/normal_font = ExtResource("3_7rc7r")
 text = "Display"
 fit_content = true
 
 [node name="Display" type="OptionButton" parent="SettingsMenu"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_7rc7r")
 item_count = 4
 selected = 0
 popup/item_0/text = "Windowed"
@@ -114,7 +118,7 @@ popup/item_3/id = 3
 
 [node name="Back" type="Button" parent="SettingsMenu"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_yy6xh")
+theme_override_fonts/font = ExtResource("3_7rc7r")
 text = "Back"
 
 [connection signal="pressed" from="StartMenu/Start" to="." method="_on_start_pressed"]

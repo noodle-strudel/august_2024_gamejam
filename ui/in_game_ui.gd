@@ -22,11 +22,6 @@ func _on_start_pressed():
 	pass # Replace with function body.
 
 
-func _on_settings_pressed():
-	$StartMenu.visible = !$StartMenu.visible
-	$SettingsMenu.visible = !$SettingsMenu.visible
-
-
 func _on_credits_pressed():
 	pass # Replace with function body.
 
@@ -62,10 +57,24 @@ func _on_display_item_selected(index):
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
 
-
 func _on_back_pressed():
-	$StartMenu.visible = !$StartMenu.visible
 	$SettingsMenu.visible = !$SettingsMenu.visible
+	$inGameOptions.visible = !$inGameOptions.visible
 
-#func _game_settings():
+func _on_settings_pressed():
+	$SettingsMenu.visible = !$SettingsMenu.visible
+	$inGameOptions.visible = !$inGameOptions.visible
 
+
+func _on_no_pressed():
+	$inGameOptions.visible = !$inGameOptions.visible
+	$WarningBackMenu.visible = !$WarningBackMenu.visible
+
+
+func _on_yes_pressed():
+	get_tree().change_scene_to_file("res://ui/start_ui.tscn")
+
+
+func _on_back_menu_pressed():
+	$inGameOptions.visible = !$inGameOptions.visible
+	$WarningBackMenu.visible = !$WarningBackMenu.visible
