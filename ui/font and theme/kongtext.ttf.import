@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://dfynaome5886n"
-path="res://.godot/imported/kongtext.ttf-22076978c3da2eca6e041ee07673dd98.fontdata"
+path="res://.godot/imported/kongtext.ttf-a11c2f7614fe3ae6213c6feb68649a4f.fontdata"
 
 [deps]
 
-source_file="res://ui/kongtext.ttf"
-dest_files=["res://.godot/imported/kongtext.ttf-22076978c3da2eca6e041ee07673dd98.fontdata"]
+source_file="res://ui/font and theme/kongtext.ttf"
+dest_files=["res://.godot/imported/kongtext.ttf-a11c2f7614fe3ae6213c6feb68649a4f.fontdata"]
 
 [params]
 

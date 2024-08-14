@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://da600675jemnf"]
 
-[ext_resource type="Theme" uid="uid://lqrgxsxs2fye" path="res://ui/base_theme.tres" id="1_ncjaa"]
+[ext_resource type="Theme" uid="uid://lqrgxsxs2fye" path="res://ui/font and theme/base_theme.tres" id="1_ncjaa"]
 [ext_resource type="Script" path="res://ui/start_ui.gd" id="2_7ewnp"]
-[ext_resource type="FontFile" uid="uid://dfynaome5886n" path="res://ui/kongtext.ttf" id="3_7rc7r"]
+[ext_resource type="FontFile" uid="uid://dfynaome5886n" path="res://ui/font and theme/kongtext.ttf" id="3_7rc7r"]
 [ext_resource type="AudioStream" uid="uid://bhlxes3g1vlg5" path="res://music/themes/start_menu.mp3" id="4_jtwqk"]
 [ext_resource type="AudioStream" uid="uid://cupyros6jodq0" path="res://music/sfx/click.mp3" id="5_41res"]
 

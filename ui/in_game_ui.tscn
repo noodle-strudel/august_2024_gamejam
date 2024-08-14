@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dwkhrrvc8bqv5"]
 
-[ext_resource type="FontFile" uid="uid://dfynaome5886n" path="res://ui/kongtext.ttf" id="1_4v0nc"]
-[ext_resource type="Theme" uid="uid://lqrgxsxs2fye" path="res://ui/base_theme.tres" id="1_euspe"]
+[ext_resource type="FontFile" uid="uid://dfynaome5886n" path="res://ui/font and theme/kongtext.ttf" id="1_4v0nc"]
+[ext_resource type="Theme" uid="uid://lqrgxsxs2fye" path="res://ui/font and theme/base_theme.tres" id="1_euspe"]
 [ext_resource type="Script" path="res://ui/in_game_ui.gd" id="2_xt6we"]
 [ext_resource type="AudioStream" uid="uid://cupyros6jodq0" path="res://music/sfx/click.mp3" id="4_tyhoc"]
 
@@ -16,7 +16,6 @@ theme = ExtResource("1_euspe")
 script = ExtResource("2_xt6we")
 
 [node name="inGameOptions" type="VBoxContainer" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -43,6 +42,7 @@ layout_mode = 2
 text = "Back to menu"
 
 [node name="SettingsMenu" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
