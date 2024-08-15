@@ -5,11 +5,11 @@ extends CharacterBody2D
 @export var accel = 10
 
 var input : Vector2
-var gravDir : Vector2
 var playerInput : Vector2
 var perpendicular : Vector2
 var grounded = true
 var rotationAngle = 0.0
+var startPos = position
 
 # Movement Input
 func get_input():
@@ -55,3 +55,10 @@ func _process(delta):
 		up_direction = collision.get_normal()
 		velocity += (up_direction * (speed / 1.2) )
 
+
+func _on_ball_reset_round():
+	position = startPos
+	grounded = true
+	perpendicular = Vector2(0, 0)
+	up_direction = Vector2.UP
+	rotationAngle = 0.0

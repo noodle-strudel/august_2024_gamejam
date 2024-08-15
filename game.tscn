@@ -1,5 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://c7hy3r6br2vo6"]
+[gd_scene load_steps=13 format=3 uid="uid://c7hy3r6br2vo6"]
 
+[ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_3anbo"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_ti4d2"]
 [ext_resource type="Texture2D" uid="uid://dnld16eqsjbyb" path="res://icon.svg" id="2_jf44u"]
 [ext_resource type="Script" path="res://Scripts/Ball.gd" id="3_uolrk"]
@@ -30,6 +31,11 @@ size = Vector2(134, 390)
 radius = 88.3629
 
 [node name="MainGame" type="Node2D"]
+
+[node name="GameManager" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_3anbo")
+winsRequired = 3
 
 [node name="Player" type="CharacterBody2D" parent="." groups=["ground"]]
 position = Vector2(592, -180)
@@ -167,4 +173,5 @@ script = ExtResource("3_uolrk")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
 shape = SubResource("CircleShape2D_0fs64")
 
-[connection signal="body_entered" from="Ball" to="Ball" method="_on_body_entered"]
+[connection signal="resetRound" from="Ball" to="GameManager" method="_on_ball_reset_round"]
+[connection signal="resetRound" from="Ball" to="Player" method="_on_ball_reset_round"]
