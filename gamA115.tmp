@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://c7hy3r6br2vo6"]
+
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_ti4d2"]
+[ext_resource type="Texture2D" uid="uid://dnld16eqsjbyb" path="res://icon.svg" id="2_jf44u"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q4fvd"]
+radius = 79.1581
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a3adf"]
+radius = 186.218
+
+[node name="MainGame" type="Node2D"]
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(48, -418)
+script = ExtResource("1_ti4d2")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture = ExtResource("2_jf44u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("CircleShape2D_q4fvd")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.3, 0.3)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(37, 98)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("CircleShape2D_a3adf")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+scale = Vector2(2.46875, 2.71094)
+texture = ExtResource("2_jf44u")
