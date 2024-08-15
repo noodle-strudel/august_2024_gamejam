@@ -42,6 +42,7 @@ func _on_resolution_item_selected(index):
 			DisplayServer.window_set_size(Vector2i(1366, 768))
 		3:
 			DisplayServer.window_set_size(Vector2i(1280, 720))
+	GlobalSettings.resolution = index
 
 
 func _on_display_item_selected(index):
@@ -60,6 +61,7 @@ func _on_display_item_selected(index):
 		3: #Borderless Fullscreen
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
+	GlobalSettings.window = index
 
 func _on_back_pressed():
 	GlobalSettings.save()
@@ -95,12 +97,14 @@ func _on_music_slider_value_changed(value):
 	AudioServer.set_bus_volume_db(
 		AudioServer.get_bus_index("music"), 
 		linear_to_db(value))
+	GlobalSettings.music = value
 
 
 func _on_sfx_slider_value_changed(value):
 	AudioServer.set_bus_volume_db(
 		AudioServer.get_bus_index("sfx"), 
 		linear_to_db(value))
+	GlobalSettings.sfx = value
 
 
 func _on_about_to_quit():
