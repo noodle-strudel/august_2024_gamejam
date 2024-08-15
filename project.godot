@@ -19,13 +19,13 @@ config/icon="res://icon.svg"
 
 GlobalSettings="*res://ui/globalSettings.gd"
 
-[dotnet]
-
-project/assembly_name="August 2024 Gamejam"
-
 [display]
 
 window/stretch/mode="viewport"
+
+[dotnet]
+
+project/assembly_name="August 2024 Gamejam"
 
 [editor]
 
