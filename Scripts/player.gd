@@ -4,12 +4,19 @@ extends CharacterBody2D
 @export var speed = 750
 @export var accel = 10
 
+# References children nodes once they exist in the scene
+@onready var anim_tree = $AnimationTree
+@onready var state_machine = anim_tree["parameters/playback"]
+
 var input : Vector2
 var playerInput : Vector2
 var perpendicular : Vector2
 var grounded = true
 var rotationAngle = 0.0
 var startPos = position
+
+# keeps track of the current animation
+var current_anim = ""
 
 # Movement Input
 func get_input():
@@ -27,6 +34,7 @@ func _process(delta):
 	if Input.get_action_strength("jump") > 0:
 		velocity = up_direction * speed
 		grounded = false
+		change_anim("jump")
 	
 	# Reset
 	if playerInput == Vector2.ZERO:
@@ -51,6 +59,8 @@ func _process(delta):
 	var collision = move_and_collide(velocity * delta)
 	if collision:
 		grounded = true
+		change_anim("sliding")
+		
 		rotation_degrees = rad_to_deg(atan2(up_direction.y, up_direction.x)) + 90
 		up_direction = collision.get_normal()
 		velocity += (up_direction * (speed / 1.2) )
@@ -62,3 +72,9 @@ func _on_ball_reset_round():
 	perpendicular = Vector2(0, 0)
 	up_direction = Vector2.UP
 	rotationAngle = 0.0
+
+# changes current animation to a new animation
+func change_anim(name):
+	if name != current_anim:
+		state_machine.travel(name)
+		current_anim = name
