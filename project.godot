@@ -11,8 +11,17 @@ config_version=5
 [application]
 
 config/name="August 2024 Gamejam"
+run/main_scene="res://ui/start_ui.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GlobalSettings="*res://ui/globalSettings.gd"
+
+[dotnet]
+
+project/assembly_name="August 2024 Gamejam"
 
 [display]
 

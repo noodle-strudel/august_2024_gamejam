@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://lqrgxsxs2fye"]
+
+[ext_resource type="FontFile" uid="uid://dfynaome5886n" path="res://ui/font and theme/kongtext.ttf" id="1_r3yi5"]
+
+[resource]
+default_font = ExtResource("1_r3yi5")

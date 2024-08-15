@@ -1,0 +1,196 @@
+[gd_scene load_steps=5 format=3 uid="uid://dwkhrrvc8bqv5"]
+
+[ext_resource type="FontFile" uid="uid://dfynaome5886n" path="res://ui/font and theme/kongtext.ttf" id="1_4v0nc"]
+[ext_resource type="Theme" uid="uid://lqrgxsxs2fye" path="res://ui/font and theme/base_theme.tres" id="1_euspe"]
+[ext_resource type="Script" path="res://ui/in_game_ui.gd" id="2_xt6we"]
+[ext_resource type="AudioStream" uid="uid://cupyros6jodq0" path="res://music/sfx/click.mp3" id="4_tyhoc"]
+
+[node name="inGameMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_euspe")
+script = ExtResource("2_xt6we")
+
+[node name="inGameOptions" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Resume" type="Button" parent="inGameOptions"]
+layout_mode = 2
+text = "Resume"
+
+[node name="Settings" type="Button" parent="inGameOptions"]
+layout_mode = 2
+text = "Settings"
+
+[node name="BackMenu" type="Button" parent="inGameOptions"]
+layout_mode = 2
+text = "Back to menu"
+
+[node name="SettingsMenu" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -161.0
+offset_top = -90.0
+offset_right = 161.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VolumeLabel" type="RichTextLabel" parent="SettingsMenu"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_4v0nc")
+text = "Volume
+"
+fit_content = true
+
+[node name="VolumeSlider" type="HSlider" parent="SettingsMenu"]
+layout_mode = 2
+max_value = 1.0
+step = 0.0
+value = 0.5
+
+[node name="MusicLabel" type="RichTextLabel" parent="SettingsMenu"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_4v0nc")
+text = "Music
+"
+fit_content = true
+
+[node name="MusicSlider" type="HSlider" parent="SettingsMenu"]
+layout_mode = 2
+max_value = 1.0
+step = 0.0
+value = 0.5
+
+[node name="SFXLabel" type="RichTextLabel" parent="SettingsMenu"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_4v0nc")
+text = "Sound Effects"
+fit_content = true
+
+[node name="SFXSlider" type="HSlider" parent="SettingsMenu"]
+layout_mode = 2
+max_value = 1.0
+step = 0.0
+value = 0.5
+
+[node name="ResolutionLabel" type="RichTextLabel" parent="SettingsMenu"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_4v0nc")
+text = "Resolution"
+fit_content = true
+
+[node name="Resolution" type="OptionButton" parent="SettingsMenu"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4v0nc")
+item_count = 4
+selected = 3
+popup/item_0/text = "2560x1440"
+popup/item_0/id = 0
+popup/item_1/text = "1920x1080"
+popup/item_1/id = 1
+popup/item_2/text = "1366x768"
+popup/item_2/id = 2
+popup/item_3/text = "1280x720"
+popup/item_3/id = 3
+
+[node name="DisplayLabel" type="RichTextLabel" parent="SettingsMenu"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_4v0nc")
+text = "Display"
+fit_content = true
+
+[node name="Display" type="OptionButton" parent="SettingsMenu"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4v0nc")
+item_count = 4
+selected = 0
+popup/item_0/text = "Windowed"
+popup/item_0/id = 0
+popup/item_1/text = "Borderless Windowed"
+popup/item_1/id = 1
+popup/item_2/text = "Fullscreen"
+popup/item_2/id = 2
+popup/item_3/text = "Borderless Fullscreen"
+popup/item_3/id = 3
+
+[node name="SaveBack" type="Button" parent="SettingsMenu"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4v0nc")
+text = "Save and Back"
+
+[node name="WarningBackMenu" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -412.0
+offset_top = -25.0
+offset_right = 412.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AreYouSure" type="Label" parent="WarningBackMenu"]
+layout_mode = 2
+text = "Are you sure you want to return to the main menu?"
+horizontal_alignment = 1
+
+[node name="ProgressWill" type="Label" parent="WarningBackMenu"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.309804, 0.435294, 1)
+text = "progress will not be saved"
+horizontal_alignment = 1
+
+[node name="Option" type="HBoxContainer" parent="WarningBackMenu"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Yes" type="Button" parent="WarningBackMenu/Option"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.309804, 0.435294, 1)
+text = "Yes"
+
+[node name="No" type="Button" parent="WarningBackMenu/Option"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.427451, 1, 0.490196, 1)
+text = "No"
+
+[node name="ClickSFX" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("4_tyhoc")
+bus = &"sfx"
+
+[connection signal="pressed" from="inGameOptions/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="inGameOptions/BackMenu" to="." method="_on_back_menu_pressed"]
+[connection signal="value_changed" from="SettingsMenu/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="item_selected" from="SettingsMenu/Resolution" to="." method="_on_resolution_item_selected"]
+[connection signal="item_selected" from="SettingsMenu/Display" to="." method="_on_display_item_selected"]
+[connection signal="pressed" from="SettingsMenu/SaveBack" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="WarningBackMenu/Option/Yes" to="." method="_on_yes_pressed"]
+[connection signal="pressed" from="WarningBackMenu/Option/No" to="." method="_on_no_pressed"]
