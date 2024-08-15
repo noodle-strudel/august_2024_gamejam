@@ -25,6 +25,7 @@ func get_input():
 	input.y = Input.get_action_strength("down") - Input.get_action_strength("up")
 	
 	pressing_jump = Input.get_action_strength("jump")
+	
 	return input.normalized()
 
 func jump():
@@ -36,7 +37,6 @@ func jump():
 func _process(delta):
 # Player Input -> movement mapping
 	playerInput = get_input()
-	
 	
 	# Jump
 	if pressing_jump > 0:

@@ -338,5 +338,8 @@ anim_player = NodePath("../AnimationPlayer")
 target_position = Vector2(2.08165e-12, -2000)
 collision_mask = 3
 
+[node name="MoveTimer" type="Timer" parent="EnemyAi"]
+
 [connection signal="resetRound" from="Ball" to="GameManager" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="Player" method="_on_ball_reset_round"]
+[connection signal="timeout" from="EnemyAi/MoveTimer" to="EnemyAi" method="_on_move_timer_timeout"]

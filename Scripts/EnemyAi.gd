@@ -9,11 +9,34 @@ var raycast = $RayCast2D
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+var rng = RandomNumberGenerator.new()
+
+@onready
+var t = $MoveTimer
+var t_max = 5
+var t_min = 3
+
+var x : int
+
+func _ready():	
+	x = rng.randi_range(-1, 1)
+	t.start(rng.randi_range(t_min, t_max))
+
+
+func _on_move_timer_timeout():
+	print(t.wait_time)
+	rng.randomize()
+	x = rng.randi_range(-1, 1)
+	
+	
 # Overriding the input for ai
 func get_input():
+	#print(t.time_left)
 	
-	input.x = 0
-	input.y = 0
+	#print(grounded)
+	if(grounded):
+		input.x = x
+		#input.y = 0
 	
 	# Get the first collision object
 	var raycast_collision = raycast.get_collider()
@@ -27,3 +50,5 @@ func get_input():
 		
 		
 	return input.normalized()
+
+
