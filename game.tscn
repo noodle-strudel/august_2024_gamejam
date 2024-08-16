@@ -304,7 +304,7 @@ script = ExtResource("3_uolrk")
 shape = SubResource("CircleShape2D_0fs64")
 
 [node name="EnemyAi" type="CharacterBody2D" parent="." groups=["ground"]]
-position = Vector2(-609, 174)
+position = Vector2(-327, 182)
 rotation = 0.0292804
 floor_stop_on_slope = false
 floor_block_on_wall = false
@@ -342,4 +342,5 @@ collision_mask = 3
 
 [connection signal="resetRound" from="Ball" to="GameManager" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="Player" method="_on_ball_reset_round"]
+[connection signal="resetRound" from="Ball" to="EnemyAi" method="_on_ball_reset_round"]
 [connection signal="timeout" from="EnemyAi/MoveTimer" to="EnemyAi" method="_on_move_timer_timeout"]
