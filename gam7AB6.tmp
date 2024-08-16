@@ -159,8 +159,6 @@ metadata/_edit_group_ = true
 [node name="Player" type="CharacterBody2D" parent="." groups=["ground"]]
 unique_name_in_owner = true
 position = Vector2(592, -180)
-collision_layer = 4
-collision_mask = 5
 floor_stop_on_slope = false
 floor_block_on_wall = false
 floor_max_angle = 3.14159
@@ -302,7 +300,7 @@ shape = SubResource("RectangleShape2D_8upkq")
 [node name="Ball" type="RigidBody2D" parent="."]
 unique_name_in_owner = true
 collision_layer = 2
-collision_mask = 4294967295
+collision_mask = 3
 script = ExtResource("3_uolrk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
@@ -313,6 +311,15 @@ unique_name_in_owner = true
 position = Vector2(246, 708)
 script = ExtResource("6_i2xiq")
 metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="GhostManager"]
+rotation = 3.14159
+scale = Vector2(4, 4)
+texture = ExtResource("2_au68j")
+hframes = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GhostManager"]
+shape = SubResource("CircleShape2D_q4fvd")
 
 [connection signal="resetRound" from="Ball" to="GameManager" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="Player" method="_on_ball_reset_round"]
