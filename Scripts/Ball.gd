@@ -28,6 +28,7 @@ func _physics_process(delta):
 		# Wall Bounce (Player has ground group)
 		if collision.get_collider().is_in_group("ground"):
 			appliedForce = appliedForce.bounce(collision.get_normal())
+			print(appliedForce)
 			return
 	
 func _integrate_forces(state):
