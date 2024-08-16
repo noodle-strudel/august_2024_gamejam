@@ -122,7 +122,6 @@ fit_content = true
 
 [node name="Display" type="OptionButton" parent="SettingsMenu"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_4v0nc")
 item_count = 4
 selected = 0
 popup/item_0/text = "Windowed"
@@ -136,7 +135,6 @@ popup/item_3/id = 3
 
 [node name="SaveBack" type="Button" parent="SettingsMenu"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_4v0nc")
 text = "Save and Back"
 
 [node name="WarningBackMenu" type="VBoxContainer" parent="."]
@@ -184,6 +182,7 @@ process_mode = 3
 stream = ExtResource("4_tyhoc")
 bus = &"sfx"
 
+[connection signal="pressed" from="inGameOptions/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="inGameOptions/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="inGameOptions/BackMenu" to="." method="_on_back_menu_pressed"]
 [connection signal="value_changed" from="SettingsMenu/VolumeSlider" to="." method="_on_volume_slider_value_changed"]

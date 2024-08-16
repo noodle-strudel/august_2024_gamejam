@@ -1,0 +1,319 @@
+[gd_scene load_steps=28 format=3 uid="uid://c7hy3r6br2vo6"]
+
+[ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_3anbo"]
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_ti4d2"]
+[ext_resource type="Texture2D" uid="uid://dfkwxa1ep1wy" path="res://Assets/Art/soccer_player.png" id="2_au68j"]
+[ext_resource type="Texture2D" uid="uid://dnld16eqsjbyb" path="res://icon.svg" id="2_jf44u"]
+[ext_resource type="Script" path="res://Scripts/Ball.gd" id="3_uolrk"]
+[ext_resource type="Script" path="res://Scripts/ghost.gd" id="6_i2xiq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q4fvd"]
+radius = 95.021
+
+[sub_resource type="Animation" id="Animation_vps5r"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_n1de1"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_bd67n"]
+resource_name = "jump"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+
+[sub_resource type="Animation" id="Animation_cyaf1"]
+resource_name = "land"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_x4l82"]
+resource_name = "sliding"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_utpno"]
+_data = {
+"RESET": SubResource("Animation_vps5r"),
+"idle": SubResource("Animation_n1de1"),
+"jump": SubResource("Animation_bd67n"),
+"land": SubResource("Animation_cyaf1"),
+"sliding": SubResource("Animation_x4l82")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wxh70"]
+animation = &"jump"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lvry7"]
+animation = &"land"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rm46t"]
+animation = &"sliding"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ppqck"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_quco3"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_k853k"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ybv0v"]
+states/End/position = Vector2(718, 128)
+states/Start/position = Vector2(136, 140)
+states/jump/node = SubResource("AnimationNodeAnimation_wxh70")
+states/jump/position = Vector2(276, 140)
+states/land/node = SubResource("AnimationNodeAnimation_lvry7")
+states/land/position = Vector2(436, 140)
+states/sliding/node = SubResource("AnimationNodeAnimation_rm46t")
+states/sliding/position = Vector2(276, 68)
+transitions = ["jump", "land", SubResource("AnimationNodeStateMachineTransition_ppqck"), "land", "sliding", SubResource("AnimationNodeStateMachineTransition_quco3"), "sliding", "jump", SubResource("AnimationNodeStateMachineTransition_k853k")]
+graph_offset = Vector2(-157, 5)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7wkhh"]
+radius = 168.0
+height = 816.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4mxpp"]
+size = Vector2(3946, 339)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ruvxh"]
+size = Vector2(3946, 339)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ldjes"]
+size = Vector2(656, 1805)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a3adf"]
+radius = 186.218
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8upkq"]
+size = Vector2(134, 390)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0fs64"]
+radius = 88.3629
+
+[node name="MainGame" type="Node2D"]
+
+[node name="GameManager" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_3anbo")
+winsRequired = 3
+
+[node name="Player" type="CharacterBody2D" parent="." groups=["ground"]]
+position = Vector2(592, -180)
+floor_stop_on_slope = false
+floor_block_on_wall = false
+floor_max_angle = 3.14159
+floor_snap_length = 0.0
+script = ExtResource("1_ti4d2")
+speed = 1000
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+rotation = 3.14159
+scale = Vector2(4, 4)
+texture = ExtResource("2_au68j")
+hframes = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("CircleShape2D_q4fvd")
+
+[node name="Line2D" type="Line2D" parent="Player"]
+position = Vector2(-336, 248)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+libraries = {
+"": SubResource("AnimationLibrary_utpno")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="Player"]
+tree_root = SubResource("AnimationNodeStateMachine_ybv0v")
+anim_player = NodePath("../AnimationPlayer")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.3, 0.3)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="." groups=["ground"]]
+position = Vector2(1522, -577)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+shape = SubResource("CapsuleShape2D_7wkhh")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2"]
+scale = Vector2(2.46875, 2.71094)
+texture = ExtResource("2_jf44u")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="." groups=["ground"]]
+position = Vector2(91, -931)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+position = Vector2(-94, -10.5)
+shape = SubResource("RectangleShape2D_4mxpp")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D3"]
+scale = Vector2(2.46875, 2.71094)
+texture = ExtResource("2_jf44u")
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="." groups=["ground"]]
+position = Vector2(100, 1068)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D6"]
+position = Vector2(-94, -10.5)
+shape = SubResource("RectangleShape2D_ruvxh")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D6"]
+scale = Vector2(2.46875, 2.71094)
+texture = ExtResource("2_jf44u")
+
+[node name="StaticBody2D7" type="StaticBody2D" parent="." groups=["ground"]]
+position = Vector2(-2280, 149)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D7"]
+position = Vector2(-7, -74.5)
+shape = SubResource("RectangleShape2D_ldjes")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D7"]
+scale = Vector2(2.46875, 2.71094)
+texture = ExtResource("2_jf44u")
+
+[node name="StaticBody2D8" type="StaticBody2D" parent="." groups=["ground"]]
+position = Vector2(2285, 127)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D8"]
+position = Vector2(-7, -74.5)
+shape = SubResource("RectangleShape2D_ldjes")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D8"]
+scale = Vector2(2.46875, 2.71094)
+texture = ExtResource("2_jf44u")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="." groups=["ground"]]
+position = Vector2(-655, 580)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
+shape = SubResource("CircleShape2D_a3adf")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D4"]
+scale = Vector2(2.46875, 2.71094)
+texture = ExtResource("2_jf44u")
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="." groups=["ground"]]
+position = Vector2(-1159, -214)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D5"]
+shape = SubResource("CircleShape2D_a3adf")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D5"]
+scale = Vector2(2.46875, 2.71094)
+texture = ExtResource("2_jf44u")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["ground"]]
+position = Vector2(524, 309)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("CircleShape2D_a3adf")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+scale = Vector2(2.46875, 2.71094)
+texture = ExtResource("2_jf44u")
+
+[node name="Goal" type="StaticBody2D" parent="."]
+position = Vector2(-1754, -4)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal"]
+shape = SubResource("RectangleShape2D_8upkq")
+
+[node name="Enemy Goal" type="StaticBody2D" parent="."]
+position = Vector2(1819, 9)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy Goal"]
+shape = SubResource("RectangleShape2D_8upkq")
+
+[node name="Ball" type="RigidBody2D" parent="."]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("3_uolrk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("CircleShape2D_0fs64")
+
+[node name="GhostTest" type="CharacterBody2D" parent="."]
+script = ExtResource("6_i2xiq")
+
+[node name="Sprite2D" type="Sprite2D" parent="GhostTest"]
+rotation = 3.14159
+scale = Vector2(4, 4)
+texture = ExtResource("2_au68j")
+hframes = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GhostTest"]
+shape = SubResource("CircleShape2D_q4fvd")
+
+[connection signal="resetRound" from="Ball" to="GameManager" method="_on_ball_reset_round"]
+[connection signal="resetRound" from="Ball" to="Player" method="_on_ball_reset_round"]
