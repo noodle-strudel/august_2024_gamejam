@@ -14,6 +14,7 @@ var perpendicular : Vector2
 var grounded = true
 var rotationAngle = 0.0
 var startPos = position
+var pressing_jump = 0
 
 # keeps track of the current animation
 var current_anim = ""
@@ -23,18 +24,23 @@ func get_input():
 	input.x = Input.get_action_strength("right") - Input.get_action_strength("left") 
 	input.y = Input.get_action_strength("down") - Input.get_action_strength("up")
 	
+	pressing_jump = Input.get_action_strength("jump")
+	
 	return input.normalized()
 
+func jump():
+	velocity = up_direction * speed
+	grounded = false
+	change_anim("jump")
+	
 # Player Movement proccessing and collisions
 func _process(delta):
 # Player Input -> movement mapping
 	playerInput = get_input()
 	
 	# Jump
-	if Input.get_action_strength("jump") > 0:
-		velocity = up_direction * speed
-		grounded = false
-		change_anim("jump")
+	if pressing_jump > 0:
+		jump()
 	
 	# Reset
 	if playerInput == Vector2.ZERO:

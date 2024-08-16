@@ -1,11 +1,11 @@
 [gd_scene load_steps=29 format=3 uid="uid://d25j3hbaff8n7"]
 
-
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_3anbo"]
 [ext_resource type="Theme" uid="uid://lqrgxsxs2fye" path="res://ui/font and theme/base_theme.tres" id="1_rt4aw"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_ti4d2"]
 [ext_resource type="Texture2D" uid="uid://dfkwxa1ep1wy" path="res://Assets/Art/soccer_player.png" id="2_au68j"]
 [ext_resource type="Script" path="res://Scripts/Ball.gd" id="3_uolrk"]
+[ext_resource type="Script" path="res://Scripts/EnemyAi.gd" id="6_luj86"]
 [ext_resource type="PackedScene" uid="uid://dwkhrrvc8bqv5" path="res://ui/in_game_ui.tscn" id="6_n71pq"]
 [ext_resource type="Script" path="res://Scripts/GhostManager.gd" id="6_i2xiq"]
 [ext_resource type="TileSet" uid="uid://cfove8krmrxsk" path="res://Assets/Art/soccer_arena_tileset.tres" id="6_n3gs8"]
@@ -255,6 +255,43 @@ script = ExtResource("3_uolrk")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
 shape = SubResource("CircleShape2D_0fs64")
 
+[node name="EnemyAi" type="CharacterBody2D" parent="." groups=["ground"]]
+position = Vector2(-327, 182)
+rotation = 0.0292804
+floor_stop_on_slope = false
+floor_block_on_wall = false
+floor_max_angle = 3.14159
+floor_snap_length = 0.0
+script = ExtResource("6_luj86")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="EnemyAi"]
+rotation = 3.14159
+scale = Vector2(4, 4)
+texture = ExtResource("2_au68j")
+hframes = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyAi"]
+shape = SubResource("CircleShape2D_q4fvd")
+
+[node name="Line2D" type="Line2D" parent="EnemyAi"]
+position = Vector2(-336, 248)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="EnemyAi"]
+libraries = {
+"": SubResource("AnimationLibrary_utpno")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="EnemyAi"]
+tree_root = SubResource("AnimationNodeStateMachine_ybv0v")
+anim_player = NodePath("../AnimationPlayer")
+
+[node name="RayCast2D" type="RayCast2D" parent="EnemyAi"]
+target_position = Vector2(2.08165e-12, -2000)
+collision_mask = 3
+
+[node name="MoveTimer" type="Timer" parent="EnemyAi"]
+
 [node name="GhostManager" type="CharacterBody2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(246, 708)
@@ -299,3 +336,4 @@ shape = SubResource("CapsuleShape2D_f1f87")
 [connection signal="resetRound" from="Ball" to="Player" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="Ball" method="_on_reset_round"]
 [connection signal="resetRound" from="Ball" to="GhostManager" method="_on_ball_reset_round"]
+[connection signal="timeout" from="EnemyAi/MoveTimer" to="EnemyAi" method="_on_move_timer_timeout"]
