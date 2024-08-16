@@ -122,7 +122,6 @@ fit_content = true
 
 [node name="Display" type="OptionButton" parent="SettingsMenu"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_4v0nc")
 item_count = 4
 selected = 0
 popup/item_0/text = "Windowed"
@@ -136,7 +135,6 @@ popup/item_3/id = 3
 
 [node name="SaveBack" type="Button" parent="SettingsMenu"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_4v0nc")
 text = "Save and Back"
 
 [node name="WarningBackMenu" type="VBoxContainer" parent="."]

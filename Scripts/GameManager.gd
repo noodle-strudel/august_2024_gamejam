@@ -28,7 +28,7 @@ func _on_ball_reset_round():
 		# Do player win stuff here...
 		print("You Win")
 		pass
-	elif aiScore > winsRequired:
+	elif aiScore >= winsRequired:
 		# Player lose here...
 		print("You Lose")
 		pass
