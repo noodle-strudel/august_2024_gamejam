@@ -1,5 +1,8 @@
 extends Node2D
 
+@onready var pause_menu = $"../inGameMenu"
+var paused = false
+
 @export var winsRequired = 5
 var playerScore = 0
 var aiScore = 0
@@ -11,12 +14,17 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if Input.is_action_just_pressed("pause") && $"../inGameMenu".on_pause_menu:
+		_pause_menu()
+	elif  Input.is_action_just_pressed("pause") && $"../inGameMenu".on_setting_menu:
+		$"../inGameMenu"._on_back_pressed()
 
 
 func _on_ball_reset_round():
 	print("You: ", playerScore, " | AI: ", aiScore)
-	if playerScore >= winsRequired:
+	$"../Score/AILabelScore".text = str(aiScore)
+	$"../Score/PlayerLabelScore".text = str(playerScore)
+	if playerScore > winsRequired:
 		# Do player win stuff here...
 		print("You Win")
 		pass
@@ -24,3 +32,13 @@ func _on_ball_reset_round():
 		# Player lose here...
 		print("You Lose")
 		pass
+
+
+func _pause_menu():
+	if paused:
+		pause_menu.hide()
+		Engine.time_scale = 1
+	else:
+		pause_menu.show()
+		Engine.time_scale = 0
+	paused = !paused

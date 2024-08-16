@@ -1,6 +1,7 @@
 extends Control
 
 var is_loading_settings = false
+var on_setting_menu = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -21,7 +22,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+		if Input.is_action_just_pressed("pause") && on_setting_menu:
+			_on_back_pressed()
 
 
 func _on_volume_slider_value_changed(value):
@@ -35,6 +37,7 @@ func _on_settings_pressed():
 	$ClickSFX.play()
 	$StartMenu.visible = !$StartMenu.visible
 	$SettingsMenu.visible = !$SettingsMenu.visible
+	on_setting_menu = true
 
 
 func _on_quit_pressed():
@@ -80,6 +83,7 @@ func _on_back_pressed():
 	$StartMenu.visible = !$StartMenu.visible
 	$SettingsMenu.visible = !$SettingsMenu.visible
 	GlobalSettings.save()
+	on_setting_menu = false
 
 
 func _on_music_slider_value_changed(value):
@@ -100,3 +104,8 @@ func _on_about_to_quit():
 	GlobalSettings.save()
 
 
+func _on_start_pressed():
+	$ClickSFX.play()
+	await get_tree().create_timer(0.3).timeout
+	get_tree().change_scene_to_file("res://game.tscn")
+	
