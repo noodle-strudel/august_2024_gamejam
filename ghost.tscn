@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dfkwxa1ep1wy" path="res://Assets/Art/soccer_player.png" id="2_hdso4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_61ldl"]
-radius = 95.021
+radius = 50.0899
 
 [sub_resource type="Animation" id="Animation_vps5r"]
 length = 0.001
@@ -137,7 +137,7 @@ metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Ghost"]
 rotation = 3.14159
-scale = Vector2(4, 4)
+scale = Vector2(2, 2)
 texture = ExtResource("2_hdso4")
 hframes = 12
 

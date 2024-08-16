@@ -1,6 +1,6 @@
 extends Control
 
-@onready var GameManager = $"../GameManager"
+@onready var GameManager = %GameManager
 
 var on_pause_menu = true
 var on_setting_menu = false
@@ -11,11 +11,11 @@ func _ready():
 	is_loading_settings = true
 	GlobalSettings.load_data()
 	
-	$SettingsMenu/VolumeSlider.value = GlobalSettings.volume
-	$SettingsMenu/MusicSlider.value = GlobalSettings.music
-	$SettingsMenu/SFXSlider.value = GlobalSettings.sfx
-	$SettingsMenu/Resolution.select(GlobalSettings.resolution)
-	$SettingsMenu/Display.select(GlobalSettings.window)
+	$PanelContainer/SettingsMenu/VolumeSlider.value = GlobalSettings.volume
+	$PanelContainer/SettingsMenu/MusicSlider.value = GlobalSettings.music
+	$PanelContainer/SettingsMenu/SFXSlider.value = GlobalSettings.sfx
+	$PanelContainer/SettingsMenu/Resolution.select(GlobalSettings.resolution)
+	$PanelContainer/SettingsMenu/Display.select(GlobalSettings.window)
 	_on_resolution_item_selected(GlobalSettings.resolution)
 	_on_display_item_selected(GlobalSettings.window)
 	
@@ -70,23 +70,23 @@ func _on_display_item_selected(index):
 func _on_back_pressed():
 	GlobalSettings.save()
 	$ClickSFX.play()
-	$SettingsMenu.visible = !$SettingsMenu.visible
-	$inGameOptions.visible = !$inGameOptions.visible
+	$PanelContainer/SettingsMenu.visible = !$PanelContainer/SettingsMenu.visible
+	$PanelContainer/inGameOptions.visible = !$PanelContainer/inGameOptions.visible
 	on_pause_menu = true
 	on_setting_menu = false
 
 func _on_settings_pressed():
 	$ClickSFX.play()
-	$SettingsMenu.visible = !$SettingsMenu.visible
-	$inGameOptions.visible = !$inGameOptions.visible
+	$PanelContainer/SettingsMenu.visible = !$PanelContainer/SettingsMenu.visible
+	$PanelContainer/inGameOptions.visible = !$PanelContainer/inGameOptions.visible
 	on_pause_menu = false
 	on_setting_menu = true
 
 
 func _on_no_pressed():
 	$ClickSFX.play()
-	$inGameOptions.visible = !$inGameOptions.visible
-	$WarningBackMenu.visible = !$WarningBackMenu.visible
+	$PanelContainer/inGameOptions.visible = !$PanelContainer/inGameOptions.visible
+	$PanelContainer/WarningBackMenu.visible = !$PanelContainer/WarningBackMenu.visible
 	on_pause_menu = true
 
 
@@ -99,8 +99,8 @@ func _on_yes_pressed():
 
 func _on_back_menu_pressed():
 	$ClickSFX.play()
-	$inGameOptions.visible = !$inGameOptions.visible
-	$WarningBackMenu.visible = !$WarningBackMenu.visible
+	$PanelContainer/inGameOptions.visible = !$PanelContainer/inGameOptions.visible
+	$PanelContainer/WarningBackMenu.visible = !$PanelContainer/WarningBackMenu.visible
 	on_pause_menu = false
 
 

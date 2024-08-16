@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var pause_menu = $"../inGameMenu"
+@onready var pause_menu = $"../CanvasLayer/inGameMenu"
 var paused = false
 
 @export var winsRequired = 5
@@ -14,9 +14,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Input.is_action_just_pressed("pause") && $"../inGameMenu".on_pause_menu:
+	if Input.is_action_just_pressed("pause") && $"../CanvasLayer/inGameMenu".on_pause_menu:
 		_pause_menu()
-	elif  Input.is_action_just_pressed("pause") && $"../inGameMenu".on_setting_menu:
+	elif  Input.is_action_just_pressed("pause") && $"../CanvasLayer/inGameMenu".on_setting_menu:
 		$"../inGameMenu"._on_back_pressed()
 
 
