@@ -40,3 +40,7 @@ func _integrate_forces(state):
 		state.transform.origin = startPos
 		reset = false
 		pass
+
+
+func _on_reset_round():
+	pass

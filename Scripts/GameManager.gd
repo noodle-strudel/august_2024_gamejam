@@ -16,11 +16,11 @@ func _process(delta):
 
 func _on_ball_reset_round():
 	print("You: ", playerScore, " | AI: ", aiScore)
-	if playerScore > winsRequired:
+	if playerScore >= winsRequired:
 		# Do player win stuff here...
 		print("You Win")
 		pass
-	elif aiScore > winsRequired:
+	elif aiScore >= winsRequired:
 		# Player lose here...
 		print("You Lose")
 		pass
