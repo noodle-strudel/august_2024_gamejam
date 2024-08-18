@@ -125,8 +125,7 @@ func _jumptimer_Timeout():
 		
 		if timeToSwapJump[jumpIndex]:
 			print((timeToSwapJump.size()) -1)
-			print(timeBeforeInputs[jumpIndex])
-			jumpTimer.wait_time = timeBeforeInputs[jumpIndex]
+			jumpTimer.wait_time = timeToSwapJump[jumpIndex]
 			jumpTimer.start()
 			print("+Index")
 			jumpIndex += 1
