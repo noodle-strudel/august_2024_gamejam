@@ -310,6 +310,16 @@ metadata/_edit_group_ = true
 position = Vector2(40, 0)
 shape = SubResource("RectangleShape2D_8upkq")
 
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Enemy Goal"]
+position = Vector2(8, 0)
+rotation = -3.14159
+polygon = PackedVector2Array(-96, -144, 32, -144, 32, -256, -32, -240, -80, -192)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Enemy Goal"]
+position = Vector2(-152, -176)
+rotation = -4.71238
+polygon = PackedVector2Array(-80.0003, -128, 31.9997, -128, 32, -256, -32.0005, -232, -64.0004, -184)
+
 [node name="Ball" type="RigidBody2D" parent="."]
 unique_name_in_owner = true
 collision_layer = 2
