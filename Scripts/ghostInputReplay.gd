@@ -42,6 +42,7 @@ func _ready():
 	jumpTimer.wait_time = 0
 	jumpTimer.timeout.connect(_jumptimer_Timeout)
 	add_child(jumpTimer)
+	get_tree().current_scene.get_node("Ball").resetRound.connect(_on_reset_round)
 
 	
 # Player Movement proccessing and collisions
