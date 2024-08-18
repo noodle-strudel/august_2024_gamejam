@@ -22,7 +22,7 @@ var timeElapsed = 0
 var lastInput : Vector2
 var timeSinceJumpChange : Array
 var jumpTimeElapsed = 0
-var isJumping = false
+var isJumping = true
 var numOfGhosts = 0
 var gameStart = true
 
@@ -88,6 +88,7 @@ func createGhost(ghostInputs: Array, timeSinceInputs: Array):
 	for i in timeSinceJumpChange:
 		ghost.timeToSwapJump.append(i)
 	
+	print("Saved Swap Jump timings", ghost.timeToSwapJump)
 	ghost.set_collision_layer_value(numOfGhosts + 3, 1)
 	
 	inputs.clear()

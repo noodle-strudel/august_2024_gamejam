@@ -22,6 +22,7 @@ var timeElapsed = 0
 var index = 0
 var jumpIndex = 0
 var isJumping = false
+var gameStart = true
 
 var timer : Timer = Timer.new()
 var jumpTimer : Timer = Timer.new()
@@ -30,7 +31,6 @@ var jumpTimer : Timer = Timer.new()
 var current_anim = ""
 
 func _ready():
-	
 	timer.one_shot = true
 	timer.autostart = true
 	timer.wait_time = 0
@@ -51,9 +51,16 @@ func _process(delta):
 	# Timer
 	if inputs.size() == 0:
 		return
-	
+		
+	#if timeToSwapJump.size()-1 < jumpIndex:
+	#	isJumping = false
+	#	print("No More Jumps")
+		
+	#if index > timeBeforeInputs.size() - 1:
+	#	perpendicular = Vector2.ZERO
+		
 	# Jump
-	if isJumping:
+	if isJumping && timeToSwapJump.size() > 0:
 		velocity = up_direction * speed
 		grounded = false
 		change_anim("jump")
@@ -113,21 +120,20 @@ func _timer_Timeout():
 	index += 1
 	timer.start()
 	
-			
 func _jumptimer_Timeout():
-	print("Current Index ", jumpIndex)
+	if timeToSwapJump.size() == 0:
+		return
+		
 	if isJumping:
 		isJumping = false
 	else:
 		isJumping = true
-		
-	print("Changing Jump Input")
+	
 	if jumpIndex < (timeToSwapJump.size()) -1:
-		
-		if timeToSwapJump[jumpIndex]:
-			print((timeToSwapJump.size()) -1)
-			jumpTimer.wait_time = timeToSwapJump[jumpIndex]
-			jumpTimer.start()
-			print("+Index")
-			jumpIndex += 1
+		jumpTimer.wait_time = timeToSwapJump[jumpIndex]
+		jumpTimer.start()
+		jumpIndex += 1
+		print("Start new timer")
+	else:
+		isJumping = false
 
