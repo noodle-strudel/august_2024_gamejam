@@ -126,7 +126,7 @@ graph_offset = Vector2(-157, 5)
 
 [node name="Ghost" type="CharacterBody2D" parent="." groups=["ghost", "ground"]]
 unique_name_in_owner = true
-position = Vector2(62, -261)
+position = Vector2(592, -180)
 collision_layer = 0
 floor_stop_on_slope = false
 floor_block_on_wall = false
