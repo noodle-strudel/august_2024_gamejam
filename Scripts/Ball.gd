@@ -7,6 +7,13 @@ var appliedForce = Vector2(0, 0)
 var startPos = position
 var reset = true
 
+# animation controls
+@onready var anim_player = $AnimationPlayer
+var current_anim = ""
+
+func _ready():
+	current_anim = "idle"
+
 # Physics Simulation
 func _physics_process(delta):
 	var collision = move_and_collide(appliedForce * delta)
@@ -23,6 +30,7 @@ func _physics_process(delta):
 		# Inital force on first hit
 		if appliedForce == Vector2(0, 0):
 			appliedForce = Vector2(position.x - collision.get_position().x, position.y - collision.get_position().y) * hitForce
+			change_anim("roll")
 			return
 			
 		# Wall Bounce (Player has ground group)
@@ -38,9 +46,16 @@ func _integrate_forces(state):
 		appliedForce = Vector2(0, 0)
 		state.angular_velocity = 0
 		state.transform.origin = startPos
+		change_anim("idle")
 		reset = false
 		pass
 
 
 func _on_reset_round():
 	pass
+
+# changes current animation to a new animation
+func change_anim(name):
+	if name != current_anim:
+		anim_player.play(name)
+		current_anim = name
