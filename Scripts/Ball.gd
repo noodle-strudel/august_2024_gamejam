@@ -18,6 +18,7 @@ func _ready():
 func _physics_process(delta):
 	var collision = move_and_collide(appliedForce * delta)
 	if collision:
+    $BallSFX.play()
 		# Inital force on first hit
 		if appliedForce == Vector2(0, 0):
 			appliedForce = Vector2(position.x - collision.get_position().x, position.y - collision.get_position().y) * hitForce
@@ -25,9 +26,11 @@ func _physics_process(delta):
 		
 		# Give score
 		elif collision.get_collider().name == "Goal":
+      $"../bgNoice/Crowd".play()
 			%GameManager.playerScore += 1
 			reset = true
 		elif collision.get_collider().name == "Enemy Goal":
+      $"../bgNoice/Crowd".play()
 			%GameManager.aiScore += 1
 			reset = true
 		# Wall Bounce (Player has ground group)

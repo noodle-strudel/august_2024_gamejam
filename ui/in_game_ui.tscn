@@ -159,13 +159,19 @@ grow_vertical = 2
 
 [node name="AreYouSure" type="Label" parent="WarningBackMenu"]
 layout_mode = 2
-text = "Are you sure you want to return to the main menu?"
+text = "Are you sure you want to return"
+horizontal_alignment = 1
+
+[node name="AreYouSure2" type="Label" parent="PanelContainer/WarningBackMenu"]
+layout_mode = 2
+text = "to the main menu?"
 horizontal_alignment = 1
 
 [node name="ProgressWill" type="Label" parent="WarningBackMenu"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.309804, 0.435294, 1)
-text = "progress will not be saved"
+theme_override_font_sizes/font_size = 14
+text = "Progress will not be saved"
 horizontal_alignment = 1
 
 [node name="Option" type="HBoxContainer" parent="WarningBackMenu"]

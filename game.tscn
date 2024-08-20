@@ -8,6 +8,10 @@
 [ext_resource type="Script" path="res://Scripts/GhostManager.gd" id="6_i2xiq"]
 [ext_resource type="TileSet" uid="uid://bu0656m5drvje" path="res://Assets/Art/soccer_arena_tileset.tres" id="6_n3gs8"]
 [ext_resource type="PackedScene" uid="uid://dwkhrrvc8bqv5" path="res://ui/in_game_ui.tscn" id="6_n71pq"]
+[ext_resource type="AudioStream" uid="uid://cpe7x7iyh70pj" path="res://music/sfx/ballKick.ogg" id="7_3locj"]
+[ext_resource type="AudioStream" uid="uid://fjctvjr767f" path="res://music/sfx/bgStadiumNoice.ogg" id="11_ufym1"]
+[ext_resource type="Script" path="res://music/Mscript/bgNoice.gd" id="12_faeqh"]
+[ext_resource type="AudioStream" uid="uid://di35cdj4frfd3" path="res://music/sfx/cheering.ogg" id="13_o85pq"]
 [ext_resource type="Script" path="res://Scripts/NormalAI.gd" id="7_3ikhx"]
 [ext_resource type="Texture2D" uid="uid://dd4th8j7tjy6m" path="res://Assets/Art/soccer_ball.png" id="7_k3uvp"]
 [ext_resource type="Texture2D" uid="uid://dc8je3nsfgnei" path="res://Assets/Art/soccer_player2.png" id="9_tpjgw"]
@@ -271,6 +275,16 @@ height = 576.0
 
 [node name="inGameMenu" parent="CanvasLayer" instance=ExtResource("6_n71pq")]
 visible = false
+top_level = true
+z_index = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+scale = Vector2(2.24, 2.24)
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="Score" type="HBoxContainer" parent="."]
 clip_contents = true
@@ -393,6 +407,9 @@ frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
 shape = SubResource("CircleShape2D_0fs64")
+
+[node name="BallSFX" type="AudioStreamPlayer2D" parent="Ball"]
+stream = ExtResource("7_3locj")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Ball"]
 libraries = {
@@ -520,6 +537,16 @@ position = Vector2(512, -440)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle2"]
 position = Vector2(0, -104)
 shape = SubResource("CapsuleShape2D_f1f87")
+
+[node name="bgNoice" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_ufym1")
+volume_db = -18.289
+bus = &"sfx"
+script = ExtResource("12_faeqh")
+
+[node name="Crowd" type="AudioStreamPlayer2D" parent="bgNoice"]
+stream = ExtResource("13_o85pq")
+bus = &"sfx"
 
 [connection signal="resetRound" from="Ball" to="GameManager" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="Player" method="_on_ball_reset_round"]
