@@ -8,7 +8,6 @@ var is_loading_settings = false
 var on_warning_menu = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
 	is_loading_settings = true
 	GlobalSettings.load_data()
 	

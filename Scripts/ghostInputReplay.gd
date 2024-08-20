@@ -138,8 +138,8 @@ func _timer_Timeout():
 		if inputTimeIndex < timeBeforeInputs.size():
 			playerInput = inputs[index]
 			index += 1
-			timer.wait_time = timeBeforeInputs[index]
-			print(index, ": Change movement after ", timeBeforeInputs[index])
+			timer.wait_time = timeBeforeInputs[inputTimeIndex]
+			print(index, ": Change movement after ", timeBeforeInputs[inputTimeIndex])
 			inputTimeIndex += 1
 			timer.start()
 			
