@@ -18,26 +18,22 @@ func _ready():
 func _physics_process(delta):
 	var collision = move_and_collide(appliedForce * delta)
 	if collision:
-		# Give score
-		if collision.get_collider().name == "Goal":
-			%GameManager.playerScore += 1
-			reset = true
-			return
-		if collision.get_collider().name == "Enemy Goal":
-			%GameManager.aiScore += 1
-			reset = true
-			return
 		# Inital force on first hit
 		if appliedForce == Vector2(0, 0):
 			appliedForce = Vector2(position.x - collision.get_position().x, position.y - collision.get_position().y) * hitForce
 			change_anim("roll")
-			return
-			
+		
+		# Give score
+		elif collision.get_collider().name == "Goal":
+			%GameManager.playerScore += 1
+			reset = true
+		elif collision.get_collider().name == "Enemy Goal":
+			%GameManager.aiScore += 1
+			reset = true
 		# Wall Bounce (Player has ground group)
-		if collision.get_collider().is_in_group("ground"):
+		elif collision.get_collider().is_in_group("ground"):
 			appliedForce = appliedForce.bounce(collision.get_normal())
-			print(appliedForce)
-			return
+			#print(appliedForce)
 	
 func _integrate_forces(state):
 	if reset:
@@ -48,7 +44,6 @@ func _integrate_forces(state):
 		state.transform.origin = startPos
 		change_anim("idle")
 		reset = false
-		pass
 
 
 func _on_reset_round():
