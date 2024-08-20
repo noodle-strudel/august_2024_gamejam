@@ -17,7 +17,7 @@ func _process(delta):
 	if Input.is_action_just_pressed("pause") && $"../CanvasLayer/inGameMenu".on_pause_menu:
 		_pause_menu()
 	elif  Input.is_action_just_pressed("pause") && $"../CanvasLayer/inGameMenu".on_setting_menu:
-		$"../inGameMenu"._on_back_pressed()
+		$"../CanvasLayer/inGameMenu"._on_back_pressed()
 
 
 func _on_ball_reset_round():

@@ -18,13 +18,13 @@ var t_min = 3
 
 var x : int
 
-func _ready():	
+func _ready():
 	x = rng.randi_range(-1, 1)
 	t.start(rng.randi_range(t_min, t_max))
 
 
 func _on_move_timer_timeout():
-	print(t.wait_time)
+	#print(t.wait_time)
 	rng.randomize()
 	x = rng.randi_range(-1, 1)
 	
