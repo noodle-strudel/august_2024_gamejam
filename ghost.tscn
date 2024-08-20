@@ -122,11 +122,9 @@ states/sliding/position = Vector2(276, 68)
 transitions = ["jump", "land", SubResource("AnimationNodeStateMachineTransition_ppqck"), "land", "sliding", SubResource("AnimationNodeStateMachineTransition_quco3"), "sliding", "jump", SubResource("AnimationNodeStateMachineTransition_k853k")]
 graph_offset = Vector2(-157, 5)
 
-[node name="Ghost" type="Node2D"]
-
-[node name="Ghost" type="CharacterBody2D" parent="." groups=["ghost", "ground"]]
+[node name="Ghost" type="CharacterBody2D" groups=["ghost", "ground"]]
 unique_name_in_owner = true
-position = Vector2(62, -261)
+position = Vector2(592, -180)
 collision_layer = 0
 floor_stop_on_slope = false
 floor_block_on_wall = false
@@ -135,20 +133,20 @@ floor_snap_length = 0.0
 script = ExtResource("1_3xhe4")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Ghost"]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 3.14159
 scale = Vector2(2, 2)
 texture = ExtResource("2_hdso4")
 hframes = 12
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ghost"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_61ldl")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Ghost"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_utpno")
 }
 
-[node name="AnimationTree" type="AnimationTree" parent="Ghost"]
+[node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_t03j6")
 anim_player = NodePath("../AnimationPlayer")
