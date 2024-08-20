@@ -2,10 +2,12 @@ extends Control
 
 var is_loading_settings = false
 var on_setting_menu = false
+var on_diff_menu = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$AudioStartMenu.play()
+	
 	
 	is_loading_settings = true
 	GlobalSettings.load_data()
@@ -24,6 +26,8 @@ func _ready():
 func _process(delta):
 		if Input.is_action_just_pressed("pause") && on_setting_menu:
 			_on_back_pressed()
+		if Input.is_action_just_pressed("pause") && on_diff_menu:
+			_on_back_diff_pressed()
 
 
 func _on_volume_slider_value_changed(value):
@@ -106,6 +110,36 @@ func _on_about_to_quit():
 
 func _on_start_pressed():
 	$ClickSFX.play()
+	$DiffMenu.visible = !$DiffMenu.visible
+	$StartMenu.visible = !$StartMenu.visible
+	on_diff_menu = true
+
+func _on_difficult_pressed():
+	$ClickSFX.play()
+	GlobalSettings.difficulty = 2
+	GlobalSettings.save()
 	await get_tree().create_timer(0.3).timeout
 	get_tree().change_scene_to_file("res://game.tscn")
-	
+
+
+func _on_normal_pressed():
+	$ClickSFX.play()
+	GlobalSettings.difficulty = 1
+	GlobalSettings.save()
+	await get_tree().create_timer(0.3).timeout
+	get_tree().change_scene_to_file("res://game.tscn")
+
+
+func _on_eazy_pressed():
+	GlobalSettings.difficulty = 0
+	GlobalSettings.save()
+	$ClickSFX.play()
+	await get_tree().create_timer(0.3).timeout
+	get_tree().change_scene_to_file("res://game.tscn")
+
+
+func _on_back_diff_pressed():
+	$ClickSFX.play()
+	$DiffMenu.visible = !$DiffMenu.visible
+	$StartMenu.visible = !$StartMenu.visible
+	on_diff_menu = false

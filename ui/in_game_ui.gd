@@ -5,6 +5,7 @@ extends Control
 var on_pause_menu = true
 var on_setting_menu = false
 var is_loading_settings = false
+var on_warning_menu = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
@@ -88,6 +89,7 @@ func _on_no_pressed():
 	$PanelContainer/inGameOptions.visible = !$PanelContainer/inGameOptions.visible
 	$PanelContainer/WarningBackMenu.visible = !$PanelContainer/WarningBackMenu.visible
 	on_pause_menu = true
+	on_warning_menu = false
 
 
 func _on_yes_pressed():
@@ -102,6 +104,7 @@ func _on_back_menu_pressed():
 	$PanelContainer/inGameOptions.visible = !$PanelContainer/inGameOptions.visible
 	$PanelContainer/WarningBackMenu.visible = !$PanelContainer/WarningBackMenu.visible
 	on_pause_menu = false
+	on_warning_menu = true
 
 
 func _on_music_slider_value_changed(value):

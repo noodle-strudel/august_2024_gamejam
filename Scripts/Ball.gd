@@ -11,12 +11,15 @@ var reset = true
 func _physics_process(delta):
 	var collision = move_and_collide(appliedForce * delta)
 	if collision:
+		$BallSFX.play()
 		# Give score
 		if collision.get_collider().name == "Goal":
+			$"../bgNoice/Crowd".play()
 			%GameManager.playerScore += 1
 			reset = true
 			return
 		if collision.get_collider().name == "Enemy Goal":
+			$"../bgNoice/Crowd".play()
 			%GameManager.aiScore += 1
 			reset = true
 			return

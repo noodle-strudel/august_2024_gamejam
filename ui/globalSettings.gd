@@ -6,6 +6,7 @@ var music: float
 var sfx: float
 var resolution: int
 var window: int
+var difficulty: int #0 easy, 1 normal, 2 difficult
 
 func save():
 	var file = FileAccess.open(save_path, FileAccess.WRITE)
@@ -14,11 +15,13 @@ func save():
 	file.store_var(sfx)
 	file.store_var(resolution)
 	file.store_var(window)
-	print("saved Volume:", volume)
-	print("saved Music:", music)
-	print("saved SFX:", sfx)
-	print("saved Resolution:", resolution)
-	print("saved Window:", window,"\n\n")
+	file.store_var(difficulty)
+	#print("saved Volume:", volume)
+	#print("saved Music:", music)
+	#print("saved SFX:", sfx)
+	#print("saved Resolution:", resolution)
+	#print("saved Window:", window,"\n\n")
+	print("saved diff: ", difficulty, "\n\n")
 	
 func load_data():
 	if FileAccess.file_exists(save_path):
@@ -28,17 +31,20 @@ func load_data():
 		sfx = file.get_var(sfx)
 		resolution = file.get_var(resolution)
 		window = file.get_var(window)
+		difficulty = file.get_var(difficulty)
 	else:
 		volume = 0.75
 		music = 0.5
 		sfx = 0.35
 		resolution = 3
 		window = 0
-	print("loaded Volume:", volume)
-	print("loaded Music:", music)
-	print("loaded SFX:", sfx)
-	print("loaded Resolution:", resolution)
-	print("loaded Window:", window,"\n\n")
+		difficulty = 0
+	#print("loaded Volume:", volume)
+	#print("loaded Music:", music)
+	#print("loaded SFX:", sfx)
+	#print("loaded Resolution:", resolution)
+	#print("loaded Window:", window,"\n\n")
+	print("loaded diff: ", difficulty, "\n\n")
 
 func delete_save_file(): #for debagging
 	if  FileAccess.file_exists(save_path):
