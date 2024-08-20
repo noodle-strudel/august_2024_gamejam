@@ -16,19 +16,20 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 # Overriding the input for ai
 func get_input():
 	if(grounded):
-		ball = ball as RigidBody2D
-		var angle = rad_to_deg(self.position.angle_to(ball.position))
-		
-		print(angle)
-		if(angle > 0):
-			input.x = -1
-		else:
-			input.x = 1
+		ball = ball as Node
+		if(ball != null):
+			var angle = rad_to_deg(ball.position.angle_to_point(position)) - 90 + rotation_degrees #rad_to_deg(position.angle_to(ball.position))
+			
+			print(int(angle))
+			if(angle > 0):
+				input.x = 1
+			else:
+				input.x = -1
 	
 	# Get the first collision object
 	var raycast_collision = raycast.get_collider()
-	
-	## Detecting the ball in front to jump towards
+	#
+	### Detecting the ball in front to jump towards
 	if raycast_collision != null and raycast_collision.get_name() == "Ball":
 		pressing_jump = 1
 	else: 
