@@ -7,9 +7,15 @@ var appliedForce = Vector2(0, 0)
 var startPos = position
 var reset = true
 
+# A collider that is drawn in the direction of ball's path for raycasting
+@onready var frontPath = $"FrontPath"
+
 # animation controls
 @onready var anim_player = $AnimationPlayer
 var current_anim = ""
+
+# THe rotation value supplied to the ball every frame
+var frontPathRotation = 0.0
 
 func _ready():
 	current_anim = "idle"
@@ -17,6 +23,8 @@ func _ready():
 # Physics Simulation
 func _physics_process(delta):
 	var collision = move_and_collide(appliedForce * delta)
+	# Constant change in rotation of the ball towards the movement directino
+	global_rotation_degrees = frontPathRotation 
 	if collision:
 		$BallSFX.play()
 		# Inital force on first hit
@@ -36,6 +44,13 @@ func _physics_process(delta):
 		elif collision.get_collider().is_in_group("ground"):
 			appliedForce = appliedForce.bounce(collision.get_normal())
 			#print(appliedForce)
+			
+		var direction = appliedForce.normalized()
+		look_at(position + direction) # Change in looking direction towards the normalized applied force
+		frontPathRotation = global_rotation_degrees - 90	
+		global_rotation_degrees = frontPathRotation 
+		
+		pass 
 	
 func _integrate_forces(state):
 	if reset:
@@ -46,6 +61,8 @@ func _integrate_forces(state):
 		state.transform.origin = startPos
 		change_anim("idle")
 		reset = false
+
+
 
 
 func _on_reset_round():
