@@ -125,7 +125,7 @@ func _on_reset_round():
 	up_direction = Vector2.UP
 	rotationAngle = 0.0
 	initiateGhost = 0
-  gameStart = true
+	gameStart = true
 	
 	if timeToSwapJump.size() > 0:
 		jumpTimer.wait_time = 0.01
