@@ -33,9 +33,10 @@ func _process(delta):
 	queue_redraw()
 
 func _draw():
+	return
 	draw_set_transform_matrix(global_transform.affine_inverse())
 	draw_line(Vector2.ZERO, up_direction * 100, Color.GREEN, 2.0)
-	#draw_line(Vector2.ZERO, (global_position + (up_direction * 100)), Color.BLUE, 2.0)
+	draw_line(Vector2.ZERO, ball.appliedForce, Color.BLUE, 2.0)
 	draw_line(Vector2.ZERO, (ball.global_position - global_position), Color.DARK_MAGENTA, 2.0)
 
 func _ready():
@@ -55,10 +56,11 @@ func get_input():
 	# change behavior based on the state of the AI
 	match state:
 		STATE.NORMAL:
-			for child in get_children():
-				if child.name == "OffenseJumpTimer":
-					child.queue_free()
-					offensive_timer = false
+			if offensive_timer:
+				for child in get_children():
+					if child.name == "OffenseJumpTimer":
+						child.queue_free()
+						offensive_timer = false
 			normal()
 			
 		STATE.OFFENSE:
@@ -96,7 +98,7 @@ func normal():
 					right = 1
 			
 			#print(ball.global_position - global_position)
-			print("angle to ball: ", int(angle))
+			#print("angle to ball: ", int(angle))
 			
 			# determine which way is "left" or "right" when initially landing on a surface
 			if landed == false:

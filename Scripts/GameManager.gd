@@ -24,8 +24,8 @@ func _process(delta):
 
 func _on_ball_reset_round():
 	print("You: ", playerScore, " | AI: ", aiScore)
-	$"../Score/AILabelScore".text = str(aiScore)
-	$"../Score/PlayerLabelScore".text = str(playerScore)
+	$"../CanvasLayer/Score/ScoreContainer/Score/AILabelScore".text = str(aiScore)
+	$"../CanvasLayer/Score/ScoreContainer/Score/PlayerLabelScore".text = str(playerScore)
 	if playerScore > winsRequired:
 		# Do player win stuff here...
 		print("You Win")

@@ -1,6 +1,18 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://cfove8krmrxsk"]
+[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://cfove8krmrxsk"]
 
 [ext_resource type="Texture2D" uid="uid://y4rejfxi6bcm" path="res://Assets/Art/soccer_arena.png" id="1_beemg"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_ghcfy"]
+tile_data = PackedInt32Array(0, 393218, 0, 65536, 524290, 0, 1, 458754, 0, 65537, 589826, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_3ryib"]
+tile_data = PackedInt32Array(0, 327682, 0, 65536, 327682, 0, 131072, 524290, 0, 1, 327682, 805306368, 65537, 327682, 805306368, 131073, 589826, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_vqppy"]
+tile_data = PackedInt32Array(0, 196610, 0, 65536, 589826, 0, 131072, 589826, 0, 1, 262146, 0, 65537, 589826, 805306368, 131073, 589826, 805306368)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_5r3wo"]
+tile_data = PackedInt32Array(0, 196610, 0, 65536, 458754, 0, 1, 262146, 0, 65537, 524290, 0)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o4oka"]
 texture = ExtResource("1_beemg")
@@ -37,8 +49,33 @@ texture_region_size = Vector2i(64, 64)
 9:0/0 = 0
 9:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 9:0/0/physics_layer_0/angular_velocity = 0.0
+10:0/0 = 0
+10:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+10:0/0/physics_layer_0/angular_velocity = 0.0
+11:0/0 = 0
+11:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+11:0/0/physics_layer_0/angular_velocity = 0.0
+12:0/0 = 0
+12:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+12:0/0/physics_layer_0/angular_velocity = 0.0
+13:0/0 = 0
+13:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+13:0/0/physics_layer_0/angular_velocity = 0.0
+14:0/0 = 0
+14:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+14:0/0/physics_layer_0/angular_velocity = 0.0
+15:0/0 = 0
+15:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+15:0/0/physics_layer_0/angular_velocity = 0.0
+16:0/0 = 0
+16:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+16:0/0/physics_layer_0/angular_velocity = 0.0
 
 [resource]
 tile_size = Vector2i(64, 64)
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 3
 sources/2 = SubResource("TileSetAtlasSource_o4oka")
+pattern_0 = SubResource("TileMapPattern_ghcfy")
+pattern_1 = SubResource("TileMapPattern_3ryib")
+pattern_2 = SubResource("TileMapPattern_vqppy")
+pattern_3 = SubResource("TileMapPattern_5r3wo")
