@@ -1,0 +1,157 @@
+[gd_scene load_steps=5 format=3 uid="uid://djn0b42t5nlfy"]
+
+[ext_resource type="Theme" uid="uid://lqrgxsxs2fye" path="res://ui/font and theme/base_theme.tres" id="1_xkv41"]
+[ext_resource type="AudioStream" uid="uid://cupyros6jodq0" path="res://music/sfx/click.mp3" id="2_2ilji"]
+[ext_resource type="Script" path="res://ui/win_lose_menu.gd" id="2_img5v"]
+[ext_resource type="FontFile" uid="uid://dfynaome5886n" path="res://ui/font and theme/kongtext.ttf" id="3_5qi31"]
+
+[node name="WinLoseMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_xkv41")
+script = ExtResource("2_img5v")
+
+[node name="ClickSFX" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("2_2ilji")
+bus = &"sfx"
+
+[node name="inGameOptions" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -40.0
+offset_right = 192.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WinLose" type="Label" parent="inGameOptions"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Restart" type="Button" parent="inGameOptions"]
+layout_mode = 2
+text = "Restart"
+
+[node name="Settings" type="Button" parent="inGameOptions"]
+layout_mode = 2
+text = "Settings"
+
+[node name="BackMenu" type="Button" parent="inGameOptions"]
+layout_mode = 2
+text = "Back to menu"
+
+[node name="SettingsMenu" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.5
+offset_top = -122.0
+offset_right = 190.5
+offset_bottom = 122.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VolumeLabel" type="RichTextLabel" parent="SettingsMenu"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("3_5qi31")
+text = "Volume
+"
+fit_content = true
+
+[node name="VolumeSlider" type="HSlider" parent="SettingsMenu"]
+layout_mode = 2
+max_value = 1.0
+step = 0.0
+value = 0.5
+
+[node name="MusicLabel" type="RichTextLabel" parent="SettingsMenu"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("3_5qi31")
+text = "Music
+"
+fit_content = true
+
+[node name="MusicSlider" type="HSlider" parent="SettingsMenu"]
+layout_mode = 2
+max_value = 1.0
+step = 0.0
+value = 0.5
+
+[node name="SFXLabel" type="RichTextLabel" parent="SettingsMenu"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("3_5qi31")
+text = "Sound Effects"
+fit_content = true
+
+[node name="SFXSlider" type="HSlider" parent="SettingsMenu"]
+layout_mode = 2
+max_value = 1.0
+step = 0.0
+value = 0.5
+
+[node name="ResolutionLabel" type="RichTextLabel" parent="SettingsMenu"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("3_5qi31")
+text = "Resolution"
+fit_content = true
+
+[node name="Resolution" type="OptionButton" parent="SettingsMenu"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_5qi31")
+item_count = 4
+selected = 3
+popup/item_0/text = "2560x1440"
+popup/item_0/id = 0
+popup/item_1/text = "1920x1080"
+popup/item_1/id = 1
+popup/item_2/text = "1366x768"
+popup/item_2/id = 2
+popup/item_3/text = "1280x720"
+popup/item_3/id = 3
+
+[node name="DisplayLabel" type="RichTextLabel" parent="SettingsMenu"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("3_5qi31")
+text = "Display"
+fit_content = true
+
+[node name="Display" type="OptionButton" parent="SettingsMenu"]
+layout_mode = 2
+item_count = 4
+selected = 0
+popup/item_0/text = "Windowed"
+popup/item_0/id = 0
+popup/item_1/text = "Borderless Windowed"
+popup/item_1/id = 1
+popup/item_2/text = "Fullscreen"
+popup/item_2/id = 2
+popup/item_3/text = "Borderless Fullscreen"
+popup/item_3/id = 3
+
+[node name="SaveBack" type="Button" parent="SettingsMenu"]
+layout_mode = 2
+text = "Save and Back"
+
+[connection signal="pressed" from="inGameOptions/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="inGameOptions/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="inGameOptions/BackMenu" to="." method="_on_back_menu_pressed"]
+[connection signal="value_changed" from="SettingsMenu/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="item_selected" from="SettingsMenu/Resolution" to="." method="_on_resolution_item_selected"]
+[connection signal="item_selected" from="SettingsMenu/Display" to="." method="_on_display_item_selected"]
+[connection signal="pressed" from="SettingsMenu/SaveBack" to="." method="_on_save_back_pressed"]

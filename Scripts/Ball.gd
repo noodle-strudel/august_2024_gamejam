@@ -3,7 +3,7 @@ signal resetRound
 
 @export var hitForce = 5
 var heldOwner = "none" # Unused from earlier Hold idea left in incase of remake
-var appliedForce = Vector2(0, 0)
+var appliedForce = Vector2.ZERO
 var startPos = position
 var reset = true
 
@@ -18,9 +18,16 @@ var current_anim = ""
 var frontPathRotation : float
 
 func _ready():
+	linear_velocity = Vector2.ZERO
+	appliedForce = Vector2(0, 0)
+	angular_velocity = 0
+	transform.origin = startPos
 	current_anim = "idle"
 	frontPathRotation = rad_to_deg(self.transform.get_rotation())
-	pass	
+	linear_velocity = Vector2.ZERO
+	appliedForce = Vector2(0, 0)
+	angular_velocity = 0
+	transform.origin = startPos
 
 # Physics Simulation
 func _physics_process(delta):

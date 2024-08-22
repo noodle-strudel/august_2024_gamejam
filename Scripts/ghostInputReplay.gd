@@ -13,11 +13,11 @@ var perpendicular : Vector2
 var grounded = true
 var rotationAngle = 0.0
 var startPos = Vector2(480, 248)
+var paused = false
 
 var inputs : Array
 var timeBeforeInputs : Array
 @export var timeToSwapJump : Array
-var timeElapsed = 0
 
 # index for the inputs array
 var index = 0
@@ -43,14 +43,14 @@ func _ready():
 	# allow the GhostManager to pass the input arrays into self
 	await get_tree().create_timer(0.5).timeout
 	
-	# initiate timer if there are any movement inputs
-	if inputs.size():
-		timer.one_shot = true
-		timer.autostart = true
-		timer.wait_time = 0.01
-		timer.name = "InputTimer"
-		timer.timeout.connect(_timer_Timeout)
-		add_child(timer)
+	print(timeToSwapJump)
+	
+	timer.one_shot = true
+	timer.autostart = true
+	timer.wait_time = 0.01
+	timer.name = "InputTimer"
+	timer.timeout.connect(_timer_Timeout)
+	add_child(timer)
 	
 	jumpTimer.one_shot = true
 	jumpTimer.autostart = true
@@ -59,6 +59,7 @@ func _ready():
 	jumpTimer.timeout.connect(_jumptimer_Timeout)
 	add_child(jumpTimer)
 	get_tree().current_scene.get_node("Ball").resetRound.connect(_on_reset_round)
+	get_tree().current_scene.get_node("GameManager").gamePaused.connect(_on_pause_toggle)
 
 	
 # Player Movement proccessing and collisions
@@ -73,11 +74,14 @@ func _process(delta):
 	#	perpendicular = Vector2.ZERO
 		
 	# Jump
+	if index >= inputs.size() && jumpIndex >= timeToSwapJump.size():
+		$Sprite2D.self_modulate.a = 0.0
+	else:
+		$Sprite2D.self_modulate.a = 0.5
 	if isJumping and timeToSwapJump.size() > 0:
 		velocity = up_direction * speed
 		grounded = false
 		change_anim("jump")
-		isJumping = false
 	
 	# Reset
 	if playerInput == Vector2.ZERO:
@@ -102,7 +106,6 @@ func _process(delta):
 	var collision = move_and_collide(velocity * delta)
 	if collision:
 		grounded = true
-		isJumping = false
 		change_anim("sliding")
 		
 		rotation_degrees = rad_to_deg(atan2(up_direction.y, up_direction.x)) + 90
@@ -114,16 +117,23 @@ func _on_reset_round():
 	index = 0
 	jumpIndex = 0
 	inputTimeIndex = 0
+	isJumping = false
 	position = startPos
 	grounded = true
-	perpendicular = Vector2(0, 0)
+	perpendicular = Vector2.ZERO
+	playerInput = Vector2.ZERO
 	up_direction = Vector2.UP
 	rotationAngle = 0.0
-	$InputTimer.wait_time = 0.01
-	$InputTimer.start()
-	$JumpTimer.wait_time = 0.01
-	$JumpTimer.start()
+	initiateGhost = 0
+	gameStart = true
 	
+	if timeToSwapJump.size() > 0:
+		jumpTimer.wait_time = 0.01
+		jumpTimer.start()
+	
+	if timeBeforeInputs.size() > 0:
+		timer.wait_time = 0.01
+		timer.start()
 
 # changes current animation to a new animation
 func change_anim(name):
@@ -133,34 +143,33 @@ func change_anim(name):
 
 
 func _timer_Timeout():
-	#print("index: ", index, " size of input array: ", timeBeforeInputs.size())
-	if is_initiated():
+	print("Timer Ended")
+	print("Index", index, " Input Size ", inputs.size())
+	if is_initiated() && inputs.size() > 0:
 		if inputTimeIndex < timeBeforeInputs.size():
 			playerInput = inputs[index]
-			index += 1
 			timer.wait_time = timeBeforeInputs[inputTimeIndex]
-			print(index, ": Change movement after ", timeBeforeInputs[inputTimeIndex])
 			inputTimeIndex += 1
 			timer.start()
-			
+			index += 1
 		else:
-			# modulate the sprite to become partially transparent
-			$Sprite2D.self_modulate.a = 0.5
 			playerInput = Vector2.ZERO
-	else:
+	elif timeBeforeInputs.size() > 0 && inputs.size() > 0:
 		timer.wait_time = timeBeforeInputs[inputTimeIndex]
-		print(inputTimeIndex, ": Change movement after ", timeBeforeInputs[inputTimeIndex])
 		inputTimeIndex += 1
 		timer.start()
 
 func _jumptimer_Timeout():
+	print("Swapping Jump")
 	if timeToSwapJump.size() == 0:
 		return
 	
 	# check if the ghost is ready to jump
 	if is_initiated():
-		#print("jump")
-		isJumping = true
+		if isJumping:
+			isJumping = false
+		else:
+			isJumping = true
 	
 	#print("jumpIndex: ", jumpIndex, "timeToSwapJump Size: ", timeToSwapJump.size())
 	if jumpIndex < timeToSwapJump.size():
@@ -179,3 +188,14 @@ func is_initiated() -> bool:
 	else:
 		initiateGhost += 1
 		return false
+
+func _on_pause_toggle():
+	if paused:
+		paused = false
+		timer.paused = false
+		jumpTimer.paused = false
+	else:
+		paused = true
+		timer.paused = true
+		jumpTimer.paused = true
+	

@@ -8,9 +8,6 @@ var resolution: int
 var window: int
 var difficulty: int #0 easy, 1 normal, 2 difficult
 
-func _ready():
-	pass
-	
 func save():
 	var file = FileAccess.open(save_path, FileAccess.WRITE)
 	file.store_var(volume)
