@@ -159,7 +159,7 @@ grow_vertical = 2
 
 [node name="AreYouSure" type="Label" parent="WarningBackMenu"]
 layout_mode = 2
-text = "Are you sure you want to return"
+text = "Are you sure you want to return?"
 horizontal_alignment = 1
 
 [node name="ProgressWill" type="Label" parent="WarningBackMenu"]
@@ -182,11 +182,6 @@ text = "Yes"
 layout_mode = 2
 theme_override_colors/font_color = Color(0.427451, 1, 0.490196, 1)
 text = "No"
-
-[node name="PanelContainer_WarningBackMenu#AreYouSure2" type="Label" parent="."]
-layout_mode = 2
-text = "to the main menu?"
-horizontal_alignment = 1
 
 [connection signal="pressed" from="inGameOptions/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="inGameOptions/Settings" to="." method="_on_settings_pressed"]

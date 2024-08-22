@@ -1,20 +1,24 @@
-[gd_scene load_steps=40 format=3 uid="uid://d25j3hbaff8n7"]
+[gd_scene load_steps=44 format=3 uid="uid://d25j3hbaff8n7"]
 
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_3anbo"]
 [ext_resource type="Theme" uid="uid://lqrgxsxs2fye" path="res://ui/font and theme/base_theme.tres" id="1_rt4aw"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_ti4d2"]
 [ext_resource type="Texture2D" uid="uid://dfkwxa1ep1wy" path="res://Assets/Art/soccer_player.png" id="2_au68j"]
+[ext_resource type="PackedScene" uid="uid://djn0b42t5nlfy" path="res://ui/win_lose_menu.tscn" id="2_gpixc"]
 [ext_resource type="Script" path="res://Scripts/Ball.gd" id="3_uolrk"]
 [ext_resource type="Script" path="res://Scripts/GhostManager.gd" id="6_i2xiq"]
 [ext_resource type="TileSet" uid="uid://cfove8krmrxsk" path="res://Assets/Art/soccer_arena_tileset.tres" id="6_n3gs8"]
 [ext_resource type="PackedScene" uid="uid://dwkhrrvc8bqv5" path="res://ui/in_game_ui.tscn" id="6_n71pq"]
+[ext_resource type="Script" path="res://music/Mscript/AudioPlayer.gd" id="6_wwvec"]
 [ext_resource type="Script" path="res://Scripts/NormalAI.gd" id="7_3ikhx"]
 [ext_resource type="AudioStream" uid="uid://cpe7x7iyh70pj" path="res://music/sfx/ballKick.ogg" id="7_3locj"]
 [ext_resource type="Texture2D" uid="uid://dd4th8j7tjy6m" path="res://Assets/Art/soccer_ball.png" id="7_k3uvp"]
+[ext_resource type="AudioStream" uid="uid://cotm0j1bnn2jj" path="res://music/sfx/fingerForMuvement.ogg" id="7_trcdj"]
 [ext_resource type="Texture2D" uid="uid://dc8je3nsfgnei" path="res://Assets/Art/soccer_player2.png" id="9_tpjgw"]
 [ext_resource type="AudioStream" uid="uid://fjctvjr767f" path="res://music/sfx/bgStadiumNoice.ogg" id="11_ufym1"]
 [ext_resource type="Script" path="res://music/Mscript/bgNoice.gd" id="12_faeqh"]
 [ext_resource type="AudioStream" uid="uid://di35cdj4frfd3" path="res://music/sfx/cheering.ogg" id="13_o85pq"]
+[ext_resource type="AudioStream" uid="uid://bd4v0qouwrfch" path="res://music/themes/mainTheme.ogg" id="16_4yaqi"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q4fvd"]
 radius = 48.1664
@@ -286,6 +290,19 @@ scale = Vector2(2.24, 2.24)
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
+[node name="WinLoseMenu" parent="CanvasLayer" instance=ExtResource("2_gpixc")]
+visible = false
+top_level = true
+z_index = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+scale = Vector2(2.24, 2.24)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
 [node name="Score" type="HBoxContainer" parent="."]
 clip_contents = true
 anchors_preset = 11
@@ -354,6 +371,14 @@ libraries = {
 tree_root = SubResource("AnimationNodeStateMachine_ybv0v")
 anim_player = NodePath("../AnimationPlayer")
 
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="Player"]
+bus = &"sfx"
+script = ExtResource("6_wwvec")
+
+[node name="fingers" type="AudioStreamPlayer2D" parent="Player/AudioPlayer"]
+stream = ExtResource("7_trcdj")
+volume_db = -6.89
+
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.835, 0.835)
 
@@ -410,6 +435,7 @@ shape = SubResource("CircleShape2D_0fs64")
 
 [node name="BallSFX" type="AudioStreamPlayer2D" parent="Ball"]
 stream = ExtResource("7_3locj")
+bus = &"sfx"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Ball"]
 libraries = {
@@ -454,6 +480,14 @@ collision_mask = 3
 
 [node name="MoveTimer" type="Timer" parent="NormalAI"]
 
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="NormalAI"]
+volume_db = -4.146
+bus = &"sfx"
+script = ExtResource("6_wwvec")
+
+[node name="fingers" type="AudioStreamPlayer2D" parent="NormalAI/AudioPlayer"]
+volume_db = -10.0
+
 [node name="EasyAI" type="CharacterBody2D" parent="." groups=["ground"]]
 visible = false
 position = Vector2(-1282, 90)
@@ -491,6 +525,14 @@ target_position = Vector2(2.08165e-12, -2000)
 collision_mask = 3
 
 [node name="MoveTimer" type="Timer" parent="EasyAI"]
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="EasyAI"]
+volume_db = -4.492
+bus = &"sfx"
+script = ExtResource("6_wwvec")
+
+[node name="fingers" type="AudioStreamPlayer2D" parent="EasyAI/AudioPlayer"]
+volume_db = -10.0
 
 [node name="GhostManager" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -541,6 +583,11 @@ script = ExtResource("12_faeqh")
 [node name="Crowd" type="AudioStreamPlayer2D" parent="bgNoice"]
 stream = ExtResource("13_o85pq")
 bus = &"sfx"
+
+[node name="theme" type="AudioStreamPlayer" parent="bgNoice"]
+stream = ExtResource("16_4yaqi")
+volume_db = -10.657
+bus = &"music"
 
 [connection signal="resetRound" from="Ball" to="GameManager" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="Player" method="_on_ball_reset_round"]

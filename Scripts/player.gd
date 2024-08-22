@@ -31,6 +31,7 @@ func get_input():
 func jump():
 	velocity = up_direction * speed
 	grounded = false
+	$AudioPlayer.play_random_sound()
 	change_anim("jump")
 	
 # Player Movement proccessing and collisions
@@ -40,19 +41,28 @@ func _process(delta):
 	
 	# Jump
 	if pressing_jump > 0:
+		$AudioPlayer/fingers.stop()
 		jump()
 	
 	# Reset
 	if playerInput == Vector2.ZERO:
 		perpendicular = Vector2.ZERO
-		
+		$AudioPlayer/fingers.stop()
+	
+	if !grounded:
+		$AudioPlayer/fingers.stop()
+	
 	# Left
 	if playerInput.x < 0:
+		if not $AudioPlayer/fingers.is_playing():
+			$AudioPlayer/fingers.play()
 		perpendicular.x = up_direction.y 
 		perpendicular.y = up_direction.x * playerInput.x
 	
 	# Right
 	if playerInput.x > 0:
+		if not $AudioPlayer/fingers.is_playing():
+			$AudioPlayer/fingers.play()
 		perpendicular.x = -up_direction.y 
 		perpendicular.y = -up_direction.x * -playerInput.x
 		
