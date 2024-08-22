@@ -22,7 +22,6 @@ theme = ExtResource("1_ncjaa")
 script = ExtResource("2_7ewnp")
 
 [node name="StartMenu" type="VBoxContainer" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -162,6 +161,7 @@ stream = ExtResource("5_41res")
 bus = &"sfx"
 
 [node name="DiffMenu" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
