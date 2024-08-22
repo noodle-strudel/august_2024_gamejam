@@ -20,7 +20,7 @@ func get_input():
 		if(ball != null):
 			var angle = rad_to_deg(ball.position.angle_to_point(position)) - 90 + rotation_degrees #rad_to_deg(position.angle_to(ball.position))
 			
-			print(int(angle))
+			# print(int(angle))
 			if(angle > 0):
 				input.x = 1
 			else:

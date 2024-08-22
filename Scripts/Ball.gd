@@ -3,9 +3,9 @@ signal resetRound
 
 @export var hitForce = 5
 var heldOwner = "none" # Unused from earlier Hold idea left in incase of remake
-var appliedForce = Vector2(0, 0)
+var appliedForce = Vector2.ZERO
 var startPos = position
-var reset = true
+var reset = false
 
 # animation controls
 @onready var anim_player = $AnimationPlayer
@@ -13,6 +13,10 @@ var current_anim = ""
 
 func _ready():
 	current_anim = "idle"
+	linear_velocity = Vector2.ZERO
+	appliedForce = Vector2(0, 0)
+	angular_velocity = 0
+	transform.origin = startPos
 
 # Physics Simulation
 func _physics_process(delta):

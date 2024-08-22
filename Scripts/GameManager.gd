@@ -1,4 +1,5 @@
 extends Node2D
+signal gamePaused
 
 @onready var pause_menu = $"../CanvasLayer/inGameMenu"
 var paused = false
@@ -40,7 +41,9 @@ func _pause_menu():
 	if paused:
 		pause_menu.hide()
 		Engine.time_scale = 1
+		emit_signal("gamePaused")
 	else:
 		pause_menu.show()
 		Engine.time_scale = 0
+		emit_signal("gamePaused")
 	paused = !paused
