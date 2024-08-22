@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://d25j3hbaff8n7"]
+[gd_scene load_steps=62 format=3 uid="uid://d25j3hbaff8n7"]
 
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_3anbo"]
 [ext_resource type="Script" path="res://Scripts/MainGame.gd" id="1_l3va8"]
@@ -20,8 +20,8 @@
 [ext_resource type="AudioStream" uid="uid://fjctvjr767f" path="res://music/sfx/bgStadiumNoice.ogg" id="11_ufym1"]
 [ext_resource type="Script" path="res://music/Mscript/bgNoice.gd" id="12_faeqh"]
 [ext_resource type="AudioStream" uid="uid://di35cdj4frfd3" path="res://music/sfx/cheering.ogg" id="13_o85pq"]
-[ext_resource type="AudioStream" uid="uid://bd4v0qouwrfch" path="res://music/themes/mainTheme.ogg" id="16_4yaqi"]
 [ext_resource type="Script" path="res://Scripts/ImpossibleAI.gd" id="16_3xyxl"]
+[ext_resource type="AudioStream" uid="uid://bd4v0qouwrfch" path="res://music/themes/mainTheme.ogg" id="16_4yaqi"]
 [ext_resource type="Texture2D" uid="uid://c34endg6fp7wo" path="res://Assets/Art/soccer_space_1.png" id="19_bmhxy"]
 [ext_resource type="Shader" path="res://shaders/scroll.gdshader" id="19_opfob"]
 [ext_resource type="Texture2D" uid="uid://j0wjcw5fgi8s" path="res://Assets/Art/soccer_space_2.png" id="21_e2hgi"]
@@ -448,6 +448,7 @@ script = ExtResource("6_wwvec")
 [node name="fingers" type="AudioStreamPlayer2D" parent="Player/AudioPlayer"]
 stream = ExtResource("7_trcdj")
 volume_db = -6.89
+bus = &"sfx"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -72)
@@ -515,7 +516,7 @@ libraries = {
 autoplay = "idle"
 
 [node name="NormalAI" type="CharacterBody2D" parent="." groups=["ground"]]
-position = Vector2(-1366, -154)
+position = Vector2(-472, 112)
 rotation = 0.0292804
 floor_stop_on_slope = false
 floor_block_on_wall = false
@@ -557,10 +558,12 @@ bus = &"sfx"
 script = ExtResource("6_wwvec")
 
 [node name="fingers" type="AudioStreamPlayer2D" parent="NormalAI/AudioPlayer"]
+stream = ExtResource("7_trcdj")
 volume_db = -10.0
+bus = &"sfx"
 
 [node name="EasyAI" type="CharacterBody2D" parent="." groups=["ground"]]
-position = Vector2(-1440, -416)
+position = Vector2(-1608, 168)
 rotation = 0.0292804
 floor_stop_on_slope = false
 floor_block_on_wall = false
@@ -602,7 +605,9 @@ bus = &"sfx"
 script = ExtResource("6_wwvec")
 
 [node name="fingers" type="AudioStreamPlayer2D" parent="EasyAI/AudioPlayer"]
+stream = ExtResource("7_trcdj")
 volume_db = -10.0
+bus = &"sfx"
 
 [node name="GhostManager" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -694,7 +699,7 @@ volume_db = -10.657
 bus = &"music"
 
 [node name="ImpossibleAI" type="CharacterBody2D" parent="." groups=["ground"]]
-position = Vector2(-1336, 128)
+position = Vector2(-1568, 392)
 rotation = 0.0292804
 floor_stop_on_slope = false
 floor_block_on_wall = false
@@ -729,6 +734,16 @@ target_position = Vector2(2.08165e-12, -2000)
 collision_mask = 3
 
 [node name="AutoJumpTimer" type="Timer" parent="ImpossibleAI"]
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="ImpossibleAI"]
+volume_db = -4.492
+bus = &"sfx"
+script = ExtResource("6_wwvec")
+
+[node name="fingers" type="AudioStreamPlayer2D" parent="ImpossibleAI/AudioPlayer"]
+stream = ExtResource("7_trcdj")
+volume_db = -10.0
+bus = &"sfx"
 
 [node name="GoalBoundaries" type="StaticBody2D" parent="." groups=["ground"]]
 position = Vector2(760, 664)
