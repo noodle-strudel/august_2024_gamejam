@@ -17,7 +17,6 @@ var startPos = Vector2(480, 248)
 var inputs : Array
 var timeBeforeInputs : Array
 @export var timeToSwapJump : Array
-var timeElapsed = 0
 
 # index for the inputs array
 var index = 0
@@ -119,6 +118,8 @@ func _on_reset_round():
 	perpendicular = Vector2(0, 0)
 	up_direction = Vector2.UP
 	rotationAngle = 0.0
+	initiateGhost = 0
+	gameStart = true
 	$InputTimer.wait_time = 0.01
 	$InputTimer.start()
 	$JumpTimer.wait_time = 0.01
@@ -139,7 +140,7 @@ func _timer_Timeout():
 			playerInput = inputs[index]
 			index += 1
 			timer.wait_time = timeBeforeInputs[inputTimeIndex]
-			print(index, ": Change movement after ", timeBeforeInputs[inputTimeIndex])
+			#print(index, ": Change movement after ", timeBeforeInputs[inputTimeIndex])
 			inputTimeIndex += 1
 			timer.start()
 			
@@ -149,7 +150,7 @@ func _timer_Timeout():
 			playerInput = Vector2.ZERO
 	else:
 		timer.wait_time = timeBeforeInputs[inputTimeIndex]
-		print(inputTimeIndex, ": Change movement after ", timeBeforeInputs[inputTimeIndex])
+		#print(inputTimeIndex, ": Change movement after ", timeBeforeInputs[inputTimeIndex])
 		inputTimeIndex += 1
 		timer.start()
 
@@ -159,8 +160,9 @@ func _jumptimer_Timeout():
 	
 	# check if the ghost is ready to jump
 	if is_initiated():
-		#print("jump")
+		print("jump")
 		isJumping = true
+		
 	
 	#print("jumpIndex: ", jumpIndex, "timeToSwapJump Size: ", timeToSwapJump.size())
 	if jumpIndex < timeToSwapJump.size():

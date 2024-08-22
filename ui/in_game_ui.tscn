@@ -159,7 +159,8 @@ grow_vertical = 2
 
 [node name="AreYouSure" type="Label" parent="WarningBackMenu"]
 layout_mode = 2
-text = "Are you sure you want to return?"
+text = "Are you sure you want to return
+to the main menu?"
 horizontal_alignment = 1
 
 [node name="ProgressWill" type="Label" parent="WarningBackMenu"]

@@ -16,9 +16,12 @@ var rotationAngle = 0.0
 var startPos = position
 var pressing_jump = 0
 
+# determines if the GhostManager can save a jump the player does
+var can_save_jump = true
 # keeps track of the current animation
 var current_anim = ""
 
+var just_landed = false
 # Movement Input
 func get_input():
 	input.x = Input.get_action_strength("right") - Input.get_action_strength("left") 
@@ -35,7 +38,7 @@ func jump():
 	change_anim("jump")
 	
 # Player Movement proccessing and collisions
-func _process(delta):
+func _physics_process(delta):
 # Player Input -> movement mapping
 	playerInput = get_input()
 	
@@ -72,15 +75,21 @@ func _process(delta):
 		velocity += up_direction * grav
 	
 	# Check for wall and change gravity direction
+	handle_collisions(delta)
+
+func handle_collisions(delta):
 	var collision = move_and_collide(velocity * delta)
 	if collision:
-		grounded = true
-		change_anim("sliding")
-		
-		rotation_degrees = rad_to_deg(atan2(up_direction.y, up_direction.x)) + 90
-		up_direction = collision.get_normal()
-		velocity += (up_direction * (speed / 1.2) )
-
+		if collision.get_collider().name.contains("AI"):
+			velocity += collision.get_normal()
+		else:
+			grounded = true
+			can_save_jump = true
+			change_anim("sliding")
+			
+			rotation_degrees = rad_to_deg(atan2(up_direction.y, up_direction.x)) + 90
+			up_direction = collision.get_normal()
+			velocity += (up_direction * (speed / 1.2) )
 
 func _on_ball_reset_round():
 	position = startPos
