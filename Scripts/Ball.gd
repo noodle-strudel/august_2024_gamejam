@@ -15,10 +15,12 @@ var reset = true
 var current_anim = ""
 
 # THe rotation value supplied to the ball every frame
-var frontPathRotation = 0.0
+var frontPathRotation : float
 
 func _ready():
 	current_anim = "idle"
+	frontPathRotation = rad_to_deg(self.transform.get_rotation())
+	pass	
 
 # Physics Simulation
 func _physics_process(delta):
@@ -45,12 +47,14 @@ func _physics_process(delta):
 			appliedForce = appliedForce.bounce(collision.get_normal())
 			#print(appliedForce)
 			
-		var direction = appliedForce.normalized()
+		change_direction(appliedForce.normalized())
+		
+# Changes the direction (rotation) of the ball	
+func change_direction(direction):
 		look_at(position + direction) # Change in looking direction towards the normalized applied force
 		frontPathRotation = global_rotation_degrees - 90	
 		global_rotation_degrees = frontPathRotation 
 		
-		pass 
 	
 func _integrate_forces(state):
 	if reset:

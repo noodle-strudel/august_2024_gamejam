@@ -14,7 +14,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var rng = RandomNumberGenerator.new()
 
 # Raycast for the ball detection
-@onready var ball = $"/root/MainGame/Ball" 
+@onready var ball = $"/root/MainGame/Ball" as RigidBody2D
 @onready var player = $"/root/MainGame/Player" 
 
 @onready var raycast = $RayCast2D
@@ -23,7 +23,8 @@ var rng = RandomNumberGenerator.new()
 
 func _ready():
 	if(jumpTimer as Timer != null):
-		jump_and_restart(false)
+		#jump_and_restart(false)
+		pass
 	
 # Ran when the timer runs out, potentially changing AI movement
 func _on_jump_timer_timeout():
@@ -56,24 +57,37 @@ func get_input():
 	# Get the first collision object
 	var raycast_collision = raycast.get_collider()
 	
+	
+	if(ball.linear_velocity.length() == 0 and raycast_collision.get_name() == "Ball"):
+		pressing_jump = 1
+		
+	
 	### Detecting the ball in front to jump towards
 	if raycast_collision != null and raycast_collision.get_name() == "FrontPath":
-		var dist : float 
-		dist = self.position.distance_to((raycast_collision as Node2D).position)
-		#velocity
+		# Distance between the AI and path of the ball
+		var dist_to_intercept = self.position.distance_to(raycast.get_collision_point())
+		# Jump speed of the AI to the path of the ball
+		var jump_speed_to_intercept = speed
+		# Time it would take for the AI to reach the path of the ball
+		var time_to_intercept = dist_to_intercept / jump_speed_to_intercept
+		
+		var ball_dist = ball.position.distance_to(raycast.get_collision_point())
+		var ball_speed = ball.linear_velocity.length()
+		var ball_time = ball_dist / ball_speed 
+		
+		#if(int(time_to_intercept) == int(ball_time)):
+		if(time_to_intercept == ball_time):
+			pressing_jump = 1
+			
+		print(str("time 1: ", time_to_intercept))
+		print(str("time 2: ", ball_time))
+		
+			
+		#print(jump_speed_to_intercept)
+		#print(str("time: ", time_to_intercept))
+		#print(str("distance: ", dist_to_intercept))
+		
 		pass
-	
-	
-	# Get the first collision object
-	#var raycast_collision = raycast.get_collider()
-	
-		
-	## Jump if 
-	#if raycast_collision != null and raycast_collision.get_name() == "Ball":#.is_in_group("ball_type"):
-		#pressing_jump = 1
-	#else: 
-		#pressing_jump = 0
-		
 		
 	return input.normalized()
 
