@@ -516,8 +516,10 @@ libraries = {
 autoplay = "idle"
 
 [node name="NormalAI" type="CharacterBody2D" parent="." groups=["ground"]]
-position = Vector2(-472, 112)
+position = Vector2(-53, 848)
 rotation = 0.0292804
+collision_layer = 8
+collision_mask = 9
 floor_stop_on_slope = false
 floor_block_on_wall = false
 floor_max_angle = 3.14159
@@ -565,6 +567,8 @@ bus = &"sfx"
 [node name="EasyAI" type="CharacterBody2D" parent="." groups=["ground"]]
 position = Vector2(-1608, 168)
 rotation = 0.0292804
+collision_layer = 8
+collision_mask = 9
 floor_stop_on_slope = false
 floor_block_on_wall = false
 floor_max_angle = 3.14159
@@ -814,6 +818,8 @@ shape = SubResource("RectangleShape2D_d34og")
 [connection signal="resetRound" from="Ball" to="GameManager" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="Player" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="Ball" method="_on_reset_round"]
+[connection signal="resetRound" from="Ball" to="NormalAI" method="_on_ball_reset_round"]
+[connection signal="resetRound" from="Ball" to="EasyAI" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="GhostManager" method="_on_ball_reset_round"]
 [connection signal="timeout" from="NormalAI/MoveTimer" to="NormalAI" method="_on_move_timer_timeout"]
 [connection signal="timeout" from="EasyAI/MoveTimer" to="EasyAI" method="_on_move_timer_timeout"]
