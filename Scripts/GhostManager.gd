@@ -44,6 +44,7 @@ func _physics_process(delta):
 	jumpTimeElapsed += delta
 	playerInput = get_input()
 	if (playerInput != lastInput):
+		#print("saved input: ", playerInput, " at ", timeElapsed)
 		inputs.append(playerInput)
 		timeBeforeInputs.append(timeElapsed)
 		timeElapsed = 0
@@ -58,10 +59,6 @@ func _physics_process(delta):
 		timeSinceJumpChange.append(jumpTimeElapsed)
 		isJumping = false
 		jumpTimeElapsed = 0
-	#elif isJumping == true:
-		#timeSinceJumpChange.append(jumpTimeElapsed)
-		#isJumping = false
-		#jumpTimeElapsed = 0
 
 func _on_ball_reset_round():
 	# add no input at the end of the array
@@ -109,6 +106,7 @@ func createGhost(ghostInputs: Array, timeSinceInputs: Array):
 		ghost.set_collision_layer_value(collisionLayer, 1)
 	else:
 		ghost.set_collision_layer_value(numOfGhosts + 4, 1)
+
 	
 	inputs.clear()
 	timeBeforeInputs.clear()

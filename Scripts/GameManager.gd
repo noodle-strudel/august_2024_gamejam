@@ -15,7 +15,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Input.is_action_just_pressed("pause") && $"../CanvasLayer/inGameMenu".on_pause_menu:
+	if Input.is_action_just_pressed("pause") && $"../CanvasLayer/inGameMenu".on_pause_menu && !$"../CanvasLayer/WinLoseMenu".visible:
 		_pause_menu()
 	elif  Input.is_action_just_pressed("pause") && $"../CanvasLayer/inGameMenu".on_setting_menu:
 		$"../CanvasLayer/inGameMenu"._on_back_pressed()
@@ -25,14 +25,18 @@ func _process(delta):
 
 func _on_ball_reset_round():
 	print("You: ", playerScore, " | AI: ", aiScore)
-	$"../Score/AILabelScore".text = str(aiScore)
-	$"../Score/PlayerLabelScore".text = str(playerScore)
+	$"../CanvasLayer/Score/ScoreContainer/Score/AILabelScore".text = str(aiScore)
+	$"../CanvasLayer/Score/ScoreContainer/Score/PlayerLabelScore".text = str(playerScore)
 	if playerScore > winsRequired:
 		# Do player win stuff here...
+		$"../CanvasLayer/WinLoseMenu"/inGameOptions/WinLose.text = "You WON!!!"
+		$"../CanvasLayer/WinLoseMenu".visible = true
 		print("You Win")
 		pass
 	elif aiScore >= winsRequired:
 		# Player lose here...
+		$"../CanvasLayer/WinLoseMenu"/inGameOptions/WinLose.text = "Loser..."
+		$"../CanvasLayer/WinLoseMenu".visible = true
 		print("You Lose")
 		pass
 

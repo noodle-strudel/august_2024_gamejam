@@ -7,7 +7,6 @@ const JUMP_VELOCITY = -400.0
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-
 # Raycast for the ball detection
 @onready var raycast = $RayCast2D
 
@@ -19,8 +18,6 @@ func get_input():
 		ball = ball as Node
 		if(ball != null):
 			var angle = rad_to_deg(ball.position.angle_to_point(position)) - 90 + rotation_degrees #rad_to_deg(position.angle_to(ball.position))
-			
-			# print(int(angle))
 			if(angle > 0):
 				input.x = 1
 			else:

@@ -12,6 +12,10 @@ var reset = false
 var current_anim = ""
 
 func _ready():
+	linear_velocity = Vector2.ZERO
+	appliedForce = Vector2(0, 0)
+	angular_velocity = 0
+	transform.origin = startPos
 	current_anim = "idle"
 	linear_velocity = Vector2.ZERO
 	appliedForce = Vector2(0, 0)

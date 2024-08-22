@@ -18,7 +18,6 @@ var paused = false
 var inputs : Array
 var timeBeforeInputs : Array
 @export var timeToSwapJump : Array
-var timeElapsed = 0
 
 # index for the inputs array
 var index = 0
@@ -126,6 +125,7 @@ func _on_reset_round():
 	up_direction = Vector2.UP
 	rotationAngle = 0.0
 	initiateGhost = 0
+  gameStart = true
 	
 	if timeToSwapJump.size() > 0:
 		jumpTimer.wait_time = 0.01
