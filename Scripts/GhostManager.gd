@@ -42,19 +42,21 @@ func _physics_process(delta):
 	jumpTimeElapsed += delta
 	playerInput = get_input()
 	if (playerInput != lastInput):
+		#print("saved input: ", playerInput, " at ", timeElapsed)
 		inputs.append(playerInput)
-		print(inputs.size() - 1)
+		#print(inputs.size() - 1)
 		
 		timeBeforeInputs.append(timeElapsed)
 		timeElapsed = 0
 		lastInput = playerInput
 	
 	# Jump
-	if Input.is_action_just_pressed("jump") and %Player.grounded:
+	if Input.get_action_strength("jump") and %Player.can_save_jump:
 		print("saved jump input")
 		timeSinceJumpChange.append(jumpTimeElapsed)
 		isJumping = true
 		jumpTimeElapsed = 0
+		%Player.can_save_jump = false
 	#elif isJumping == true:
 		#timeSinceJumpChange.append(jumpTimeElapsed)
 		#isJumping = false
@@ -78,9 +80,6 @@ func change_anim(name):
 		current_anim = name
 
 func createGhost(ghostInputs: Array, timeSinceInputs: Array):
-	if (gameStart == true):
-		gameStart = false
-		return
 	numOfGhosts += 1
 	var ghostInstance = ghostScene.instantiate()
 	ghostInstance.position = Vector2(480, 248)
@@ -101,7 +100,7 @@ func createGhost(ghostInputs: Array, timeSinceInputs: Array):
 		
 	for i in timeSinceJumpChange:
 		ghost.timeToSwapJump.append(i)
-	
+	print("Saved Input Timings", ghost.timeBeforeInputs)
 	print("Saved Swap Jump timings", ghost.timeToSwapJump)
 	ghost.set_collision_layer_value(numOfGhosts + 3, 1)
 	

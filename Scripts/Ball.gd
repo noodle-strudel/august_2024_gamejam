@@ -5,13 +5,17 @@ signal resetRound
 var heldOwner = "none" # Unused from earlier Hold idea left in incase of remake
 var appliedForce = Vector2(0, 0)
 var startPos = position
-var reset = true
+var reset = false
 
 # animation controls
 @onready var anim_player = $AnimationPlayer
 var current_anim = ""
 
 func _ready():
+	linear_velocity = Vector2.ZERO
+	appliedForce = Vector2(0, 0)
+	angular_velocity = 0
+	transform.origin = startPos
 	current_anim = "idle"
 
 # Physics Simulation
