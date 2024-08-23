@@ -58,8 +58,8 @@ func get_input():
 	var raycast_collision = raycast.get_collider()
 	
 	
-	if(ball.linear_velocity.length() == 0 and raycast_collision.get_name() == "Ball"):
-		pressing_jump = 1
+	#if(ball.linear_velocity.length() == 0 and raycast_collision.get_name() == "Ball"):
+		#pressing_jump = 1
 		
 	
 	### Detecting the ball in front to jump towards
@@ -71,18 +71,28 @@ func get_input():
 		# Time it would take for the AI to reach the path of the ball
 		var time_to_intercept = dist_to_intercept / jump_speed_to_intercept
 		
+		# Distance between the ball and the predicted AI position along ball path
 		var ball_dist = ball.position.distance_to(raycast.get_collision_point())
-		var ball_speed = ball.linear_velocity.length()
+		# Speed for the ball to reach the predicted AI position along ball path
+		var ball_speed = ball.appliedForce.length()
+		# Time the ball will take to reach the predicted AI position along ball path
 		var ball_time = ball_dist / ball_speed 
 		
-		#if(int(time_to_intercept) == int(ball_time)):
+		# Rounding the time values for easier comparison
+		time_to_intercept = snappedf(time_to_intercept, 0.1)
+		ball_time = snappedf(ball_time, 0.1)
+		
+		# If both times match, the AI jumps to catch the moving ball 
 		if(time_to_intercept == ball_time):
 			pressing_jump = 1
 			
 		print(str("time 1: ", time_to_intercept))
 		print(str("time 2: ", ball_time))
 		
-			
+		print(str("speed 1: ", jump_speed_to_intercept))
+		print(str("speed 2: ", ball_speed))
+		
+		
 		#print(jump_speed_to_intercept)
 		#print(str("time: ", time_to_intercept))
 		#print(str("distance: ", dist_to_intercept))
