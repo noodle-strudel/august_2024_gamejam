@@ -215,7 +215,7 @@ _data = {
 
 [sub_resource type="GDScript" id="GDScript_hk2rv"]
 script/source = "extends \"res://Scripts/player.gd\"
-
+signal aiJump
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
@@ -266,8 +266,10 @@ func get_input():
 	# Detecting the ball in front to jump towards
 	if raycast_collision != null and raycast_collision.get_name() == \"Ball\":
 		pressing_jump = 1
+		emit_signal(\"aiJump\", 1)
 	else: 
 		pressing_jump = 0
+		emit_signal(\"aiJump\", 0)
 		
 		
 	return input.normalized()
@@ -504,7 +506,7 @@ libraries = {
 autoplay = "idle"
 
 [node name="NormalAI" type="CharacterBody2D" parent="." groups=["ground"]]
-position = Vector2(-53, 848)
+position = Vector2(-1651, 756)
 rotation = 0.0292804
 collision_layer = 8
 collision_mask = 9
@@ -513,6 +515,7 @@ floor_block_on_wall = false
 floor_max_angle = 3.14159
 floor_snap_length = 0.0
 script = ExtResource("7_3ikhx")
+speed = 1000
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="NormalAI"]
@@ -553,7 +556,7 @@ volume_db = -10.0
 bus = &"sfx"
 
 [node name="EasyAI" type="CharacterBody2D" parent="." groups=["ground"]]
-position = Vector2(-1608, 168)
+position = Vector2(-1587, 191)
 rotation = 0.0292804
 collision_layer = 8
 collision_mask = 9
@@ -562,6 +565,7 @@ floor_block_on_wall = false
 floor_max_angle = 3.14159
 floor_snap_length = 0.0
 script = SubResource("GDScript_hk2rv")
+speed = 1000
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="EasyAI"]
@@ -693,6 +697,7 @@ floor_block_on_wall = false
 floor_max_angle = 3.14159
 floor_snap_length = 0.0
 script = ExtResource("16_3xyxl")
+speed = 1000
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ImpossibleAI"]

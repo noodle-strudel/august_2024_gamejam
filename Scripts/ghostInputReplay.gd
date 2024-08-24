@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 var grav = -500
-var speed = 1000
+@export var speed = 1000
 var accel = 10
 
 # References children nodes once they exist in the scene
@@ -12,7 +12,7 @@ var playerInput : Vector2
 var perpendicular : Vector2
 var grounded = true
 var rotationAngle = 0.0
-var startPos = Vector2(480, 248)
+var startPos
 var paused = false
 
 var inputs : Array
@@ -43,8 +43,6 @@ func _ready():
 	# allow the GhostManager to pass the input arrays into self
 	await get_tree().create_timer(0.5).timeout
 	
-	print(timeToSwapJump)
-	
 	timer.one_shot = true
 	timer.autostart = true
 	timer.wait_time = 0.01
@@ -74,8 +72,9 @@ func _process(delta):
 	#	perpendicular = Vector2.ZERO
 		
 	# Jump
-	if index >= inputs.size() && jumpIndex >= timeToSwapJump.size():
-		$Sprite2D.self_modulate.a = 0.0
+	if inputs.size() <= index && timeToSwapJump.size() <= jumpIndex:
+		$Sprite2D.self_modulate.a = -1
+		position.y = -2000
 	else:
 		$Sprite2D.self_modulate.a = 0.5
 	if isJumping and timeToSwapJump.size() > 0:
@@ -154,7 +153,7 @@ func _timer_Timeout():
 			index += 1
 		else:
 			playerInput = Vector2.ZERO
-	elif timeBeforeInputs.size() > 1 && inputs.size() > 1:
+	elif timeBeforeInputs.size() > 0 && timeBeforeInputs.size() > 0 && timeBeforeInputs.size() > inputTimeIndex:
 		timer.wait_time = timeBeforeInputs[inputTimeIndex]
 		inputTimeIndex += 1
 		timer.start()

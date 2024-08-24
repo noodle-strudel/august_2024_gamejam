@@ -1,5 +1,5 @@
 extends "res://Scripts/player.gd"
-
+signal aiJump(value)
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
@@ -29,8 +29,10 @@ func get_input():
 	### Detecting the ball in front to jump towards
 	if raycast_collision != null and raycast_collision.get_name() == "Ball":
 		pressing_jump = 1
+		emit_signal("aiJump", 1)
 	else: 
 		pressing_jump = 0
+		emit_signal("aiJump", 0)
 		
 	
 	
