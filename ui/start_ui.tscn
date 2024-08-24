@@ -1,25 +1,290 @@
-[gd_scene load_steps=6 format=3 uid="uid://da600675jemnf"]
+[gd_scene load_steps=28 format=3 uid="uid://da600675jemnf"]
 
 [ext_resource type="Theme" uid="uid://lqrgxsxs2fye" path="res://ui/font and theme/base_theme.tres" id="1_ncjaa"]
 [ext_resource type="Script" path="res://ui/start_ui.gd" id="2_7ewnp"]
 [ext_resource type="FontFile" uid="uid://dfynaome5886n" path="res://ui/font and theme/kongtext.ttf" id="3_7rc7r"]
+[ext_resource type="Shader" path="res://shaders/scroll1.gdshader" id="3_406fa"]
+[ext_resource type="Texture2D" uid="uid://j0wjcw5fgi8s" path="res://Assets/Art/soccer_space_2.png" id="4_jmou5"]
 [ext_resource type="AudioStream" uid="uid://bhlxes3g1vlg5" path="res://music/themes/start_menu.mp3" id="4_jtwqk"]
 [ext_resource type="AudioStream" uid="uid://cupyros6jodq0" path="res://music/sfx/click.mp3" id="5_41res"]
+[ext_resource type="Shader" path="res://shaders/scroll.gdshader" id="5_vdt6q"]
+[ext_resource type="Texture2D" uid="uid://c34endg6fp7wo" path="res://Assets/Art/soccer_space_1.png" id="6_xri68"]
+[ext_resource type="Shader" path="res://shaders/scroll2.gdshader" id="7_hx4es"]
+[ext_resource type="Texture2D" uid="uid://bs42esh6xrl7" path="res://Assets/Art/soccer_space_3.png" id="8_647hx"]
+[ext_resource type="Shader" path="res://shaders/scroll3.gdshader" id="9_4deby"]
+[ext_resource type="Texture2D" uid="uid://x4u1p66vn80w" path="res://Assets/Art/soccer_space_4.png" id="10_3lee1"]
+[ext_resource type="Texture2D" uid="uid://u6gt1qdjwv86" path="res://Assets/Art/soccer_main_menu_background_sun.png" id="12_3itgp"]
+[ext_resource type="Texture2D" uid="uid://bguvgoq54j4td" path="res://Assets/Art/soccer_space_background.png" id="12_7x2qw"]
+[ext_resource type="Texture2D" uid="uid://drfwk8lpjertk" path="res://Assets/Art/soccer_main_menu_background_arena.png" id="13_x31xh"]
+[ext_resource type="Texture2D" uid="uid://s8chipwmdrjp" path="res://Assets/Art/soccer_main_menu_background_title.png" id="14_xx2lv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h78lg"]
+shader = ExtResource("9_4deby")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p80bj"]
+shader = ExtResource("7_hx4es")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_823m2"]
+shader = ExtResource("3_406fa")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3m68n"]
+shader = ExtResource("5_vdt6q")
+
+[sub_resource type="Animation" id="Animation_utvfi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2133, 1200)]
+}
+
+[sub_resource type="Animation" id="Animation_m6f1w"]
+resource_name = "new_animation"
+length = 7.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 2.5, 3, 4.5, 6),
+"transitions": PackedFloat32Array(2, 0.5, 1, 2, 0.5, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 44), Vector2(0, 88), Vector2(0, 88), Vector2(0, 44), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2133, 1200)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7vhj1"]
+_data = {
+"RESET": SubResource("Animation_utvfi"),
+"new_animation": SubResource("Animation_m6f1w")
+}
+
+[sub_resource type="Animation" id="Animation_0a701"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1280, 762)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_26twx"]
+resource_name = "new_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1280, 762), Vector2(24, 762), Vector2(24, 76)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(2520, 0), Vector2(2520, 1372)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7j044"]
+_data = {
+"RESET": SubResource("Animation_0a701"),
+"new_animation": SubResource("Animation_26twx")
+}
 
 [node name="Control" type="Control"]
 layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(2, 2)
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("1_ncjaa")
 script = ExtResource("2_7ewnp")
+
+[node name="SoccerSpaceBackground" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -427.0
+offset_bottom = -233.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("12_7x2qw")
+expand_mode = 1
+
+[node name="SoccerSpace4" type="TextureRect" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_h78lg")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -427.0
+offset_bottom = -240.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("10_3lee1")
+expand_mode = 1
+
+[node name="SoccerSpace3" type="TextureRect" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_p80bj")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -427.0
+offset_bottom = -240.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("8_647hx")
+expand_mode = 1
+
+[node name="SoccerSpace2" type="TextureRect" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_823m2")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -427.0
+offset_bottom = -233.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("4_jmou5")
+expand_mode = 1
+
+[node name="SoccerSpace1" type="TextureRect" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_3m68n")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -427.0
+offset_bottom = -240.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("6_xri68")
+expand_mode = 1
+
+[node name="SoccerSpaceSun" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 720.0
+offset_right = 2005.0
+offset_bottom = 1773.0
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("12_3itgp")
+expand_mode = 1
+
+[node name="SoccerArena" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -427.0
+offset_bottom = -240.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("13_x31xh")
+expand_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SoccerArena"]
+libraries = {
+"": SubResource("AnimationLibrary_7vhj1")
+}
+autoplay = "new_animation"
+
+[node name="SoccerSpaceTitle" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1280.0
+offset_top = 762.0
+offset_right = -1280.0
+offset_bottom = -678.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("14_xx2lv")
+expand_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SoccerSpaceTitle"]
+libraries = {
+"": SubResource("AnimationLibrary_7j044")
+}
+autoplay = "new_animation"
 
 [node name="StartMenu" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -38,21 +303,25 @@ grow_vertical = 2
 [node name="Start" type="Button" parent="StartMenu"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_7rc7r")
+theme_override_font_sizes/font_size = 32
 text = "Start"
 
 [node name="Settings" type="Button" parent="StartMenu"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_7rc7r")
+theme_override_font_sizes/font_size = 32
 text = "Settings"
 
 [node name="Credits" type="Button" parent="StartMenu"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_7rc7r")
+theme_override_font_sizes/font_size = 32
 text = "Credits"
 
 [node name="Quit" type="Button" parent="StartMenu"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_7rc7r")
+theme_override_font_sizes/font_size = 32
 text = "Quit"
 
 [node name="SettingsMenu" type="VBoxContainer" parent="."]
@@ -150,6 +419,7 @@ popup/item_3/id = 3
 
 [node name="SaveBack" type="Button" parent="SettingsMenu"]
 layout_mode = 2
+theme = ExtResource("1_ncjaa")
 text = "Save and Back"
 
 [node name="AudioStartMenu" type="AudioStreamPlayer" parent="."]
@@ -184,17 +454,17 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Hard" type="Button" parent="DiffMenu/HBoxContainer"]
+[node name="Eazy" type="Button" parent="DiffMenu/HBoxContainer"]
 layout_mode = 2
-text = "Hard"
+text = "Easy"
 
 [node name="Normal" type="Button" parent="DiffMenu/HBoxContainer"]
 layout_mode = 2
 text = "Normal"
 
-[node name="Eazy" type="Button" parent="DiffMenu/HBoxContainer"]
+[node name="Hard" type="Button" parent="DiffMenu/HBoxContainer"]
 layout_mode = 2
-text = "Eazy"
+text = "Hard"
 
 [node name="BackDiff" type="Button" parent="DiffMenu"]
 layout_mode = 2
@@ -210,7 +480,7 @@ text = "Back"
 [connection signal="item_selected" from="SettingsMenu/Resolution" to="." method="_on_resolution_item_selected"]
 [connection signal="item_selected" from="SettingsMenu/Display" to="." method="_on_display_item_selected"]
 [connection signal="pressed" from="SettingsMenu/SaveBack" to="." method="_on_back_pressed"]
-[connection signal="pressed" from="DiffMenu/HBoxContainer/Hard" to="." method="_on_difficult_pressed"]
-[connection signal="pressed" from="DiffMenu/HBoxContainer/Normal" to="." method="_on_normal_pressed"]
 [connection signal="pressed" from="DiffMenu/HBoxContainer/Eazy" to="." method="_on_eazy_pressed"]
+[connection signal="pressed" from="DiffMenu/HBoxContainer/Normal" to="." method="_on_normal_pressed"]
+[connection signal="pressed" from="DiffMenu/HBoxContainer/Hard" to="." method="_on_difficult_pressed"]
 [connection signal="pressed" from="DiffMenu/BackDiff" to="." method="_on_back_diff_pressed"]

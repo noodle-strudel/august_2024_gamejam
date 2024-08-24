@@ -29,6 +29,7 @@ var can_save_jump = true
 var current_anim = ""
 
 var just_landed = false
+	
 # Movement Input
 func get_input():
 	input.x = Input.get_action_strength("right") - Input.get_action_strength("left") 
