@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://d25j3hbaff8n7"]
+[gd_scene load_steps=66 format=3 uid="uid://d25j3hbaff8n7"]
 
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_3anbo"]
 [ext_resource type="Script" path="res://Scripts/MainGame.gd" id="1_l3va8"]
@@ -21,7 +21,6 @@
 [ext_resource type="AudioStream" uid="uid://fjctvjr767f" path="res://music/sfx/bgStadiumNoice.ogg" id="11_ufym1"]
 [ext_resource type="Script" path="res://music/Mscript/bgNoice.gd" id="12_faeqh"]
 [ext_resource type="AudioStream" uid="uid://di35cdj4frfd3" path="res://music/sfx/cheering.ogg" id="13_o85pq"]
-[ext_resource type="Script" path="res://Scripts/ImpossibleAI.gd" id="16_3xyxl"]
 [ext_resource type="AudioStream" uid="uid://bd4v0qouwrfch" path="res://music/themes/mainTheme.ogg" id="16_4yaqi"]
 [ext_resource type="Texture2D" uid="uid://c34endg6fp7wo" path="res://Assets/Art/soccer_space_1.png" id="19_bmhxy"]
 [ext_resource type="Shader" path="res://shaders/scroll.gdshader" id="19_opfob"]
@@ -444,7 +443,6 @@ bus = &"sfx"
 
 [node name="jet" type="AudioStreamPlayer2D" parent="Player/AudioPlayer"]
 stream = ExtResource("10_7u3hq")
-volume_db = -10.02
 bus = &"sfx"
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -714,58 +712,6 @@ stream = ExtResource("16_4yaqi")
 volume_db = -10.657
 bus = &"music"
 
-[node name="ImpossibleAI" type="CharacterBody2D" parent="." groups=["ground"]]
-position = Vector2(512, 176)
-rotation = 0.0292804
-floor_stop_on_slope = false
-floor_block_on_wall = false
-floor_max_angle = 3.14159
-floor_snap_length = 0.0
-script = ExtResource("16_3xyxl")
-speed = 1000
-metadata/_edit_group_ = true
-
-[node name="Sprite2D" type="Sprite2D" parent="ImpossibleAI"]
-rotation = 3.14159
-scale = Vector2(2, 2)
-texture = ExtResource("9_tpjgw")
-hframes = 14
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ImpossibleAI"]
-shape = SubResource("CircleShape2D_q4fvd")
-
-[node name="Line2D" type="Line2D" parent="ImpossibleAI"]
-position = Vector2(-336, 248)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="ImpossibleAI"]
-libraries = {
-"": SubResource("AnimationLibrary_utpno")
-}
-
-[node name="AnimationTree" type="AnimationTree" parent="ImpossibleAI"]
-tree_root = SubResource("AnimationNodeStateMachine_ybv0v")
-anim_player = NodePath("../AnimationPlayer")
-
-[node name="RayCast2D" type="RayCast2D" parent="ImpossibleAI"]
-target_position = Vector2(2.08165e-12, -2000)
-collision_mask = 3
-
-[node name="AutoJumpTimer" type="Timer" parent="ImpossibleAI"]
-
-[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="ImpossibleAI"]
-bus = &"sfx"
-script = ExtResource("6_wwvec")
-
-[node name="fingers" type="AudioStreamPlayer2D" parent="ImpossibleAI/AudioPlayer"]
-stream = ExtResource("7_trcdj")
-volume_db = -6.89
-bus = &"sfx"
-
-[node name="jet" type="AudioStreamPlayer2D" parent="ImpossibleAI/AudioPlayer"]
-stream = ExtResource("10_7u3hq")
-volume_db = -7.287
-bus = &"sfx"
-
 [node name="GoalBoundaries" type="StaticBody2D" parent="." groups=["ground"]]
 position = Vector2(760, 664)
 rotation = -1.57079
@@ -864,7 +810,6 @@ polygon = PackedVector2Array(-1024, -224, -992, -224, -992, 224, -1024, 224)
 [connection signal="timeout" from="NormalAI/JumpTimer" to="NormalAI" method="_on_jump_timer_timeout"]
 [connection signal="timeout" from="EasyAI/MoveTimer" to="EasyAI" method="_on_move_timer_timeout"]
 [connection signal="finished" from="bgNoice/Crowd" to="." method="_on_crowd_finished"]
-[connection signal="timeout" from="ImpossibleAI/AutoJumpTimer" to="ImpossibleAI" method="_on_move_timer_timeout"]
 [connection signal="timeout" from="RoundTimer" to="." method="_on_round_timer_timeout"]
 [connection signal="body_exited" from="BallBoundary" to="." method="_on_ball_boundary_body_exited"]
 

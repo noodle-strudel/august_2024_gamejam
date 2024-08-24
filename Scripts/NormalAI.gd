@@ -1,4 +1,5 @@
 extends "res://Scripts/AI.gd"
+signal aiJump
 
 const CHANCE_TO_CHASE_BALL = 100
 const CATCH_TIME_ERROR = 2.0
@@ -23,8 +24,10 @@ func get_input():
 		
 		if(catchable or aligned):
 			pressing_jump = 1
+			emit_signal("aiJump", 1)
 		else:
 			pressing_jump = 0
+			emit_signal("aiJump", 0)
 			
 		#var angle = rad_to_deg(ball.position.angle_to_point(position)) - 90 + rotation_degrees #rad_to_deg(position.angle_to(ball.position))
 		#

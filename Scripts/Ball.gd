@@ -5,7 +5,7 @@ signal resetRound
 var heldOwner = "none" # Unused from earlier Hold idea left in incase of remake
 var appliedForce = Vector2.ZERO
 var startPos = position
-var reset = true
+var reset = false
 
 # A collider that is drawn in the direction of ball's path for raycasting
 @onready var frontPath = $"FrontPath"
@@ -68,7 +68,6 @@ func change_direction(direction):
 		
 	
 func _integrate_forces(state):
-	print("working??")
 	if reset:
 		emit_signal("resetRound")
 		state.linear_velocity = Vector2.ZERO

@@ -15,6 +15,8 @@ func _process(delta):
 	time_ui.text = str(ceil(round_time.time_left))
 	if round_time.time_left <= 20:
 		time_ui.set("theme_override_colors/font_color", Color.GOLD)
+	else:
+		time_ui.set("theme_override_colors/font_color", Color.WHITE)
 
 
 func _on_round_timer_timeout():
