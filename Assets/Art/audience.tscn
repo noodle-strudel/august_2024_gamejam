@@ -1,0 +1,382 @@
+[gd_scene load_steps=14 format=3 uid="uid://sogdlu45oh6u"]
+
+[ext_resource type="Texture2D" uid="uid://ccj2h35ulk1pd" path="res://Assets/Art/soccer_audience.png" id="1_laq60"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kniq3"]
+atlas = ExtResource("1_laq60")
+region = Rect2(1344, 0, 112, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_775d2"]
+atlas = ExtResource("1_laq60")
+region = Rect2(1456, 0, 112, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1dg7r"]
+atlas = ExtResource("1_laq60")
+region = Rect2(1568, 0, 112, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xi2tp"]
+atlas = ExtResource("1_laq60")
+region = Rect2(1680, 0, 112, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2oqxh"]
+atlas = ExtResource("1_laq60")
+region = Rect2(112, 0, 112, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3nf6l"]
+atlas = ExtResource("1_laq60")
+region = Rect2(336, 0, 112, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_utet6"]
+atlas = ExtResource("1_laq60")
+region = Rect2(448, 0, 112, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8h2ua"]
+atlas = ExtResource("1_laq60")
+region = Rect2(672, 0, 112, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dwb07"]
+atlas = ExtResource("1_laq60")
+region = Rect2(784, 0, 112, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gt46m"]
+atlas = ExtResource("1_laq60")
+region = Rect2(1008, 0, 112, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vn7qa"]
+atlas = ExtResource("1_laq60")
+region = Rect2(1120, 0, 112, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xsrgv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kniq3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_775d2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1dg7r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xi2tp")
+}],
+"loop": true,
+"name": &"cheer",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2oqxh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3nf6l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_utet6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8h2ua")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dwb07")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gt46m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vn7qa")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Audience" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(0, -24)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.203686
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(208, 0)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.830291
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(624, 0)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.393921
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D5" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(832, 0)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.0205202
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D7" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(1248, 0)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.562481
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D14" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(1120, 248)
+rotation = 1.5708
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.562481
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D15" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(1304, 208)
+rotation = 1.5708
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.562481
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D22" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(1112, 1112)
+rotation = 1.5708
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.562481
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D23" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(1128, 1344)
+rotation = 1.5708
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.562481
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D17" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(1272, 448)
+rotation = 1.5708
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.562481
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D19" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(1248, 752)
+rotation = 1.5708
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.562481
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D20" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(1280, 984)
+rotation = 1.5708
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.562481
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D21" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(1280, 1240)
+rotation = 1.5708
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.562481
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D24" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(1240, 1464)
+rotation = 1.5708
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.562481
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D26" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(-1256, 200)
+rotation = -1.5708
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.562481
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D28" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(-1136, 1136)
+rotation = -1.5708
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.562481
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D29" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(-1136, 1320)
+rotation = -1.5708
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.562481
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D30" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(-1280, 448)
+rotation = -1.5708
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.562481
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D31" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(-1136, 352)
+rotation = -1.5708
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.562481
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D32" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(-1296, 808)
+rotation = -1.5708
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.562481
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D33" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(-1296, 1048)
+rotation = -1.5708
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.562481
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D35" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(-1256, 1424)
+rotation = -1.5708
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.562481
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D9" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(1040, -8)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.437026
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D8" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(-824, 8)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.677443
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D10" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(-616, -32)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.0205202
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D12" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(-200, 8)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.562481
+speed_scale = 2.0
+
+[node name="AnimatedSprite2D13" type="AnimatedSprite2D" parent="." groups=["audience"]]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(-408, -8)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xsrgv")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.437026
+speed_scale = 2.0

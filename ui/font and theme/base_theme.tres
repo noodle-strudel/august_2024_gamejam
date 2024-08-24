@@ -5,3 +5,8 @@
 [resource]
 default_font = ExtResource("1_r3yi5")
 default_font_size = 0
+Button/font_sizes/font_size = 32
+Label/font_sizes/font_size = 32
+OptionButton/font_sizes/font_size = 32
+PopupMenu/font_sizes/font_size = 32
+RichTextLabel/font_sizes/normal_font_size = 32

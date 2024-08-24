@@ -1,64 +1,73 @@
-extends "res://Scripts/player.gd"
+extends "res://Scripts/AI.gd"
 
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
-
-
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 # Raycast for the ball detection
 @onready var raycast = $RayCast2D
-
-# The instance of hte randomizer
-var rng = RandomNumberGenerator.new()
-
 # The timer for the random movement
 @onready var moveTimer = $MoveTimer
-var t_max = 5
-var t_min = 2
-
 # The timer that triggers random jumpng
-@onready var jumpTimer = $JumpTimerx
+@onready var jumpTimer = $JumpTimer
 
-# The x input of the AI
-var inputAi : Vector2
+const CHANCE_TO_CHASE_BALL = 100
+const MIN_RANDOM_JUMP_TIME = 5
+const MAX_RANDOM_JUMP_TIME = 8
+const ERROR_CATCH_TIME = 0
 
 func _ready():	
-	#inputAi.x = rng.randi_range(-1, 1)
-	#moveTimer.start(rng.randi_range(t_min, t_max))
-	_on_move_timer_timeout()
+	start_random_jump_timer(jumpTimer, MIN_RANDOM_JUMP_TIME, MAX_RANDOM_JUMP_TIME)
+	just_grounded.connect(_on_just_grounded)
 
-# Ran when the timer runs out, potentially changing AI movement
-func _on_move_timer_timeout():
-	rng.randomize()
-	
-	inputAi.x = rng.randi_range(-1, 1) # randomly moves left, right or stays stills
+func _on_just_grounded():
+	track_or_random_move(CHANCE_TO_CHASE_BALL)
+
+# Randomly jumps when the timer runs out
+func _on_jump_timer_timeout():
 	pressing_jump = 1
-	
-	moveTimer.start(rng.randi_range(t_min, t_max))
-	
+	pass
+
 # Overriding the input for ai
 func get_input():
-	
-	# Move if grounded
+	#update_awareness()
 	if(grounded):
-		input.x = inputAi.x
-		#input.y = 0
+		move()
+		# Makes the player jump when it sees the ball ahead of it the even through walls 
+		if(aligned_towards_ball() or can_catch_ball(raycast, ERROR_CATCH_TIME)):
+			pressing_jump = 1
+			pass
 	else:
 		pressing_jump = 0
 	
-	# Get the first collision object
-	var raycast_collision = raycast.get_collider()
+	## Move if grounded
+	#if(grounded):
+		#input.x = inputAi.x
+		##input.y = 0
+	#else:
+		#pressing_jump = 0
+	#
+	## Get the first collision object
+	#var raycast_collision = raycast.get_collider()
+	#
+		#
+	#rng.randomize() 
+	## Detecting the ball in front to jump towards
+	#if raycast_collision != null and raycast_collision.get_name() == "Ball":
+		#pressing_jump = 1
+		#
+	#queue_redraw()
+	#_draw()
 	
-		
-	rng.randomize() 
-	# Detecting the ball in front to jump towards
-	if raycast_collision != null and raycast_collision.get_name() == "Ball":
-		pressing_jump = 1
-		
-		
 	return input.normalized()
 
 
+## Ran when the timer runs out, potentially changing AI movement
+#func _on_move_timer_timeout():
+	#move_and_restart()
+	#
+#func move_and_restart():
+	#rng.randomize()
+	#
+	#inputAi.x = rng.randi_range(-1, 1) # randomly moves left, right or stays stills
+	##pressing_jump = 1
+	#
+	#moveTimer.start(rng.randi_range(t_min, t_max))

@@ -6,6 +6,8 @@ var on_diff_menu = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$SoccerArena/AnimationPlayer.play("new_animation")
+	$SoccerSpaceTitle/AnimationPlayer.play("new_animation")
 	$AudioStartMenu.play()
 	
 	
@@ -119,7 +121,7 @@ func _on_difficult_pressed():
 	GlobalSettings.difficulty = 2
 	GlobalSettings.save()
 	await get_tree().create_timer(0.3).timeout
-	get_tree().change_scene_to_file("res://game.tscn")
+	get_tree().change_scene_to_file("res://ui/how_to_play.tscn")
 
 
 func _on_normal_pressed():
@@ -127,7 +129,7 @@ func _on_normal_pressed():
 	GlobalSettings.difficulty = 1
 	GlobalSettings.save()
 	await get_tree().create_timer(0.3).timeout
-	get_tree().change_scene_to_file("res://game.tscn")
+	get_tree().change_scene_to_file("res://ui/how_to_play.tscn")
 
 
 func _on_eazy_pressed():
@@ -135,7 +137,7 @@ func _on_eazy_pressed():
 	GlobalSettings.save()
 	$ClickSFX.play()
 	await get_tree().create_timer(0.3).timeout
-	get_tree().change_scene_to_file("res://game.tscn")
+	get_tree().change_scene_to_file("res://ui/how_to_play.tscn")
 
 
 func _on_back_diff_pressed():
