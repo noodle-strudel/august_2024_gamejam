@@ -8,13 +8,14 @@ extends Node2D
 # @onready var state_machine = anim_tree["parameters/playback"]
 
 const ghostScene = preload("res://ghost.tscn")
+const AIghostScene = preload("res://AIghost.tscn")
 
 var input : Vector2
 var playerInput = Vector2.ZERO
+var AIinput = Vector2.ZERO
 var perpendicular : Vector2
 var grounded = true
 var rotationAngle = 0.0
-var startPos = Vector2(480, 248)
 
 var inputs : Array
 var timeBeforeInputs : Array
@@ -24,11 +25,27 @@ var timeSinceJumpChange : Array
 var jumpTimeElapsed = 0
 var isJumping = false
 
+var AIinputs : Array
+var AItimeBeforeInputs : Array
+var AItimeElapsed = 0
+var AIlastInput = Vector2.ZERO
+var AItimeSinceJumpChange : Array
+var AIjumpTimeElapsed = 0
+var AIisJumping = false
+var AI : Node2D
+
+var ghostInstance
+
 var numOfGhosts = 0
-var gameStart = true
+var gameStart = false
 
 # keeps track of the current animation
 var current_anim = ""
+
+func _ready():
+	get_node("../EasyAI").aiJump.connect(_on_aiJump)
+	get_node("../NormalAI").aiJump.connect(_on_aiJump)
+	# get_node("../HardAI").aiJump.connect(_on_aiJump)
 	
 # Movement Input
 func get_input():
@@ -36,15 +53,37 @@ func get_input():
 	input.y = Input.get_action_strength("down") - Input.get_action_strength("up")
 	
 	return input.normalized()
+	
+func ai_get_input():
+	if GlobalSettings.difficulty == 0:
+		AI = get_node("../EasyAI")
+	if GlobalSettings.difficulty == 1:
+		AI = get_node("../NormalAI")
+		
+	if GlobalSettings.difficulty == 2:
+		AI = get_node("../HardAI")
+		
+	AIinput = AI.input
+		
+	if (AIinput != AIlastInput) and AIinput != null:
+		print("saved input: ", AIinput, " at ", AItimeElapsed)
+		print("Ai current: ", AIinput, " AI Last ", AIlastInput)
+		AIinputs.append(AIinput)
+		AItimeBeforeInputs.append(AItimeElapsed)
+		AItimeElapsed = 0
+		AIlastInput = AIinput
 
 # Player Movement proccessing and collisions
 func _physics_process(delta):
 # Player Input -> movement mapping
 	timeElapsed += delta
 	jumpTimeElapsed += delta
+	AItimeElapsed += delta
+	AIjumpTimeElapsed += delta
 	playerInput = get_input()
+	AIinput = ai_get_input()
+	
 	if (playerInput != lastInput):
-		#print("saved input: ", playerInput, " at ", timeElapsed)
 		inputs.append(playerInput)
 		timeBeforeInputs.append(timeElapsed)
 		timeElapsed = 0
@@ -63,13 +102,22 @@ func _physics_process(delta):
 func _on_ball_reset_round():
 	# add no input at the end of the array
 	inputs.append(Vector2.ZERO)
+	AIinputs.append(Vector2.ZERO)
 	
 	print("Reset ROund")
 	# record the time
 	timeBeforeInputs.append(timeElapsed)
+	AItimeBeforeInputs.append(timeElapsed)
 	
-	createGhost(inputs, timeBeforeInputs)
+	print("AI STUFF: ")
+	print(AItimeBeforeInputs)
+	print(AIinputs)
+	
+	createGhost(inputs, timeBeforeInputs, true)
+	await get_tree().process_frame
+	createGhost(AIinputs, AItimeBeforeInputs, false)
 	timeElapsed = 0
+	AItimeElapsed = 0
 	
 
 # changes current animation to a new animation
@@ -78,10 +126,13 @@ func change_anim(name):
 		# state_machine.travel(name)
 		current_anim = name
 
-func createGhost(ghostInputs: Array, timeSinceInputs: Array):
+func createGhost(ghostInputs: Array, timeSinceInputs: Array, isPlayer: bool):
 	numOfGhosts += 1
-	var ghostInstance = ghostScene.instantiate()
-	ghostInstance.position = %Player.startPos
+	
+	if isPlayer:
+		ghostInstance = ghostScene.instantiate()
+	else:
+		ghostInstance = AIghostScene.instantiate()
 	
 	# it cannot add the child until the tree has some idle time.
 	call_deferred("add_child", ghostInstance)
@@ -92,24 +143,62 @@ func createGhost(ghostInputs: Array, timeSinceInputs: Array):
 	var ghost = get_child(lastChild)
 	var index = 0
 	
-	for i in ghostInputs:
-		ghost.inputs.append(i)
-		ghost.timeBeforeInputs.append(timeBeforeInputs[index])
-		index += 1
+	if isPlayer:
+		ghost.startPos = %Player.startPos
+		ghost.position = %Player.startPos
+		for i in ghostInputs:
+			ghost.inputs.append(i)
+			ghost.timeBeforeInputs.append(timeBeforeInputs[index])
+			index += 1
+			
+			
+		for i in timeSinceJumpChange:
+			ghost.timeToSwapJump.append(i)
+			
+		print("Player Inputs Added")
 		
-	for i in timeSinceJumpChange:
-		ghost.timeToSwapJump.append(i)
-	
-	if numOfGhosts + 4 > 32:
-		var collisionLayer = get_child(0).get_child(0).collision_layer
-		remove_child(get_child(0))
-		ghost.set_collision_layer_value(collisionLayer, 1)
+		if numOfGhosts + 4 > 32:
+			var collisionLayer = get_child(0).get_child(0).collision_layer
+			remove_child(get_child(0))
+			ghost.set_collision_layer_value(collisionLayer, 1)
+		else:
+			ghost.set_collision_layer_value(numOfGhosts + 4, 1)
+		inputs.clear()
+		timeBeforeInputs.clear()
+		timeSinceJumpChange.clear()
+		
 	else:
-		ghost.set_collision_layer_value(numOfGhosts + 4, 1)
-
+		ghost.startPos = AI.startPos
+		ghost.position = AI.startPos
+		for i in ghostInputs:
+			ghost.inputs.append(i)
+			ghost.timeBeforeInputs.append(AItimeBeforeInputs[index])
+			index += 1
+			
+		for i in AItimeSinceJumpChange:
+			ghost.timeToSwapJump.append(i)
+		
+		print("AI Inputs Added")
+		
+		if numOfGhosts + 4 > 32:
+			var collisionLayer = get_child(0).get_child(0).collision_layer
+			remove_child(get_child(0))
+			ghost.set_collision_layer_value(collisionLayer, 1)
+		else:
+			ghost.set_collision_layer_value(numOfGhosts + 4, 1)
 	
-	inputs.clear()
-	timeBeforeInputs.clear()
-	timeSinceJumpChange.clear()
+		AIinputs.clear()
+		AItimeBeforeInputs.clear()
+		AItimeSinceJumpChange.clear()
 	
 	
+func _on_aiJump(value):
+	if AI:
+		if AI.pressing_jump && AIisJumping == false:
+			AItimeSinceJumpChange.append(AIjumpTimeElapsed)
+			AIisJumping = true
+			AIjumpTimeElapsed = 0
+		elif AI.pressing_jump == 0 && AIisJumping == true:
+			AItimeSinceJumpChange.append(AIjumpTimeElapsed)
+			AIisJumping = false
+			AIjumpTimeElapsed = 0
