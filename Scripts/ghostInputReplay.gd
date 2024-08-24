@@ -126,11 +126,11 @@ func _on_reset_round():
 	initiateGhost = 0
 	gameStart = true
 	
-	if timeToSwapJump.size() > 0:
+	if timeToSwapJump.size() > 1:
 		jumpTimer.wait_time = 0.01
 		jumpTimer.start()
 	
-	if timeBeforeInputs.size() > 0:
+	if timeBeforeInputs.size() > 1:
 		timer.wait_time = 0.01
 		timer.start()
 
@@ -144,7 +144,7 @@ func change_anim(name):
 func _timer_Timeout():
 	print("Timer Ended")
 	print("Index", index, " Input Size ", inputs.size())
-	if is_initiated() && inputs.size() > 0:
+	if is_initiated() && inputs.size() > 1:
 		if inputTimeIndex < timeBeforeInputs.size():
 			playerInput = inputs[index]
 			timer.wait_time = timeBeforeInputs[inputTimeIndex]

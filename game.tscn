@@ -1,11 +1,11 @@
-[gd_scene load_steps=62 format=3 uid="uid://d25j3hbaff8n7"]
+[gd_scene load_steps=65 format=3 uid="uid://d25j3hbaff8n7"]
 
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_3anbo"]
 [ext_resource type="Script" path="res://Scripts/MainGame.gd" id="1_l3va8"]
 [ext_resource type="Theme" uid="uid://lqrgxsxs2fye" path="res://ui/font and theme/base_theme.tres" id="1_rt4aw"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_ti4d2"]
 [ext_resource type="Texture2D" uid="uid://dfkwxa1ep1wy" path="res://Assets/Art/soccer_player.png" id="2_au68j"]
-[ext_resource type="PackedScene" uid="uid://djn0b42t5nlfy" path="res://ui/win_lose_menu.tscn" id="2_gpixc"]
+[ext_resource type="PackedScene" uid="uid://lbewvpmaep3w" path="res://ui/win_lose_menu.tscn" id="2_gpixc"]
 [ext_resource type="Texture2D" uid="uid://bguvgoq54j4td" path="res://Assets/Art/soccer_space_background.png" id="2_sbqes"]
 [ext_resource type="Script" path="res://Scripts/Ball.gd" id="3_uolrk"]
 [ext_resource type="Script" path="res://Scripts/GhostManager.gd" id="6_i2xiq"]
@@ -31,6 +31,7 @@
 [ext_resource type="Texture2D" uid="uid://x4u1p66vn80w" path="res://Assets/Art/soccer_space_4.png" id="23_wycuy"]
 [ext_resource type="Shader" path="res://shaders/scroll3.gdshader" id="25_p741q"]
 [ext_resource type="Texture2D" uid="uid://byw43b6d0kebj" path="res://Assets/Art/soccer_space_sun.png" id="27_navdi"]
+[ext_resource type="PackedScene" uid="uid://sogdlu45oh6u" path="res://Assets/Art/audience.tscn" id="32_8crl0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q4fvd"]
 radius = 48.1664
@@ -279,16 +280,24 @@ func get_input():
 [sub_resource type="CircleShape2D" id="CircleShape2D_wb8fx"]
 radius = 120.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6g1wf"]
+radius = 120.0
+height = 368.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_r7e3u"]
 radius = 56.5685
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jeb2a"]
+radius = 120.0
+height = 368.0
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f1f87"]
-radius = 128.0
-height = 560.0
+radius = 120.0
+height = 240.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_low0s"]
-radius = 128.0
-height = 512.0
+radius = 120.0
+height = 240.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gq10c"]
 shader = ExtResource("19_opfob")
@@ -312,29 +321,9 @@ script = ExtResource("1_l3va8")
 
 [node name="inGameMenu" parent="CanvasLayer" instance=ExtResource("6_n71pq")]
 visible = false
-top_level = true
-z_index = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-scale = Vector2(2.24, 2.24)
-size_flags_horizontal = 4
-size_flags_vertical = 4
 
 [node name="WinLoseMenu" parent="CanvasLayer" instance=ExtResource("2_gpixc")]
 visible = false
-top_level = true
-z_index = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-scale = Vector2(2.24, 2.24)
-size_flags_horizontal = 4
-size_flags_vertical = 4
 
 [node name="Score" type="HBoxContainer" parent="CanvasLayer"]
 anchors_preset = 5
@@ -356,14 +345,12 @@ layout_mode = 2
 
 [node name="TimeLabel" type="Label" parent="CanvasLayer/Score/TimerContainer/VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("1_rt4aw")
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 40
 text = "TIME"
 
 [node name="TimeLeft" type="Label" parent="CanvasLayer/Score/TimerContainer/VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("1_rt4aw")
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 40
 text = "30"
 horizontal_alignment = 1
 
@@ -375,14 +362,14 @@ layout_mode = 2
 
 [node name="AllyLabel" type="Label" parent="CanvasLayer/Score/TeamContainer/VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("1_rt4aw")
-theme_override_font_sizes/font_size = 32
+theme_override_colors/font_color = Color(0.46, 0.685, 1, 1)
+theme_override_font_sizes/font_size = 40
 text = "ALLY"
 
 [node name="OpponentLabel" type="Label" parent="CanvasLayer/Score/TeamContainer/VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("1_rt4aw")
-theme_override_font_sizes/font_size = 32
+theme_override_colors/font_color = Color(1, 0.505, 0.46, 1)
+theme_override_font_sizes/font_size = 40
 text = "OPPONENT"
 
 [node name="ScoreContainer" type="PanelContainer" parent="CanvasLayer/Score"]
@@ -394,12 +381,12 @@ layout_mode = 2
 [node name="PlayerLabelScore" type="Label" parent="CanvasLayer/Score/ScoreContainer/Score"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 40
 text = "0"
 
 [node name="AILabelScore" type="Label" parent="CanvasLayer/Score/ScoreContainer/Score"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 40
 text = "0"
 horizontal_alignment = 1
 
@@ -411,7 +398,7 @@ metadata/_edit_group_ = true
 
 [node name="Player" type="CharacterBody2D" parent="." groups=["ground"]]
 unique_name_in_owner = true
-position = Vector2(512, 176)
+position = Vector2(-512, 192)
 collision_layer = 4
 collision_mask = 5
 floor_stop_on_slope = false
@@ -493,6 +480,7 @@ polygon = PackedVector2Array(-48.0012, -128, 31.9997, -128, 31.998, -224, -16.00
 
 [node name="Ball" type="RigidBody2D" parent="."]
 unique_name_in_owner = true
+z_index = 1
 collision_layer = 2
 collision_mask = 4294967295
 script = ExtResource("3_uolrk")
@@ -627,68 +615,63 @@ z_index = -1
 scale = Vector2(2, 2)
 tile_set = ExtResource("6_n3gs8")
 format = 2
-layer_0/tile_data = PackedInt32Array(-2, 393218, 0, -1, 393218, 0, -65536, 393218, 0, -65535, 458754, 0, -65534, 524290, 0, 2, 393218, 0, 65535, 393218, 0, -3, 393218, 0, -4, 393218, 0, 65532, 393218, 0, -65539, 393218, 0, -65538, 393218, 0, -131071, 196610, 0, -131070, 262146, 0, -131072, 393218, 0, -65537, 393218, 0, 131071, 393218, 0, 65538, 393218, 0, 65539, 393218, 0, 3, 393218, 0, -65533, 393218, 0, -131069, 393218, 0, -131079, 393218, 0, 196601, 393218, 0, 131077, 393218, 0, 131078, 393218, 0, -196602, 393218, 0, -131078, 393218, 0, -131075, 393218, 0, -131074, 393218, 0, -131073, 393218, 0, -196608, 393218, 0, -196607, 393218, 0, -196606, 393218, 0, -196603, 393218, 0, -65542, 393218, 0, -5, 393218, 0, 65531, 393218, 0, 65530, 524290, 0, 131066, 393218, 0, 131067, 393218, 0, -6, 262146, 0, 65540, 393218, 0, 65541, 393218, 0, 5, 458754, 0, -65531, 196610, 0, -131067, 393218, 0, -131068, 393218, 0, -65532, 393218, 0, 4, 393218, 0, 131076, 262146, 0, 131075, 196610, 0, 131074, 393218, 0, 131073, 393218, 0, 131072, 393218, 0, 196607, 393218, 0, 196602, 393218, 0, 65542, 393218, 0, 6, 524290, 0, -65530, 262146, 0, -131066, 393218, 0, -65543, 393218, 0, -7, 196610, 0, 65529, 458754, 0, 131065, 393218, 0, -196615, 327682, 0, 262137, 327682, 0, 196614, 327682, 0, -262138, 327682, 0, -196614, 393218, 0, -196613, 589826, 0, -196612, 589826, 805306368, -196611, 393218, 0, -196610, 393218, 0, -196609, 393218, 0, -262144, 327682, 0, -262143, 393218, 0, -262142, 393218, 0, -262139, 393218, 0, 196613, 393218, 0, 196612, 589826, 805306368, 196611, 589826, 0, 196610, 393218, 0, 196609, 393218, 0, 196608, 393218, 0, 262143, 327682, 0, 262142, 393218, 0, 262141, 393218, 0, 262138, 393218, 0, -262152, 65538, 0, -262151, 131074, 0, -262150, 131074, 0, -262149, 589826, 0, -262148, 589826, 805306368, -262147, 131074, 0, -262146, 131074, 0, -262145, 131074, 0, -327680, 131074, 0, -327679, 131074, 0, -327678, 131074, 0, -327675, 131074, 0, -327674, 131074, 0, -327673, 65538, 1342177280, 262151, 65538, 805306368, 327672, 65538, 1610612736, 262136, 131074, 1610612736, 196600, 131074, 1610612736, 131064, 1048578, 0, 65528, 393218, 0, -8, 393218, 0, -65544, 1048578, 1342177280, -131080, 131074, 1610612736, -196616, 131074, 1610612736, 327673, 131074, 805306368, 327674, 131074, 805306368, 327677, 131074, 805306368, 327678, 131074, 805306368, 327679, 131074, 805306368, 262144, 131074, 805306368, 262145, 131074, 805306368, 262146, 131074, 805306368, 262147, 589826, 0, 262148, 589826, 805306368, 262149, 131074, 805306368, 262150, 131074, 805306368, 196615, 131074, 1342177280, 131079, 131074, 1342177280, 65543, 1048578, 1610612736, 7, 393218, 0, -65529, 393218, 0, -131065, 1048578, 805306368, -262137, 131074, 1342177280, -196601, 131074, 1342177280, 196606, 393218, 0, -327677, 589826, 0, -262141, 589826, 0, -196605, 262146, 805306368, -327676, 589826, 805306368, -262140, 589826, 805306368, -196604, 196610, 805306368, -131077, 262146, 805306368, -65541, 393218, 0, -131076, 196610, 805306368, -65540, 393218, 0, 65537, 393218, 0, 131068, 393218, 0, 196605, 393218, 0, 65536, 393218, 0, 0, 393218, 0, 1, 393218, 0, 131063, 655362, 1610612736, -65545, 786434, 1610612736, -9, 720898, 1610612736, 65527, 720898, 1610612736, -131064, 786434, 0, -65528, 720898, 1879048192, 8, 720898, 1879048192, 65544, 786434, 1342177280, 196603, 196610, 0, 262139, 589826, 0, 327675, 589826, 0, 196604, 262146, 0, 262140, 589826, 805306368, 327676, 589826, 805306368, 65533, 196610, 0, 131069, 458754, 0, 65534, 262146, 0, 131070, 524290, 0)
+layer_0/tile_data = PackedInt32Array(-2, 393218, 0, -1, 393218, 0, -65536, 393218, 0, -65535, 393218, 0, -65534, 393218, 0, 2, 393218, 0, 65535, 393218, 0, -3, 393218, 0, -4, 262146, 0, 65532, 524290, 0, -65539, 393218, 0, -65538, 393218, 0, -131071, 393218, 0, -131070, 393218, 0, -131072, 196610, 805306368, -65537, 262146, 805306368, 65538, 393218, 0, 65539, 393218, 0, 3, 458754, 0, -65533, 196610, 0, -131069, 393218, 0, -131079, 393218, 0, 196601, 327682, 0, 131077, 393218, 0, 131078, 327682, 0, -196602, 393218, 0, -131078, 196610, 1610612736, -131075, 393218, 0, -131074, 393218, 0, -131073, 589826, 0, -196608, 589826, 805306368, -196607, 393218, 0, -196606, 393218, 0, -196603, 262146, 1342177280, -65542, 393218, 0, -5, 196610, 0, 65531, 458754, 0, 65530, 393218, 0, 131066, 393218, 0, 131067, 393218, 0, -6, 393218, 0, 65540, 393218, 0, 65541, 393218, 0, 5, 393218, 0, -65531, 393218, 0, -131067, 393218, 0, -131068, 393218, 0, -65532, 262146, 0, 4, 524290, 0, 131076, 393218, 0, 131075, 262146, 0, 131074, 196610, 0, 131073, 393218, 0, 196602, 393218, 0, 65542, 393218, 0, 6, 393218, 0, -65530, 327682, 0, -131066, 393218, 0, -7, 327682, 0, 65529, 393218, 0, 131065, 393218, 0, -196615, 393218, 0, 262137, 393218, 0, 196614, 393218, 0, -262138, 393218, 0, -196614, 262146, 1610612736, -196613, 262146, 0, -196612, 393218, 0, -196611, 393218, 0, -196610, 393218, 0, -196609, 196610, 0, -262144, 262146, 0, -262143, 393218, 0, -262142, 393218, 0, -262139, 196610, 1342177280, 196613, 393218, 0, 196612, 393218, 0, 196611, 524290, 0, 196610, 458754, 0, 196609, 393218, 0, 262142, 393218, 0, 262141, 524290, 0, 262138, 393218, 0, -262152, 65538, 0, -262151, 131074, 0, -262150, 131074, 0, -262149, 131074, 0, -262148, 131074, 0, -262147, 131074, 0, -262146, 131074, 0, -262145, 131074, 0, -327680, 131074, 0, -327679, 131074, 0, -327678, 131074, 0, -327675, 131074, 0, -327674, 131074, 0, -327673, 65538, 1342177280, 262151, 65538, 805306368, 327672, 65538, 1610612736, 262136, 131074, 1610612736, 196600, 131074, 1610612736, 131064, 1048578, 0, 65528, 393218, 0, -8, 393218, 0, -65544, 1048578, 1342177280, -131080, 131074, 1610612736, -196616, 131074, 1610612736, 327673, 131074, 805306368, 327674, 131074, 805306368, 327677, 131074, 805306368, 327678, 131074, 805306368, 327679, 131074, 805306368, 262144, 131074, 805306368, 262145, 131074, 805306368, 262146, 131074, 805306368, 262147, 131074, 805306368, 262148, 131074, 805306368, 262149, 131074, 805306368, 262150, 131074, 805306368, 196615, 131074, 1342177280, 131079, 131074, 1342177280, 65543, 1048578, 1610612736, 7, 393218, 0, -65529, 393218, 0, -131065, 1048578, 805306368, -262137, 131074, 1879048192, -196601, 131074, 1342177280, 196606, 393218, 0, -327677, 131074, 0, -262141, 393218, 0, -196605, 393218, 0, -327676, 131074, 0, -262140, 196610, 0, -196604, 458754, 0, -131077, 524290, 0, -65541, 393218, 0, -131076, 393218, 0, -65540, 393218, 0, 65537, 393218, 0, 131068, 393218, 0, 196605, 262146, 0, 0, 393218, 0, 1, 393218, 0, 131063, 655362, 1610612736, -65545, 786434, 1610612736, -9, 720898, 1610612736, 65527, 720898, 1610612736, -131064, 786434, 0, -65528, 720898, 1879048192, 8, 720898, 1879048192, 65544, 786434, 1342177280, 196603, 393218, 0, 262139, 393218, 0, 327675, 131074, 805306368, 196604, 196610, 0, 262140, 458754, 0, 327676, 131074, 805306368, 65533, 393218, 0, 131069, 393218, 0, 65534, 393218, 0, 131070, 393218, 0, 131071, 196610, 0, 196607, 589826, 0, 262143, 262146, 805306368, 65536, 262146, 0, 131072, 589826, 805306368, 196608, 196610, 805306368, -65543, 393218, 0)
 layer_1/z_index = 1
 layer_1/tile_data = PackedInt32Array(131063, 851970, 1610612736, 65527, 917506, 1610612736, -9, 917506, 1610612736, -65545, 983042, 1610612736, -131064, 851970, 1342177280, 65544, 983042, 1342177280, 8, 917506, 1342177280, -65528, 917506, 1342177280)
 
 [node name="Obstacle" type="StaticBody2D" parent="." groups=["ground"]]
-visible = false
 position = Vector2(256, 256)
 
 [node name="CollisionShape2D10" type="CollisionShape2D" parent="Obstacle"]
-position = Vector2(-512, -128)
+position = Vector2(-768, -256)
 shape = SubResource("CircleShape2D_wb8fx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle"]
-position = Vector2(512, -256)
+position = Vector2(256, -256)
 shape = SubResource("CircleShape2D_wb8fx")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Obstacle"]
-position = Vector2(0, -384)
-shape = SubResource("CircleShape2D_wb8fx")
+position = Vector2(-256, 64)
+shape = SubResource("CapsuleShape2D_6g1wf")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Obstacle"]
-position = Vector2(-320, 192)
+position = Vector2(-1088, 64)
 shape = SubResource("CircleShape2D_r7e3u")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="Obstacle"]
-position = Vector2(-1088, 192)
-shape = SubResource("CircleShape2D_r7e3u")
-
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="Obstacle"]
-position = Vector2(-1088, -704)
-shape = SubResource("CircleShape2D_r7e3u")
-
-[node name="CollisionShape2D6" type="CollisionShape2D" parent="Obstacle"]
-position = Vector2(-192, -704)
+position = Vector2(-1088, -320)
 shape = SubResource("CircleShape2D_r7e3u")
 
 [node name="CollisionShape2D7" type="CollisionShape2D" parent="Obstacle"]
-position = Vector2(576, -704)
+position = Vector2(576, -320)
 shape = SubResource("CircleShape2D_r7e3u")
 
 [node name="CollisionShape2D8" type="CollisionShape2D" parent="Obstacle"]
-position = Vector2(576, 192)
+position = Vector2(576, 64)
 shape = SubResource("CircleShape2D_r7e3u")
 
 [node name="CollisionShape2D9" type="CollisionShape2D" parent="Obstacle"]
-position = Vector2(-1024, -256)
-shape = SubResource("CircleShape2D_wb8fx")
+position = Vector2(-256, -576)
+shape = SubResource("CapsuleShape2D_jeb2a")
 
 [node name="CollisionShape2D11" type="CollisionShape2D" parent="Obstacle"]
-position = Vector2(256, -800)
+position = Vector2(384, -640)
+rotation = -1.57079
 shape = SubResource("CapsuleShape2D_f1f87")
 
 [node name="CollisionShape2D12" type="CollisionShape2D" parent="Obstacle"]
-position = Vector2(-768, -792)
+position = Vector2(-896, -640)
+rotation = -1.57079
 shape = SubResource("CapsuleShape2D_f1f87")
 
 [node name="CollisionShape2D13" type="CollisionShape2D" parent="Obstacle"]
-position = Vector2(-768, 288)
+position = Vector2(-640, 128)
+rotation = -1.57079
 shape = SubResource("CapsuleShape2D_f1f87")
 
 [node name="CollisionShape2D14" type="CollisionShape2D" parent="Obstacle"]
-position = Vector2(256, 256)
+position = Vector2(128, 128)
+rotation = -1.57079
 shape = SubResource("CapsuleShape2D_low0s")
 
 [node name="bgNoice" type="AudioStreamPlayer" parent="."]
@@ -707,7 +690,7 @@ volume_db = -10.657
 bus = &"music"
 
 [node name="ImpossibleAI" type="CharacterBody2D" parent="." groups=["ground"]]
-position = Vector2(-1847, 849)
+position = Vector2(512, 176)
 rotation = 0.0292804
 floor_stop_on_slope = false
 floor_block_on_wall = false
@@ -774,7 +757,7 @@ autostart = true
 
 [node name="SoccerSpaceBackground" type="Sprite2D" parent="."]
 z_index = -2
-position = Vector2(79, -86)
+position = Vector2(22.4, -123.2)
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("2_sbqes")
 
@@ -782,6 +765,7 @@ texture = ExtResource("2_sbqes")
 z_index = -2
 texture_repeat = 2
 material = SubResource("ShaderMaterial_gq10c")
+position = Vector2(22.4, -121.2)
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("19_bmhxy")
 
@@ -789,6 +773,7 @@ texture = ExtResource("19_bmhxy")
 z_index = -2
 texture_repeat = 2
 material = SubResource("ShaderMaterial_8ospf")
+position = Vector2(22.4, -121.2)
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("21_e2hgi")
 
@@ -796,6 +781,7 @@ texture = ExtResource("21_e2hgi")
 z_index = -2
 texture_repeat = 2
 material = SubResource("ShaderMaterial_wlf4n")
+position = Vector2(22.4, -121.2)
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("22_1bpfq")
 
@@ -803,6 +789,7 @@ texture = ExtResource("22_1bpfq")
 z_index = -2
 texture_repeat = 2
 material = SubResource("ShaderMaterial_4si7j")
+position = Vector2(22.4, -121.2)
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("23_wycuy")
 
@@ -819,6 +806,25 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BallBoundary"]
 shape = SubResource("RectangleShape2D_d34og")
 
+[node name="Audience" parent="." instance=ExtResource("32_8crl0")]
+position = Vector2(0, -744)
+
+[node name="AnimatedSprite2D22" parent="Audience" index="7"]
+position = Vector2(1128, 1112)
+
+[node name="TeamColors" type="Node2D" parent="."]
+
+[node name="Polygon2D" type="Polygon2D" parent="TeamColors"]
+z_index = -1
+color = Color(1, 0.505, 0.46, 1)
+polygon = PackedVector2Array(-1024, -224, -992, -224, -992, 224, -1024, 224)
+
+[node name="Polygon2D2" type="Polygon2D" parent="TeamColors"]
+z_index = -1
+position = Vector2(2016, 0)
+color = Color(0.46, 0.685, 1, 1)
+polygon = PackedVector2Array(-1024, -224, -992, -224, -992, 224, -1024, 224)
+
 [connection signal="resetRound" from="Ball" to="." method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="GameManager" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="Player" method="_on_ball_reset_round"]
@@ -828,6 +834,9 @@ shape = SubResource("RectangleShape2D_d34og")
 [connection signal="resetRound" from="Ball" to="GhostManager" method="_on_ball_reset_round"]
 [connection signal="timeout" from="NormalAI/MoveTimer" to="NormalAI" method="_on_move_timer_timeout"]
 [connection signal="timeout" from="EasyAI/MoveTimer" to="EasyAI" method="_on_move_timer_timeout"]
+[connection signal="finished" from="bgNoice/Crowd" to="." method="_on_crowd_finished"]
 [connection signal="timeout" from="ImpossibleAI/AutoJumpTimer" to="ImpossibleAI" method="_on_move_timer_timeout"]
 [connection signal="timeout" from="RoundTimer" to="." method="_on_round_timer_timeout"]
 [connection signal="body_exited" from="BallBoundary" to="." method="_on_ball_boundary_body_exited"]
+
+[editable path="Audience"]
