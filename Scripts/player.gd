@@ -44,20 +44,23 @@ func _physics_process(delta):
 	
 	# Jump
 	if pressing_jump > 0:
-		$AudioPlayer/fingers.stop()
+		$AudioPlayer/fingers.volume_db = -90
+		if not $AudioPlayer/jet.is_playing():
+			$AudioPlayer/jet.play()
 		jump()
 	
 	# Reset
 	if playerInput == Vector2.ZERO:
 		perpendicular = Vector2.ZERO
-		$AudioPlayer/fingers.stop()
+		$AudioPlayer/fingers.volume_db = -90
 	
 	if !grounded:
-		$AudioPlayer/fingers.stop()
+		$AudioPlayer/fingers.volume_db = -90
 	
 	# Left
 	if playerInput.x < 0:
 		if not $AudioPlayer/fingers.is_playing():
+			$AudioPlayer/fingers.volume_db = $AudioPlayer.fingers_volume_const
 			$AudioPlayer/fingers.play()
 		perpendicular.x = up_direction.y 
 		perpendicular.y = up_direction.x * playerInput.x
@@ -71,6 +74,7 @@ func _physics_process(delta):
 		
 	# Apply Movement + Gravity when on ground
 	if grounded:
+		$AudioPlayer/jet.stop()
 		velocity = lerp(velocity, perpendicular * speed, delta * accel)
 		velocity += up_direction * grav
 	
