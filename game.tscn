@@ -568,7 +568,7 @@ volume_db = -10.0
 bus = &"sfx"
 
 [node name="EasyAI" type="CharacterBody2D" parent="." groups=["ground"]]
-position = Vector2(-523, 66.0001)
+position = Vector2(-1587, 191)
 rotation = 0.0292804
 collision_layer = 8
 collision_mask = 9
@@ -774,7 +774,7 @@ autostart = true
 
 [node name="SoccerSpaceBackground" type="Sprite2D" parent="."]
 z_index = -2
-position = Vector2(-12, -3)
+position = Vector2(79, -86)
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("2_sbqes")
 

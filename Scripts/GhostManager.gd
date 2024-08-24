@@ -57,6 +57,7 @@ func get_input():
 func ai_get_input():
 	if GlobalSettings.difficulty == 0:
 		AI = get_node("../EasyAI")
+		
 	if GlobalSettings.difficulty == 1:
 		AI = get_node("../NormalAI")
 		

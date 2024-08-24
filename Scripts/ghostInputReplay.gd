@@ -73,7 +73,7 @@ func _process(delta):
 		
 	# Jump
 	if inputs.size() <= index && timeToSwapJump.size() <= jumpIndex:
-		$Sprite2D.self_modulate.a = 0.0
+		$Sprite2D.self_modulate.a = -1
 		position.y = -2000
 	else:
 		$Sprite2D.self_modulate.a = 0.5
