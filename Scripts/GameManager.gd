@@ -35,7 +35,7 @@ func _on_ball_reset_round():
 		pass
 	elif aiScore >= winsRequired:
 		# Player lose here...
-		$"../CanvasLayer/WinLoseMenu"/inGameOptions/WinLose.text = "Loser..."
+		$"../CanvasLayer/WinLoseMenu"/inGameOptions/WinLose.text = "You lose :("
 		$"../CanvasLayer/WinLoseMenu".visible = true
 		print("You Lose")
 		pass
