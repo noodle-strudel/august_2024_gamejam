@@ -1,0 +1,179 @@
+extends "res://Scripts/player.gd"
+
+
+@onready var ball = $"/root/MainGame/Ball" as RigidBody2D
+@onready var player = $"/root/MainGame/Player" as CharacterBody2D
+
+enum MOVEMENT_STATE {
+	RANDOM,
+	BALL_TRACKING
+}
+
+var movementState : MOVEMENT_STATE
+
+# The instance of hte randomizer
+var rng = RandomNumberGenerator.new()
+
+# Angle between AI's rotation and the Ball
+var angle : float
+
+# The current directions of right and left
+var left = -1
+var right = 1
+
+var random_direction = 0
+
+# Runs when the Node with this script is put into the game
+func _ready():
+	ball.resetRound.connect(_on_ball_reset_round)
+	just_grounded.connect(_just_grounded)
+
+func _just_grounded():
+	random_direction = 0
+# Run when the class is instantiated
+#func _init():
+	#just_grounded.connect(_on_just_grounded)
+
+func _draw():
+	return
+	draw_set_transform_matrix(global_transform.affine_inverse())
+	draw_line(Vector2.ZERO, up_direction * 100, Color.GREEN, 2.0)
+	draw_line(Vector2.ZERO, ball.appliedForce, Color.BLUE, 2.0)
+	draw_line(Vector2.ZERO, (ball.global_position - global_position), Color.DARK_MAGENTA, 2.0)
+
+#func _on_just_grounded():
+	#print("just grounded !")
+	#pass
+	
+## Ran when the timer runs out, potentially changing AI movement
+#func _on_jump_timer_timeout():
+	#jump_and_restart(true, )
+	
+	
+# Determine which way is "left" or "right", as well as angle between the player's rotation and ball
+func update_awareness():
+	if up_direction.y < 0:
+		angle = int(rad_to_deg((up_direction * 100).angle_to(ball.global_position - global_position)))
+		#print("on the ground")
+		if angle > 0:
+			left = 1
+		else:
+			right = -1
+	else:
+		angle = int(rad_to_deg((ball.global_position - global_position).angle_to(up_direction * 100)))
+		#print("upside down")
+		if angle > 0:
+			left = -1
+		else:
+			right = 1
+	
+# Moves AI towards the ball
+func ball_move():
+	update_awareness()
+	if angle > 0:
+		input.x = left
+	elif angle < 0:
+		input.x = right
+
+
+# Moves AI in the random direction
+func random_move():
+	if(random_direction != 0):
+		input.x = random_direction
+	else:
+		rng.randomize()
+		var num = rng.randi_range(1,2)
+		if(num == 1):
+			random_direction = 1
+		else:
+			random_direction = -1
+		input.x = random_direction	
+		
+
+
+# Moves the AI depending on the AI's movement type
+func move():
+	if(movementState == MOVEMENT_STATE.BALL_TRACKING):
+		ball_move() # Make movement towards the ball
+	elif(movementState == MOVEMENT_STATE.RANDOM):
+		random_move() # Make a random movement
+	
+	
+# Move the AI either randomly or towards the ball depending on the chance
+# Chance determines how likely the AI will go towards the ball, otherwise randomly
+func track_or_random_move(chance_to_ball = 50):
+	rng.randomize()
+	var result_chance = rng.randi_range(0, 100)
+	if(result_chance < chance_to_ball):
+		movementState = MOVEMENT_STATE.BALL_TRACKING
+	else:
+		movementState == MOVEMENT_STATE.RANDOM
+		
+
+# Starts the random jump timer that sholud be handled in the child notes
+func start_random_jump_timer(timer : Timer, min_time = 5.0, max_time = 7.0):
+	rng.randomize()
+	timer.stop()
+	timer.start(rng.randf_range(min_time, max_time))
+
+
+# Returns whether the Ai looks straight towards the ball even through the obstacles 
+# All angles are in degrees
+func aligned_towards_ball(min_angle = -5, max_angle = 5):
+	update_awareness()
+	return angle > min_angle and angle < max_angle
+
+
+# Checks whether it is possible to catch the ball while the ball is moving.
+# Error times allow for AI a chance to slightly/largely miss for realism
+func can_catch_ball(raycast, time_error = 0.0):
+	# Get the first collision object
+	var raycast_collision = raycast.get_collider()
+	
+	#if(ball.linear_velocity.length() == 0 and raycast_collision.get_name() == "Ball"):
+		#pressing_jump = 1
+	
+	#correct_direction()
+	#if (angle == 0):
+		#print("jump")
+		
+	### Detecting the ball in front to jump towards
+	if raycast_collision != null and raycast_collision.get_name() == "FrontPath":
+		# Distance between the AI and path of the ball
+		var dist_to_intercept = self.position.distance_to(raycast.get_collision_point())
+		# Jump speed of the AI to the path of the ball
+		var jump_speed_to_intercept = speed
+		# Time it would take for the AI to reach the path of the ball
+		var time_to_intercept = dist_to_intercept / jump_speed_to_intercept
+		
+		# Distance between the ball and the predicted AI position along ball path
+		var ball_dist = ball.position.distance_to(raycast.get_collision_point())
+		# Speed for the ball to reach the predicted AI position along ball path
+		var ball_speed = ball.appliedForce.length()
+		# Time the ball will take to reach the predicted AI position along ball path
+		var ball_time = ball_dist / ball_speed 
+		
+		# Rounding the time values for easier comparison
+		time_to_intercept = snappedf(time_to_intercept, 0.1)
+		ball_time = snappedf(ball_time, 0.1)
+		
+				
+		#print(str("time 1: ", time_to_intercept))
+		#print(str("time 2: ", ball_time))
+		#
+		#print(str("speed 1: ", jump_speed_to_intercept))
+		#print(str("speed 2: ", ball_speed))
+		
+		
+		#print(jump_speed_to_intercept)
+		#print(str("time: ", time_to_intercept))
+		#print(str("distance: ", dist_to_intercept))
+		
+		# If both times match, notify that Ai can catch the ball
+		if(time_to_intercept > ball_time - time_error and 
+		time_to_intercept < ball_time + time_error):
+			return true
+			
+	
+	return false
+		
