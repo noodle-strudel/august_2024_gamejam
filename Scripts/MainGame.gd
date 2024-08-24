@@ -13,6 +13,8 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	time_ui.text = str(ceil(round_time.time_left))
+	if round_time.time_left <= 20:
+		time_ui.set("theme_override_colors/font_color", Color.GOLD)
 
 
 func _on_round_timer_timeout():
@@ -26,3 +28,8 @@ func _on_ball_reset_round():
 func _on_ball_boundary_body_exited(body):
 	if body.name == "Ball":
 		body.position = Vector2.ZERO
+
+
+func _on_crowd_finished():
+	for sprite in get_tree().get_nodes_in_group("audience"):
+		sprite.play("idle")

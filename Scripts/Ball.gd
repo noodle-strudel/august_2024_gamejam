@@ -33,10 +33,14 @@ func _physics_process(delta):
 			change_anim("roll")
 		# Give score
 		elif collision.get_collider().name == "Goal":
+			for sprite in get_tree().get_nodes_in_group("audience"):
+				sprite.play("cheer")
 			$"../bgNoice/Crowd".play()
 			%GameManager.playerScore += 1
 			reset = true
 		elif collision.get_collider().name == "Enemy Goal":
+			for sprite in get_tree().get_nodes_in_group("audience"):
+				sprite.play("cheer")
 			$"../bgNoice/Crowd".play()
 			%GameManager.aiScore += 1
 			reset = true
@@ -46,6 +50,7 @@ func _physics_process(delta):
 			#print(appliedForce)
 	
 func _integrate_forces(state):
+	print("working??")
 	if reset:
 		emit_signal("resetRound")
 		state.linear_velocity = Vector2.ZERO
