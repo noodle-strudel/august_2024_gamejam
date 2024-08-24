@@ -1,52 +1,53 @@
-extends "res://Scripts/player.gd"
-signal aiJump(value)
+extends "res://Scripts/AI.gd"
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
+const CHANCE_TO_CHASE_BALL = 100
+const CATCH_TIME_ERROR = 2.0
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-
-# Raycast for the ball detection
 @onready var raycast = $RayCast2D
+@onready var jumpTimer = $"JumpTimer"
 
-@onready var ball = $"/root/MainGame/Ball" 
+func _ready():
+	if(jumpTimer as Timer != null):
+		#jump_and_restart(false)
+		pass
 
-# Overriding the input for ai
+func _on_just_grounded():
+	track_or_random_move(CHANCE_TO_CHASE_BALL)
+	
 func get_input():
+	#While on the ground
 	if(grounded):
-		ball = ball as Node
-		if(ball != null):
-			var angle = rad_to_deg(ball.position.angle_to_point(position)) - 90 + rotation_degrees #rad_to_deg(position.angle_to(ball.position))
-			if(angle > 0):
-				input.x = 1
-			else:
-				input.x = -1
-	
-	# Get the first collision object
-	var raycast_collision = raycast.get_collider()
-	#
-	### Detecting the ball in front to jump towards
-	if raycast_collision != null and raycast_collision.get_name() == "Ball":
-		pressing_jump = 1
-		emit_signal("aiJump", 1)
-	else: 
+		move()
+		var catchable = can_catch_ball(raycast, CATCH_TIME_ERROR)
+		var aligned = aligned_towards_ball()
+		
+		if(catchable or aligned):
+			pressing_jump = 1
+		else:
+			pressing_jump = 0
+			
+		#var angle = rad_to_deg(ball.position.angle_to_point(position)) - 90 + rotation_degrees #rad_to_deg(position.angle_to(ball.position))
+		#
+		##print(int(angle))
+		#if(angle > 0):
+			#input.x = 1
+		#else:
+			#input.x = -1
+		
+		
+		#pathing_to_ball()
+		pass
+	else:
 		pressing_jump = 0
-		emit_signal("aiJump", 0)
-		
-	
-	
-	# Get the first collision object
-	#var raycast_collision = raycast.get_collider()
-	
-		
-	## Jump if 
-	#if raycast_collision != null and raycast_collision.get_name() == "Ball":#.is_in_group("ball_type"):
-		#pressing_jump = 1
-	#else: 
-		#pressing_jump = 0
-		
+
+	#try_catch_ball(raycast, MIN_CATCH_TIME_ERROR, MAX_CATCH_TIME_ERROR)
 		
 	return input.normalized()
 
-
+func _on_ball_force_applied(force):
+	pass
+	#print("hi")
+	##position = force
+	#var shape = CollisionShape2D.new()
+	#add_child(shape)
+	#shape.global_position = Vector2.ZERO 

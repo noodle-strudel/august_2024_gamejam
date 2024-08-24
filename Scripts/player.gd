@@ -1,8 +1,15 @@
 extends CharacterBody2D
 
-@export var grav = -500
-@export var speed = 750
-@export var accel = 10
+signal just_grounded
+
+@export var grav : int
+@export var speed : int
+@export var accel : int
+
+func _init():
+	speed = 750
+	accel = 10
+	grav = -500
 
 # References children nodes once they exist in the scene
 @onready var anim_tree = $AnimationTree
@@ -84,6 +91,9 @@ func handle_collisions(delta):
 		if collision.get_collider().name.contains("AI"):
 			velocity += collision.get_normal()
 		else:
+			# Just grounded
+			if(!grounded):
+				emit_signal("just_grounded")
 			grounded = true
 			can_save_jump = true
 			change_anim("sliding")
@@ -95,6 +105,7 @@ func handle_collisions(delta):
 func _on_ball_reset_round():
 	position = startPos
 	grounded = true
+	emit_signal("just_grounded")
 	perpendicular = Vector2(0, 0)
 	up_direction = Vector2.UP
 	rotationAngle = 0.0

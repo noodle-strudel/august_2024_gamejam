@@ -154,9 +154,6 @@ graph_offset = Vector2(-157, 5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8upkq"]
 size = Vector2(96, 288)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_0fs64"]
-radius = 48.0
-
 [sub_resource type="Animation" id="Animation_n2qd4"]
 length = 0.001
 tracks/0/type = "value"
@@ -212,6 +209,11 @@ _data = {
 "idle": SubResource("Animation_7xcee"),
 "roll": SubResource("Animation_il1vm")
 }
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_sy47l"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0fs64"]
+radius = 48.0
 
 [sub_resource type="GDScript" id="GDScript_hk2rv"]
 script/source = "extends \"res://Scripts/player.gd\"
@@ -492,9 +494,6 @@ texture = ExtResource("7_k3uvp")
 hframes = 9
 frame = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
-shape = SubResource("CircleShape2D_0fs64")
-
 [node name="BallSFX" type="AudioStreamPlayer2D" parent="Ball"]
 stream = ExtResource("7_3locj")
 bus = &"sfx"
@@ -504,6 +503,19 @@ libraries = {
 "": SubResource("AnimationLibrary_b27ep")
 }
 autoplay = "idle"
+
+[node name="FrontPath" type="Area2D" parent="Ball"]
+light_mask = 15
+visibility_layer = 15
+position = Vector2(-1.9233e-06, -44)
+scale = Vector2(1, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball/FrontPath"]
+shape = SubResource("SegmentShape2D_sy47l")
+one_way_collision_margin = 20.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("CircleShape2D_0fs64")
 
 [node name="NormalAI" type="CharacterBody2D" parent="." groups=["ground"]]
 position = Vector2(-1651, 756)
@@ -542,8 +554,9 @@ anim_player = NodePath("../AnimationPlayer")
 [node name="RayCast2D" type="RayCast2D" parent="NormalAI"]
 target_position = Vector2(2.08165e-12, -2000)
 collision_mask = 3
+collide_with_areas = true
 
-[node name="MoveTimer" type="Timer" parent="NormalAI"]
+[node name="JumpTimer" type="Timer" parent="NormalAI"]
 
 [node name="AudioPlayer" type="AudioStreamPlayer2D" parent="NormalAI"]
 volume_db = -4.146
@@ -832,7 +845,7 @@ polygon = PackedVector2Array(-1024, -224, -992, -224, -992, 224, -1024, 224)
 [connection signal="resetRound" from="Ball" to="NormalAI" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="EasyAI" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="GhostManager" method="_on_ball_reset_round"]
-[connection signal="timeout" from="NormalAI/MoveTimer" to="NormalAI" method="_on_move_timer_timeout"]
+[connection signal="timeout" from="NormalAI/JumpTimer" to="NormalAI" method="_on_jump_timer_timeout"]
 [connection signal="timeout" from="EasyAI/MoveTimer" to="EasyAI" method="_on_move_timer_timeout"]
 [connection signal="finished" from="bgNoice/Crowd" to="." method="_on_crowd_finished"]
 [connection signal="timeout" from="ImpossibleAI/AutoJumpTimer" to="ImpossibleAI" method="_on_move_timer_timeout"]
