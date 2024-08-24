@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://cfove8krmrxsk"]
+[gd_resource type="TileSet" load_steps=8 format=3 uid="uid://cfove8krmrxsk"]
 
 [ext_resource type="Texture2D" uid="uid://y4rejfxi6bcm" path="res://Assets/Art/soccer_arena.png" id="1_beemg"]
 
@@ -13,6 +13,9 @@ tile_data = PackedInt32Array(0, 196610, 0, 65536, 589826, 0, 131072, 589826, 0, 
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_5r3wo"]
 tile_data = PackedInt32Array(0, 196610, 0, 65536, 458754, 0, 1, 262146, 0, 65537, 524290, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_0wyn8"]
+tile_data = PackedInt32Array(0, 196610, 0, 65536, 589826, 0, 131072, 262146, 805306368, 1, 262146, 0, 65537, 589826, 805306368, 131073, 196610, 805306368)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o4oka"]
 texture = ExtResource("1_beemg")
@@ -79,3 +82,4 @@ pattern_0 = SubResource("TileMapPattern_ghcfy")
 pattern_1 = SubResource("TileMapPattern_3ryib")
 pattern_2 = SubResource("TileMapPattern_vqppy")
 pattern_3 = SubResource("TileMapPattern_5r3wo")
+pattern_4 = SubResource("TileMapPattern_0wyn8")
