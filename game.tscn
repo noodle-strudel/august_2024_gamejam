@@ -21,6 +21,8 @@
 [ext_resource type="AudioStream" uid="uid://fjctvjr767f" path="res://music/sfx/bgStadiumNoice.ogg" id="11_ufym1"]
 [ext_resource type="Script" path="res://music/Mscript/bgNoice.gd" id="12_faeqh"]
 [ext_resource type="AudioStream" uid="uid://di35cdj4frfd3" path="res://music/sfx/cheering.ogg" id="13_o85pq"]
+[ext_resource type="Script" path="res://Scripts/EasyAI.gd" id="13_oug6g"]
+[ext_resource type="Script" path="res://Scripts/HardAI.gd" id="16_3xyxl"]
 [ext_resource type="AudioStream" uid="uid://bd4v0qouwrfch" path="res://music/themes/mainTheme.ogg" id="16_4yaqi"]
 [ext_resource type="Texture2D" uid="uid://c34endg6fp7wo" path="res://Assets/Art/soccer_space_1.png" id="19_bmhxy"]
 [ext_resource type="Shader" path="res://shaders/scroll.gdshader" id="19_opfob"]
@@ -400,7 +402,7 @@ metadata/_edit_group_ = true
 
 [node name="Player" type="CharacterBody2D" parent="." groups=["ground"]]
 unique_name_in_owner = true
-position = Vector2(-512, 192)
+position = Vector2(600, 171)
 collision_layer = 4
 collision_mask = 5
 floor_stop_on_slope = false
@@ -433,6 +435,7 @@ tree_root = SubResource("AnimationNodeStateMachine_ybv0v")
 anim_player = NodePath("../AnimationPlayer")
 
 [node name="AudioPlayer" type="AudioStreamPlayer2D" parent="Player"]
+visible = false
 bus = &"sfx"
 script = ExtResource("6_wwvec")
 
@@ -521,8 +524,61 @@ one_way_collision_margin = 20.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
 shape = SubResource("CircleShape2D_0fs64")
 
+[node name="EasyAI" type="CharacterBody2D" parent="." groups=["ground"]]
+position = Vector2(63, 531)
+rotation = 0.0292804
+collision_layer = 8
+collision_mask = 9
+floor_stop_on_slope = false
+floor_block_on_wall = false
+floor_max_angle = 3.14159
+floor_snap_length = 0.0
+script = ExtResource("13_oug6g")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="EasyAI"]
+rotation = 3.14159
+scale = Vector2(2, 2)
+texture = ExtResource("9_tpjgw")
+hframes = 14
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EasyAI"]
+shape = SubResource("CircleShape2D_q4fvd")
+
+[node name="Line2D" type="Line2D" parent="EasyAI"]
+position = Vector2(-336, 248)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="EasyAI"]
+libraries = {
+"": SubResource("AnimationLibrary_utpno")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="EasyAI"]
+tree_root = SubResource("AnimationNodeStateMachine_ybv0v")
+anim_player = NodePath("../AnimationPlayer")
+
+[node name="RayCast2D" type="RayCast2D" parent="EasyAI"]
+target_position = Vector2(2.08165e-12, -2000)
+collision_mask = 3
+collide_with_areas = true
+
+[node name="MoveTimer" type="Timer" parent="EasyAI"]
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="EasyAI"]
+volume_db = -4.492
+bus = &"sfx"
+script = ExtResource("6_wwvec")
+
+[node name="fingers" type="AudioStreamPlayer2D" parent="EasyAI/AudioPlayer"]
+stream = ExtResource("7_trcdj")
+volume_db = -10.0
+bus = &"sfx"
+
+[node name="JumpTimer" type="Timer" parent="EasyAI"]
+
 [node name="NormalAI" type="CharacterBody2D" parent="." groups=["ground"]]
-position = Vector2(-1651, 756)
+process_mode = 4
+position = Vector2(108, 475)
 rotation = 0.0292804
 collision_layer = 8
 collision_mask = 9
@@ -578,8 +634,6 @@ bus = &"sfx"
 [node name="EasyAI" type="CharacterBody2D" parent="." groups=["ground"]]
 position = Vector2(-1587, 191)
 rotation = 0.0292804
-collision_layer = 8
-collision_mask = 9
 floor_stop_on_slope = false
 floor_block_on_wall = false
 floor_max_angle = 3.14159
@@ -588,38 +642,39 @@ script = SubResource("GDScript_hk2rv")
 speed = 1000
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="EasyAI"]
+[node name="Sprite2D" type="Sprite2D" parent="HardAI"]
 rotation = 3.14159
 scale = Vector2(2, 2)
 texture = ExtResource("9_tpjgw")
 hframes = 14
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EasyAI"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HardAI"]
 shape = SubResource("CircleShape2D_q4fvd")
 
-[node name="Line2D" type="Line2D" parent="EasyAI"]
+[node name="Line2D" type="Line2D" parent="HardAI"]
 position = Vector2(-336, 248)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="EasyAI"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HardAI"]
 libraries = {
 "": SubResource("AnimationLibrary_utpno")
 }
 
-[node name="AnimationTree" type="AnimationTree" parent="EasyAI"]
+[node name="AnimationTree" type="AnimationTree" parent="HardAI"]
 tree_root = SubResource("AnimationNodeStateMachine_ybv0v")
 anim_player = NodePath("../AnimationPlayer")
 
-[node name="RayCast2D" type="RayCast2D" parent="EasyAI"]
+[node name="RayCast2D" type="RayCast2D" parent="HardAI"]
 target_position = Vector2(2.08165e-12, -2000)
 collision_mask = 3
+collide_with_areas = true
 
-[node name="MoveTimer" type="Timer" parent="EasyAI"]
+[node name="AutoJumpTimer" type="Timer" parent="HardAI"]
 
 [node name="AudioPlayer" type="AudioStreamPlayer2D" parent="EasyAI"]
 bus = &"sfx"
 script = ExtResource("6_wwvec")
 
-[node name="fingers" type="AudioStreamPlayer2D" parent="EasyAI/AudioPlayer"]
+[node name="fingers" type="AudioStreamPlayer2D" parent="HardAI/AudioPlayer"]
 stream = ExtResource("7_trcdj")
 volume_db = -6.89
 bus = &"sfx"
@@ -804,10 +859,9 @@ polygon = PackedVector2Array(-1024, -224, -992, -224, -992, 224, -1024, 224)
 [connection signal="resetRound" from="Ball" to="GameManager" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="Player" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="Ball" method="_on_reset_round"]
-[connection signal="resetRound" from="Ball" to="NormalAI" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="EasyAI" method="_on_ball_reset_round"]
+[connection signal="resetRound" from="Ball" to="NormalAI" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="GhostManager" method="_on_ball_reset_round"]
-[connection signal="timeout" from="NormalAI/JumpTimer" to="NormalAI" method="_on_jump_timer_timeout"]
 [connection signal="timeout" from="EasyAI/MoveTimer" to="EasyAI" method="_on_move_timer_timeout"]
 [connection signal="finished" from="bgNoice/Crowd" to="." method="_on_crowd_finished"]
 [connection signal="timeout" from="RoundTimer" to="." method="_on_round_timer_timeout"]
