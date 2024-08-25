@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://d25j3hbaff8n7"]
+[gd_scene load_steps=68 format=3 uid="uid://d25j3hbaff8n7"]
 
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_3anbo"]
 [ext_resource type="Script" path="res://Scripts/MainGame.gd" id="1_l3va8"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://lbewvpmaep3w" path="res://ui/win_lose_menu.tscn" id="2_gpixc"]
 [ext_resource type="Texture2D" uid="uid://bguvgoq54j4td" path="res://Assets/Art/soccer_space_background.png" id="2_sbqes"]
 [ext_resource type="Script" path="res://Scripts/Ball.gd" id="3_uolrk"]
+[ext_resource type="AudioStream" uid="uid://cel74o7pjhab" path="res://music/sfx/win.ogg" id="6_2e7h0"]
 [ext_resource type="Script" path="res://Scripts/GhostManager.gd" id="6_i2xiq"]
 [ext_resource type="TileSet" uid="uid://cfove8krmrxsk" path="res://Assets/Art/soccer_arena_tileset.tres" id="6_n3gs8"]
 [ext_resource type="PackedScene" uid="uid://dwkhrrvc8bqv5" path="res://ui/in_game_ui.tscn" id="6_n71pq"]
@@ -15,6 +16,7 @@
 [ext_resource type="Script" path="res://Scripts/NormalAI.gd" id="7_3ikhx"]
 [ext_resource type="AudioStream" uid="uid://cpe7x7iyh70pj" path="res://music/sfx/ballKick.ogg" id="7_3locj"]
 [ext_resource type="Texture2D" uid="uid://dd4th8j7tjy6m" path="res://Assets/Art/soccer_ball.png" id="7_k3uvp"]
+[ext_resource type="AudioStream" uid="uid://c4bntgb3eu2mr" path="res://music/sfx/lose.ogg" id="7_mag2e"]
 [ext_resource type="AudioStream" uid="uid://cotm0j1bnn2jj" path="res://music/sfx/fingerForMuvement.ogg" id="7_trcdj"]
 [ext_resource type="Texture2D" uid="uid://dc8je3nsfgnei" path="res://Assets/Art/soccer_player2.png" id="9_tpjgw"]
 [ext_resource type="AudioStream" uid="uid://bsgj4q62ygioh" path="res://music/sfx/jet.ogg" id="10_7u3hq"]
@@ -31,7 +33,7 @@
 [ext_resource type="Texture2D" uid="uid://x4u1p66vn80w" path="res://Assets/Art/soccer_space_4.png" id="23_wycuy"]
 [ext_resource type="Shader" path="res://shaders/scroll3.gdshader" id="25_p741q"]
 [ext_resource type="Texture2D" uid="uid://byw43b6d0kebj" path="res://Assets/Art/soccer_space_sun.png" id="27_navdi"]
-[ext_resource type="PackedScene" uid="uid://sogdlu45oh6u" path="res://Assets/Art/audience.tscn" id="32_8crl0"]
+[ext_resource type="PackedScene" path="res://Assets/Art/audience.tscn" id="32_8crl0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q4fvd"]
 radius = 48.1664
@@ -397,6 +399,15 @@ unique_name_in_owner = true
 script = ExtResource("1_3anbo")
 winsRequired = 3
 metadata/_edit_group_ = true
+
+[node name="WinSound" type="AudioStreamPlayer" parent="GameManager"]
+stream = ExtResource("6_2e7h0")
+bus = &"sfx"
+
+[node name="LoseSound" type="AudioStreamPlayer" parent="GameManager"]
+stream = ExtResource("7_mag2e")
+pitch_scale = 1.99
+bus = &"sfx"
 
 [node name="Player" type="CharacterBody2D" parent="." groups=["ground"]]
 unique_name_in_owner = true

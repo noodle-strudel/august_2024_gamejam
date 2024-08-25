@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://da600675jemnf"]
+[gd_scene load_steps=29 format=3 uid="uid://da600675jemnf"]
 
 [ext_resource type="Theme" uid="uid://lqrgxsxs2fye" path="res://ui/font and theme/base_theme.tres" id="1_ncjaa"]
 [ext_resource type="Script" path="res://ui/start_ui.gd" id="2_7ewnp"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://bguvgoq54j4td" path="res://Assets/Art/soccer_space_background.png" id="12_7x2qw"]
 [ext_resource type="Texture2D" uid="uid://drfwk8lpjertk" path="res://Assets/Art/soccer_main_menu_background_arena.png" id="13_x31xh"]
 [ext_resource type="Texture2D" uid="uid://s8chipwmdrjp" path="res://Assets/Art/soccer_main_menu_background_title.png" id="14_xx2lv"]
+[ext_resource type="Script" path="res://ui/Credist.gd" id="18_1xd3a"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h78lg"]
 shader = ExtResource("9_4deby")
@@ -252,8 +253,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 2133.0
-offset_bottom = 1200.0
+offset_right = -427.0
+offset_bottom = -240.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.2, 1.2)
@@ -273,8 +274,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 1280.0
 offset_top = 762.0
-offset_right = 1280.0
-offset_bottom = 762.0
+offset_right = -1280.0
+offset_bottom = -678.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("14_xx2lv")
@@ -451,23 +452,136 @@ text = "Choose a difficulty"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="DiffMenu"]
 layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="Eazy" type="Button" parent="DiffMenu/HBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
 text = "Easy"
+
+[node name="space2" type="Control" parent="DiffMenu/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Normal" type="Button" parent="DiffMenu/HBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
 text = "Normal"
+
+[node name="space" type="Control" parent="DiffMenu/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Hard" type="Button" parent="DiffMenu/HBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
 text = "Hard"
 
 [node name="BackDiff" type="Button" parent="DiffMenu"]
 layout_mode = 2
+size_flags_vertical = 4
+text = "Back"
+icon_alignment = 1
+
+[node name="Credist" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -587.0
+offset_top = -92.0
+offset_right = 587.0
+offset_bottom = 92.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("18_1xd3a")
+
+[node name="ContainerNoodlestrudel" type="HBoxContainer" parent="Credist"]
+clip_contents = true
+layout_mode = 2
+
+[node name="noodlestrudel" type="RichTextLabel" parent="Credist/ContainerNoodlestrudel"]
+layout_mode = 2
+bbcode_enabled = true
+text = "noodlestrudel"
+fit_content = true
+autowrap_mode = 0
+
+[node name="space" type="Control" parent="Credist/ContainerNoodlestrudel"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="leadArtist" type="Label" parent="Credist/ContainerNoodlestrudel"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = " Lead Artist"
+horizontal_alignment = 2
+
+[node name="ContainerPalnex" type="HBoxContainer" parent="Credist"]
+layout_mode = 2
+
+[node name="palnex" type="RichTextLabel" parent="Credist/ContainerPalnex"]
+layout_mode = 2
+bbcode_enabled = true
+text = "palnex"
+fit_content = true
+autowrap_mode = 0
+
+[node name="space" type="Control" parent="Credist/ContainerPalnex"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="musicAndUI" type="Label" parent="Credist/ContainerPalnex"]
+layout_mode = 2
+text = "Music and UI"
+
+[node name="ContainerLowercasewords" type="HBoxContainer" parent="Credist"]
+layout_mode = 2
+
+[node name="lowercasewords" type="RichTextLabel" parent="Credist/ContainerLowercasewords"]
+layout_mode = 2
+bbcode_enabled = true
+text = "lowercasewords"
+fit_content = true
+autowrap_mode = 0
+
+[node name="space" type="Control" parent="Credist/ContainerLowercasewords"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AIProgrammer" type="Label" parent="Credist/ContainerLowercasewords"]
+layout_mode = 2
+text = "AI programmer"
+
+[node name="ContainerMrSqueeg" type="HBoxContainer" parent="Credist"]
+layout_mode = 2
+
+[node name="MrSqueeg" type="RichTextLabel" parent="Credist/ContainerMrSqueeg"]
+layout_mode = 2
+bbcode_enabled = true
+text = "MrSqueeg  "
+fit_content = true
+autowrap_mode = 0
+
+[node name="space" type="Control" parent="Credist/ContainerMrSqueeg"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GeneralProgrammer" type="Label" parent="Credist/ContainerMrSqueeg"]
+layout_mode = 2
+text = "General programmer"
+
+[node name="ContainerBackCreds" type="HBoxContainer" parent="Credist"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="BackCreds" type="Button" parent="Credist/ContainerBackCreds"]
+layout_mode = 2
+size_flags_vertical = 4
 text = "Back"
 
 [connection signal="pressed" from="StartMenu/Start" to="." method="_on_start_pressed"]
@@ -484,3 +598,4 @@ text = "Back"
 [connection signal="pressed" from="DiffMenu/HBoxContainer/Normal" to="." method="_on_normal_pressed"]
 [connection signal="pressed" from="DiffMenu/HBoxContainer/Hard" to="." method="_on_difficult_pressed"]
 [connection signal="pressed" from="DiffMenu/BackDiff" to="." method="_on_back_diff_pressed"]
+[connection signal="pressed" from="Credist/ContainerBackCreds/BackCreds" to="." method="_on_back_creds_pressed"]
