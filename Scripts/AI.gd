@@ -1,5 +1,6 @@
 extends "res://Scripts/player.gd"
 
+signal aiJump
 
 @onready var ball = $"/root/MainGame/Ball" as RigidBody2D
 @onready var player = $"/root/MainGame/Player" as CharacterBody2D
@@ -34,6 +35,7 @@ func _just_grounded():
 #func _init():
 	#just_grounded.connect(_on_just_grounded)
 
+	
 func _draw():
 	return
 	draw_set_transform_matrix(global_transform.affine_inverse())
@@ -112,9 +114,10 @@ func track_or_random_move(chance_to_ball = 50):
 
 # Starts the random jump timer that sholud be handled in the child notes
 func start_random_jump_timer(timer : Timer, min_time = 5.0, max_time = 7.0):
-	rng.randomize()
-	timer.stop()
-	timer.start(rng.randf_range(min_time, max_time))
+	if(timer != null):
+		rng.randomize()
+		timer.stop()
+		timer.start(rng.randf_range(min_time, max_time))
 
 
 # Returns whether the Ai looks straight towards the ball even through the obstacles 

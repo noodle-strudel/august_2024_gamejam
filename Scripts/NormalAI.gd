@@ -1,5 +1,5 @@
 extends "res://Scripts/AI.gd"
-signal aiJump
+
 
 const CHANCE_TO_CHASE_BALL = 100
 const CATCH_TIME_ERROR = 2.0
