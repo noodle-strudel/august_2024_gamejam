@@ -338,7 +338,7 @@ metadata/_edit_group_ = true
 
 [node name="Player" type="CharacterBody2D" parent="." groups=["ground"]]
 unique_name_in_owner = true
-position = Vector2(-833, 159)
+position = Vector2(276, -191)
 collision_layer = 4
 collision_mask = 5
 floor_stop_on_slope = false
@@ -436,7 +436,7 @@ polygon = PackedVector2Array(-48.0012, -128, 31.9997, -128, 31.998, -224, -16.00
 [node name="Ball" type="RigidBody2D" parent="."]
 unique_name_in_owner = true
 z_index = 1
-position = Vector2(14, 36)
+position = Vector2(2.08165e-12, 2.08165e-12)
 collision_layer = 2
 collision_mask = 4294967295
 script = ExtResource("3_uolrk")
@@ -473,10 +473,10 @@ shape = SubResource("CircleShape2D_0fs64")
 
 [node name="EasyAI" type="CharacterBody2D" parent="." groups=["ground"]]
 process_mode = 4
-position = Vector2(-389, 179)
-rotation = 0.0292804
-collision_layer = 8
-collision_mask = 9
+visible = false
+position = Vector2(-386, 195)
+collision_layer = 4
+collision_mask = 5
 floor_stop_on_slope = false
 floor_block_on_wall = false
 floor_max_angle = 3.14159
@@ -527,10 +527,11 @@ stream = ExtResource("10_7u3hq")
 bus = &"sfx"
 
 [node name="NormalAI" type="CharacterBody2D" parent="." groups=["ground"]]
-position = Vector2(-473, 196)
-rotation = 0.0292804
-collision_layer = 9
-collision_mask = 9
+process_mode = 4
+visible = false
+position = Vector2(-386, 195)
+collision_layer = 4
+collision_mask = 5
 floor_stop_on_slope = false
 floor_block_on_wall = false
 floor_max_angle = 3.14159
@@ -581,8 +582,10 @@ bus = &"sfx"
 
 [node name="HardAI" type="CharacterBody2D" parent="." groups=["ground"]]
 process_mode = 4
-position = Vector2(-592, 551)
-rotation = 0.0292804
+visible = false
+position = Vector2(-386, 195)
+collision_layer = 4
+collision_mask = 5
 floor_stop_on_slope = false
 floor_block_on_wall = false
 floor_max_angle = 3.14159
@@ -804,12 +807,17 @@ position = Vector2(2016, 0)
 color = Color(0.46, 0.685, 1, 1)
 polygon = PackedVector2Array(-1024, -224, -992, -224, -992, 224, -1024, 224)
 
+[node name="PreStartTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
 [connection signal="resetRound" from="Ball" to="." method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="GameManager" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="Player" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="Ball" method="_on_reset_round"]
 [connection signal="resetRound" from="Ball" to="EasyAI" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="NormalAI" method="_on_ball_reset_round"]
+[connection signal="resetRound" from="Ball" to="HardAI" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="GhostManager" method="_on_ball_reset_round"]
 [connection signal="timeout" from="HardAI/AutoJumpTimer" to="HardAI" method="_on_move_timer_timeout"]
 [connection signal="finished" from="bgNoice/Crowd" to="." method="_on_crowd_finished"]

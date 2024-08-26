@@ -20,11 +20,24 @@ var angle : float
 var left = -1
 var right = 1
 
+# THe current random direction of AI's movement
 var random_direction = 0
 
+func _on_enabled_timeout():
+	self.process_mode = Node.PROCESS_MODE_INHERIT
+
+#func _init():
+	#start_delay.process_mode = Node.PROCESS_MODE_ALWAYS
+	#self.add_child(start_delay)
+	#start_delay.autostart = true
+	#start_delay.one_shot = true
+	#start_delay.timeout.connect(_on_enabled_timeout)
+	#pass
+	
 # Runs when the Node with this script is put into the game
 func _ready():
 	ball.resetRound.connect(_on_ball_reset_round)
+	grounded = false
 	#visibility_changed.connect(_on_debug)
 	#just_grounded.connect(_on_just_grounded)
 

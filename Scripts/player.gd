@@ -11,7 +11,7 @@ func _init():
 	speed = 750
 	accel = 10
 	grav = -500
-
+	
 # References children nodes once they exist in the scene
 @onready var anim_tree = $AnimationTree
 @onready var state_machine = anim_tree["parameters/playback"]
@@ -54,7 +54,7 @@ func _physics_process(delta):
 	playerInput = get_input()
 	
 	# Jump
-	if pressing_jump > 0:
+	if pressing_jump > 0 and grounded:
 		emit_signal("just_jumped", 1)
 		$AudioPlayer/fingers.volume_db = -90
 		if not $AudioPlayer/jet.is_playing():
