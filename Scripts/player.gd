@@ -5,6 +5,7 @@ signal just_grounded
 @export var grav : int
 @export var speed : int
 @export var accel : int
+var startUpDirection = Vector2.LEFT
 
 func _init():
 	speed = 750
@@ -29,6 +30,9 @@ var can_save_jump = true
 var current_anim = ""
 
 var just_landed = false
+	
+func _ready():
+	up_direction = startUpDirection
 	
 # Movement Input
 func get_input():
@@ -111,7 +115,7 @@ func _on_ball_reset_round():
 	grounded = true
 	emit_signal("just_grounded")
 	perpendicular = Vector2(0, 0)
-	up_direction = Vector2.UP
+	up_direction = startUpDirection
 	rotationAngle = 0.0
 
 # changes current animation to a new animation

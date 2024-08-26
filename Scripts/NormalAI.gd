@@ -8,6 +8,8 @@ const CATCH_TIME_ERROR = 2.0
 @onready var jumpTimer = $"JumpTimer"
 
 func _ready():
+	startUpDirection = Vector2.RIGHT
+	up_direction = startUpDirection
 	if(jumpTimer as Timer != null):
 		#jump_and_restart(false)
 		pass

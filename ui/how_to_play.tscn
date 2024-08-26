@@ -1,8 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://b5ogiy5qtmcxs"]
+[gd_scene load_steps=10 format=3 uid="uid://bx5hg4r2dyp6a"]
 
 [ext_resource type="Theme" uid="uid://lqrgxsxs2fye" path="res://ui/font and theme/base_theme.tres" id="1_ulgwu"]
 [ext_resource type="Script" path="res://Scripts/how_to_play.gd" id="2_hdbde"]
-[ext_resource type="StyleBox" uid="uid://1vibes0eg4nv" path="res://ui/font and theme/how_to_play_theme.tres" id="3_ekvai"]
+[ext_resource type="StyleBox" path="res://ui/font and theme/how_to_play_theme.tres" id="3_ekvai"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7r5gc"]
 bg_color = Color(0.12, 0.32, 0.6, 0.0666667)

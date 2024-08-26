@@ -27,7 +27,7 @@ func _on_ball_reset_round():
 	print("You: ", playerScore, " | AI: ", aiScore)
 	$"../CanvasLayer/Score/ScoreContainer/Score/AILabelScore".text = str(aiScore)
 	$"../CanvasLayer/Score/ScoreContainer/Score/PlayerLabelScore".text = str(playerScore)
-	if playerScore > winsRequired:
+	if playerScore >= winsRequired:
 		# Do player win stuff here...
 		$"../CanvasLayer/WinLoseMenu"/inGameOptions/WinLose.text = "You WON!!!"
 		$"../CanvasLayer/WinLoseMenu".visible = true
