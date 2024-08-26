@@ -26,6 +26,8 @@ var random_direction = 0
 func _on_enabled_timeout():
 	self.process_mode = Node.PROCESS_MODE_INHERIT
 
+
+
 #func _init():
 	#start_delay.process_mode = Node.PROCESS_MODE_ALWAYS
 	#self.add_child(start_delay)
@@ -87,7 +89,15 @@ func focus_on(target : Node2D):
 			left = -1
 		else:
 			right = 1
-	
+
+func round_delay(timer : Timer):
+	# Make AI visible but disables on start
+	self.visible = true
+	self.process_mode = Node.PROCESS_MODE_DISABLED
+	timer.start(PROCESS_DELAY)
+	pass
+
+
 # Moves AI towards the target
 func move(target):
 	focus_on(target)

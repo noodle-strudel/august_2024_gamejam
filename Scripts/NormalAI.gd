@@ -1,6 +1,5 @@
 extends "res://Scripts/AI.gd"
 
-
 const CHANCE_TO_CHASE_BALL = 80
 const MIN_RANDOM_JUMP_TIME = 5
 const MAX_RANDOM_JUMP_TIME = 9
@@ -14,6 +13,7 @@ func _on_jump_timer_timeout():
 	pressing_jump = 1
 	pass
 	
+# Just grounded
 func _on_just_grounded():
 	track_or_random_move(CHANCE_TO_CHASE_BALL)
 	var total_time = start_random_jump_timer(jumpTimer, MIN_RANDOM_JUMP_TIME, MAX_RANDOM_JUMP_TIME)

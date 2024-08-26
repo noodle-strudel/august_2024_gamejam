@@ -32,7 +32,6 @@ func _ready():
 
 # Overriding the input for ai
 func get_input():
-	#s()
 	if(grounded):
 		choose_movement(ball)
 		var catchable = can_catch_target(ball, raycast, ERROR_CATCH_TIME)

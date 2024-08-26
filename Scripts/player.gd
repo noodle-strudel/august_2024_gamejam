@@ -3,6 +3,9 @@ extends CharacterBody2D
 signal just_grounded
 signal just_jumped
 
+const PROCESS_DELAY = 1
+const DELAY_TIMER_NAME = "DELAY"
+
 @export var grav : int
 @export var speed : int
 @export var accel : int
@@ -40,8 +43,6 @@ func get_input():
 	pressing_jump = Input.get_action_strength("jump")
 	
 	return input.normalized()
-
-	
 
 func jump():
 	velocity = up_direction * speed
@@ -117,10 +118,24 @@ func handle_collisions(delta):
 			up_direction = collision.get_normal()
 			velocity += (up_direction * (speed / 1.2) )
 
+# Disables the AI and enables on timer elapsed
+func round_delay(timer : Timer):
+# Make AI visible but disables on start
+	self.visible = true
+	self.process_mode = Node.PROCESS_MODE_DISABLED
+	timer.start(PROCESS_DELAY)
+	pass
+
 func _on_ball_reset_round():
 	position = startPos
 	grounded = true
 	emit_signal("just_grounded")
+	var timer = self.get_node(DELAY_TIMER_NAME)
+	
+	print(DELAY_TIMER_NAME)
+	#print(self.has_node())
+	if(timer != null):
+		round_delay(timer)
 	perpendicular = Vector2(0, 0)
 	up_direction = Vector2.UP
 	rotationAngle = 0.0
