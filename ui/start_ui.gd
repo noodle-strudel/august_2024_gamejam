@@ -3,6 +3,7 @@ extends Control
 var is_loading_settings = false
 var on_setting_menu = false
 var on_diff_menu = false
+var on_creds_menu = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -30,7 +31,8 @@ func _process(delta):
 			_on_back_pressed()
 		if Input.is_action_just_pressed("pause") && on_diff_menu:
 			_on_back_diff_pressed()
-
+		if Input.is_action_just_pressed("pause") && on_creds_menu:
+			_on_back_creds_pressed()
 
 func _on_volume_slider_value_changed(value):
 	AudioServer.set_bus_volume_db(
@@ -145,3 +147,17 @@ func _on_back_diff_pressed():
 	$DiffMenu.visible = !$DiffMenu.visible
 	$StartMenu.visible = !$StartMenu.visible
 	on_diff_menu = false
+
+
+func _on_credits_pressed():
+	$ClickSFX.play()
+	$StartMenu.visible = !$StartMenu.visible
+	$Credist.visible = !$Credist.visible
+	on_creds_menu = true
+
+
+func _on_back_creds_pressed():
+	$ClickSFX.play()
+	$StartMenu.visible = !$StartMenu.visible
+	$Credist.visible = !$Credist.visible
+	on_creds_menu = false
