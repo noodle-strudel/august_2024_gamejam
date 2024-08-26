@@ -3,6 +3,7 @@
 [ext_resource type="Theme" uid="uid://lqrgxsxs2fye" path="res://ui/font and theme/base_theme.tres" id="1_ulgwu"]
 [ext_resource type="Script" path="res://Scripts/how_to_play.gd" id="2_hdbde"]
 [ext_resource type="StyleBox" path="res://ui/font and theme/how_to_play_theme.tres" id="3_ekvai"]
+
 [ext_resource type="AudioStream" uid="uid://d04q3olf0jxrl" path="res://music/sfx/agreement_start.ogg" id="4_xt17c"]
 [ext_resource type="AudioStream" uid="uid://loe63u4nelqo" path="res://music/sfx/agreement_end.ogg" id="5_11l48"]
 

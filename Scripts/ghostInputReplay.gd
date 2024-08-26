@@ -14,6 +14,7 @@ var grounded = true
 var rotationAngle = 0.0
 var startPos
 var paused = false
+var startUpDirection : Vector2
 
 var inputs : Array
 var timeBeforeInputs : Array
@@ -42,6 +43,8 @@ var current_anim = ""
 func _ready():
 	# allow the GhostManager to pass the input arrays into self
 	await get_tree().create_timer(0.5).timeout
+	
+	up_direction = startUpDirection
 	
 	timer.one_shot = true
 	timer.autostart = true
@@ -72,10 +75,11 @@ func _process(delta):
 	#	perpendicular = Vector2.ZERO
 		
 	# Jump
-	if inputs.size() <= index && timeToSwapJump.size() <= jumpIndex:
-		$Sprite2D.self_modulate.a = -1
-		position.y = -2000
+	if timeBeforeInputs.size() <= inputTimeIndex && timeToSwapJump.size() <= jumpIndex:
+		self.visible = false
+		position.y = -3000
 	else:
+		self.visible = true
 		$Sprite2D.self_modulate.a = 0.5
 	if isJumping and timeToSwapJump.size() > 0:
 		velocity = up_direction * speed
@@ -121,7 +125,7 @@ func _on_reset_round():
 	grounded = true
 	perpendicular = Vector2.ZERO
 	playerInput = Vector2.ZERO
-	up_direction = Vector2.UP
+	up_direction = startUpDirection
 	rotationAngle = 0.0
 	initiateGhost = 0
 	gameStart = true
@@ -142,8 +146,6 @@ func change_anim(name):
 
 
 func _timer_Timeout():
-	print("Timer Ended")
-	print("Index", index, " Input Size ", inputs.size())
 	if is_initiated() && inputs.size() > 1:
 		if inputTimeIndex < timeBeforeInputs.size():
 			playerInput = inputs[index]
@@ -159,7 +161,6 @@ func _timer_Timeout():
 		timer.start()
 
 func _jumptimer_Timeout():
-	print("Swapping Jump")
 	if timeToSwapJump.size() == 0:
 		return
 	
@@ -177,8 +178,7 @@ func _jumptimer_Timeout():
 		#print(jumpIndex, ": Jump after ", timeToSwapJump[jumpIndex])
 		jumpIndex += 1
 	else:
-		print("ghost end of jumping")
-
+		isJumping = false
 
 func is_initiated() -> bool:
 	if initiateGhost == 2:
