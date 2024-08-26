@@ -1,7 +1,5 @@
 extends "res://Scripts/player.gd"
 
-signal aiJump
-
 @onready var ball = $"/root/MainGame/Ball" as RigidBody2D
 @onready var player = $"/root/MainGame/Player" as CharacterBody2D
 
@@ -27,11 +25,13 @@ var random_direction = 0
 # Runs when the Node with this script is put into the game
 func _ready():
 	ball.resetRound.connect(_on_ball_reset_round)
-	just_grounded.connect(_just_grounded)
+	
+	#just_grounded.connect(_on_just_grounded)
 
-func _just_grounded():
-	random_direction = 0
+#func _on_just_grounded():
+	#random_direction = 0
 # Run when the class is instantiated
+
 #func _init():
 	#just_grounded.connect(_on_just_grounded)
 
@@ -118,6 +118,8 @@ func start_random_jump_timer(timer : Timer, min_time = 5.0, max_time = 7.0):
 		rng.randomize()
 		timer.stop()
 		timer.start(rng.randf_range(min_time, max_time))
+		return timer.time_left
+	return 0
 
 
 # Returns whether the Ai looks straight towards the ball even through the obstacles 
@@ -156,6 +158,10 @@ func can_catch_ball(raycast, time_error = 0.0):
 		# Time the ball will take to reach the predicted AI position along ball path
 		var ball_time = ball_dist / ball_speed 
 		
+		# Introducing randomness to the catching so that the AI might miss
+		#rng.randomize()
+		#ball_time = rng.randf_range(ball_time - time_error, ball_time + time_error)
+		
 		# Rounding the time values for easier comparison
 		time_to_intercept = snappedf(time_to_intercept, 0.1)
 		ball_time = snappedf(ball_time, 0.1)
@@ -173,6 +179,7 @@ func can_catch_ball(raycast, time_error = 0.0):
 		#print(str("distance: ", dist_to_intercept))
 		
 		# If both times match, notify that Ai can catch the ball
+		#if(time_to_intercept == ball_time):
 		if(time_to_intercept > ball_time - time_error and 
 		time_to_intercept < ball_time + time_error):
 			return true

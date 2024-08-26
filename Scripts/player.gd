@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal just_grounded
+signal just_jumped
 
 @export var grav : int
 @export var speed : int
@@ -52,6 +53,7 @@ func _physics_process(delta):
 	
 	# Jump
 	if pressing_jump > 0:
+		emit_signal("just_jumped", 1)
 		$AudioPlayer/fingers.volume_db = -90
 		if not $AudioPlayer/jet.is_playing():
 			$AudioPlayer/jet.play()

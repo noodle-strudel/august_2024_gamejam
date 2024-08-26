@@ -43,8 +43,8 @@ var gameStart = false
 var current_anim = ""
 
 func _ready():
-	get_node("../EasyAI").aiJump.connect(_on_aiJump)
-	get_node("../NormalAI").aiJump.connect(_on_aiJump)
+	get_node("../EasyAI").just_jumped.connect(_on_aiJump)
+	get_node("../NormalAI").just_jumped.connect(_on_aiJump)
 	# get_node("../HardAI").aiJump.connect(_on_aiJump)
 	
 # Movement Input

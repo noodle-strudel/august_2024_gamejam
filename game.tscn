@@ -337,7 +337,7 @@ metadata/_edit_group_ = true
 
 [node name="Player" type="CharacterBody2D" parent="." groups=["ground"]]
 unique_name_in_owner = true
-position = Vector2(-512, 192)
+position = Vector2(315, 164)
 collision_layer = 4
 collision_mask = 5
 floor_stop_on_slope = false
@@ -424,6 +424,7 @@ polygon = PackedVector2Array(-48.0012, -128, 31.9997, -128, 31.998, -224, -16.00
 [node name="Ball" type="RigidBody2D" parent="."]
 unique_name_in_owner = true
 z_index = 1
+position = Vector2(249, 135)
 collision_layer = 2
 collision_mask = 4294967295
 script = ExtResource("3_uolrk")
@@ -459,7 +460,7 @@ one_way_collision_margin = 20.0
 shape = SubResource("CircleShape2D_0fs64")
 
 [node name="EasyAI" type="CharacterBody2D" parent="." groups=["ground"]]
-position = Vector2(-227, 327)
+position = Vector2(-389, 179)
 rotation = 0.0292804
 collision_layer = 8
 collision_mask = 9
@@ -492,8 +493,10 @@ tree_root = SubResource("AnimationNodeStateMachine_ybv0v")
 anim_player = NodePath("../AnimationPlayer")
 
 [node name="RayCast2D" type="RayCast2D" parent="EasyAI"]
+position = Vector2(23.0194, 0.326203)
 target_position = Vector2(2.08165e-12, -2000)
 collision_mask = 3
+collide_with_areas = true
 
 [node name="JumpTimer" type="Timer" parent="EasyAI"]
 
@@ -511,7 +514,8 @@ stream = ExtResource("10_7u3hq")
 bus = &"sfx"
 
 [node name="NormalAI" type="CharacterBody2D" parent="." groups=["ground"]]
-position = Vector2(-1651, 756)
+process_mode = 4
+position = Vector2(-473, 196)
 rotation = 0.0292804
 collision_layer = 8
 collision_mask = 9
@@ -520,7 +524,6 @@ floor_block_on_wall = false
 floor_max_angle = 3.14159
 floor_snap_length = 0.0
 script = ExtResource("7_3ikhx")
-speed = 1000
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="NormalAI"]
@@ -743,8 +746,6 @@ polygon = PackedVector2Array(-1024, -224, -992, -224, -992, 224, -1024, 224)
 [connection signal="resetRound" from="Ball" to="EasyAI" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="NormalAI" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="GhostManager" method="_on_ball_reset_round"]
-[connection signal="timeout" from="EasyAI/JumpTimer" to="EasyAI" method="_on_move_timer_timeout"]
-[connection signal="timeout" from="NormalAI/JumpTimer" to="NormalAI" method="_on_jump_timer_timeout"]
 [connection signal="finished" from="bgNoice/Crowd" to="." method="_on_crowd_finished"]
 [connection signal="timeout" from="RoundTimer" to="." method="_on_round_timer_timeout"]
 [connection signal="body_exited" from="BallBoundary" to="." method="_on_ball_boundary_body_exited"]
