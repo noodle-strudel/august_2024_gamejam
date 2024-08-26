@@ -7,9 +7,28 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	start_game()
 
-
+func start_game():
+	var ai_object : CharacterBody2D
+	match GlobalSettings.difficulty:
+		0:
+			ai_object = get_node("EasyAI")
+		1:
+			ai_object = get_node("NormalAI")
+		2:
+			ai_object = get_node("HardAI")
+	# Defines the timer after which AI will be enabled
+	var timer = Timer.new()
+	timer.name = ai_object.DELAY_TIMER_NAME
+	ai_object.add_child(timer)
+	timer.process_mode = Node.PROCESS_MODE_ALWAYS
+	timer.one_shot = true
+	timer.timeout.connect(ai_object._on_enabled_timeout)
+	ai_object.round_delay(timer)
+	
+	
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	time_ui.text = str(ceil(round_time.time_left))

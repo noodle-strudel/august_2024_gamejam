@@ -1,16 +1,18 @@
 extends "res://Scripts/AI.gd"
 
 
-var landed = false
+const ERROR_CATCH_TIME = 0.1
 
-# determins if the offensiveTimer is a child
-var offensiveTimer = false
+# determins if the offensive_timer is a child
+var offensive_timer = false
 
 # Raycast for the ball detection
 @onready var raycast = $RayCast2D
+
 @onready var enemy_goal = $"/root/MainGame/Enemy Goal"
 @onready var goal = $"/root/MainGame/Goal"
 @onready var offense_jump_timer
+
 
 enum STATE {
 	OFFENSE,
@@ -18,11 +20,44 @@ enum STATE {
 	NORMAL
 }
 
-var state = STATE.OFFENSE
+var state = STATE.NORMAL
 
-func _process(delta):
-	queue_redraw()
+func _ready():
+	just_grounded.connect(_on_just_grounded)
 
+#func focus_on(target : Node2D):
+	#if up_direction.y < 0:
+		#angle = int(rad_to_deg((up_direction * 100).angle_to(target.global_position - global_position)))
+		##print("on the ground")
+		#if angle > 0:
+			#left = 1
+		#else:
+			#right = -1
+	#else:
+		#angle = int(rad_to_deg((ball.global_position - global_position).angle_to(up_direction * 100)))
+		##print("upside down")
+		#if angle > 0:
+			#left = -1
+		#else:
+			#right = 1
+	
+	
+# determine which way is "left" or "right" when initially landing on a surface
+func _on_just_grounded():
+	if up_direction.y < 0:
+		#print("on the ground")
+		if angle > 0:
+			left = -1
+		else:
+			right = 1
+	else:
+		#print("upside down")
+		if angle > 0:
+			left = 1
+		else:
+			right = -1
+	
+	
 # Overriding the input for ai
 func get_input():
 	
@@ -30,97 +65,68 @@ func get_input():
 	if ball.global_position.x > 384: # close to the player's goal
 		state = STATE.OFFENSE
 	elif ball.global_position.x < -384: # close to the AI's goal
-		state = STATE.NORMAL
+		state = STATE.DEFENSE
 	else: # in the middle
 		state = STATE.NORMAL
-	
-	# change behavior based on the state of the AI
+	defense()
+	## change behavior based on the state of the AI
 	match state:
 		STATE.NORMAL:
-			if offensiveTimer:
+			if offensive_timer:
 				for child in get_children():
 					if child.name == "OffenseJumpTimer":
 						child.queue_free()
-						offensiveTimer = false
+						offensive_timer = false
 			normal()
-			
 		STATE.OFFENSE:
-			if offensiveTimer == false:
+			if offensive_timer == false:
 				offense_jump_timer = Timer.new()
 				offense_jump_timer.autostart = true
 				offense_jump_timer.wait_time = 5
 				offense_jump_timer.name = "OffenseJumpTimer"
 				offense_jump_timer.timeout.connect(_offense_Timeout)
 				add_child(offense_jump_timer)
-				offensiveTimer = true
+				offensive_timer = true
 			normal()
+		STATE.DEFENSE:
+			if offensive_timer:
+				for child in get_children():
+					if child.name == "OffenseJumpTimer":
+						child.queue_free()
+						offensive_timer = false
+			defense()
+	
 	
 	return input.normalized()
 
 func normal():
+	if(grounded):
+		focus_on(ball)
+		move(ball)
+		print(angle)
+			
+		var catchable = can_catch_target(ball, raycast)
+		var aligned = aligned_towards_target(ball)
+		
+		if (catchable or aligned):
+			pressing_jump = 1
+		else: 
+			pressing_jump = 0
+		
+func defense():
 	#print("up direction: ", up_direction)
 	if(grounded):
-		ball = ball as Node
-		if(ball != null):
-			ball_move()
-			#var angle
-			#if up_direction.y < 0:
-				#angle = int(rad_to_deg((up_direction * 100).angle_to(ball.global_position - global_position)))
-				##print("on the ground")
-				#if angle > 0:
-					#left = 1
-				#else:
-					#right = -1
-			#else:
-				#angle = int(rad_to_deg((ball.global_position - global_position).angle_to(up_direction * 100)))
-				##print("upside down")
-				#if angle > 0:
-					#left = -1
-				#else:
-					#right = 
-					
-					
-			##
-			### determine which way is "left" or "right" when initially landing on a surface
-			#if landed == false:
-				#print('landed')
-				#landed = true
-				#if up_direction.y < 0:
-					##print("on the ground")
-					#if angle > 0:
-						#left = -1
-					#else:
-						#right = 1
-				#else:
-					##print("upside down")
-					#if angle > 0:
-						#left = 1
-					#else:
-						#right = -1
-			##
-			# move toward the ball based on angle from the ball
-			#if angle > 0:
-				#input.x = left
-			#elif angle < 0:
-				#input.x = right
-			#else:
-				## jump to try and move closer to the ball
-				#jump()
-				#landed = false
-
+		focus_on(ball)
+		move(ball)
 	
-	# Get the first collision object
-	var raycast_collision = raycast.get_collider()
-	#
-	### Detecting the ball in front to jump towards
-	if raycast_collision != null and raycast_collision.get_name() == "Ball":
-		pressing_jump = 1
-		landed = false
-	else: 
-		pressing_jump = 0
-
-func defense():
-	pass
+		var player_catchable = can_catch_target(player, raycast, 0.2)# and player.pressing_jump == 1
+		var player_aligned = aligned_towards_target(player)
+		var ball_aligned = aligned_towards_target(ball)
+		#print(player.grounded)
+		if ((player_catchable and !player.grounded) or ball_aligned or player_aligned):
+			pressing_jump = 1
+		else: 
+			pressing_jump = 0
 
 func _offense_Timeout():
 	jump()

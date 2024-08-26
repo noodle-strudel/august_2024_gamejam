@@ -1,6 +1,10 @@
 extends CharacterBody2D
 
 signal just_grounded
+signal just_jumped
+
+const PROCESS_DELAY = 1
+const DELAY_TIMER_NAME = "DELAY"
 
 @export var grav : int
 @export var speed : int
@@ -11,7 +15,8 @@ func _init():
 	speed = 750
 	accel = 10
 	grav = -500
-
+	pass
+	
 # References children nodes once they exist in the scene
 @onready var anim_tree = $AnimationTree
 @onready var state_machine = anim_tree["parameters/playback"]
@@ -55,7 +60,8 @@ func _physics_process(delta):
 	playerInput = get_input()
 	
 	# Jump
-	if pressing_jump > 0:
+	if pressing_jump > 0 and grounded:
+		emit_signal("just_jumped", 1)
 		$AudioPlayer/fingers.volume_db = -90
 		if not $AudioPlayer/jet.is_playing():
 			$AudioPlayer/jet.play()
@@ -98,6 +104,12 @@ func handle_collisions(delta):
 	if collision:
 		if collision.get_collider().name.contains("AI"):
 			velocity += collision.get_normal()
+			if(!grounded):
+				var u = up_direction
+				up_direction *= -Vector2.ONE.normalized()
+				jump()
+				u = up_direction
+				pass
 		else:
 			# Just grounded
 			if(!grounded):
@@ -110,10 +122,24 @@ func handle_collisions(delta):
 			up_direction = collision.get_normal()
 			velocity += (up_direction * (speed / 1.2) )
 
+# Disables the AI and enables on timer elapsed
+func round_delay(timer : Timer):
+# Make AI visible but disables on start
+	self.visible = true
+	self.process_mode = Node.PROCESS_MODE_DISABLED
+	timer.start(PROCESS_DELAY)
+	pass
+
 func _on_ball_reset_round():
 	position = startPos
 	grounded = true
 	emit_signal("just_grounded")
+	var timer = self.get_node(DELAY_TIMER_NAME)
+	
+	print(DELAY_TIMER_NAME)
+	#print(self.has_node())
+	if(timer != null):
+		round_delay(timer)
 	perpendicular = Vector2(0, 0)
 	up_direction = startUpDirection
 	rotationAngle = 0.0

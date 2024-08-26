@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://d25j3hbaff8n7"]
+[gd_scene load_steps=67 format=3 uid="uid://d25j3hbaff8n7"]
 
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_3anbo"]
 [ext_resource type="Script" path="res://Scripts/MainGame.gd" id="1_l3va8"]
@@ -23,6 +23,8 @@
 [ext_resource type="AudioStream" uid="uid://fjctvjr767f" path="res://music/sfx/bgStadiumNoice.ogg" id="11_ufym1"]
 [ext_resource type="Script" path="res://music/Mscript/bgNoice.gd" id="12_faeqh"]
 [ext_resource type="AudioStream" uid="uid://di35cdj4frfd3" path="res://music/sfx/cheering.ogg" id="13_o85pq"]
+[ext_resource type="Script" path="res://Scripts/EasyAI.gd" id="13_oug6g"]
+[ext_resource type="Script" path="res://Scripts/HardAI.gd" id="16_3xyxl"]
 [ext_resource type="AudioStream" uid="uid://bd4v0qouwrfch" path="res://music/themes/mainTheme.ogg" id="16_4yaqi"]
 [ext_resource type="Texture2D" uid="uid://c34endg6fp7wo" path="res://Assets/Art/soccer_space_1.png" id="19_bmhxy"]
 [ext_resource type="Shader" path="res://shaders/scroll.gdshader" id="19_opfob"]
@@ -153,6 +155,8 @@ states/sliding/position = Vector2(276, 68)
 transitions = ["jump", "land", SubResource("AnimationNodeStateMachineTransition_ppqck"), "land", "sliding", SubResource("AnimationNodeStateMachineTransition_quco3"), "sliding", "jump", SubResource("AnimationNodeStateMachineTransition_k853k")]
 graph_offset = Vector2(-157, 5)
 
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_sy47l"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8upkq"]
 size = Vector2(96, 288)
 
@@ -212,75 +216,8 @@ _data = {
 "roll": SubResource("Animation_il1vm")
 }
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_sy47l"]
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_0fs64"]
 radius = 48.0
-
-[sub_resource type="GDScript" id="GDScript_hk2rv"]
-script/source = "extends \"res://Scripts/player.gd\"
-signal aiJump
-
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
-
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting(\"physics/2d/default_gravity\")
-
-# Raycast for the ball detection
-@onready
-var raycast = $RayCast2D
-
-# The instance of hte randomizer
-var rng = RandomNumberGenerator.new()
-
-# The timer for the random movement
-@onready
-var t = $MoveTimer
-var t_max = 5
-var t_min = 3
-
-# The x input of the AI
-var x : int
-
-func _ready():
-	startUpDirection = Vector2.RIGHT	
-	up_direction = startUpDirection
-	x = rng.randi_range(-1, 1)
-	t.start(rng.randi_range(t_min, t_max))
-
-# Ran when the timer runs out, potentially changing AI movement
-func _on_move_timer_timeout():
-	rng.randomize()
-	x = rng.randi_range(-1, 1)
-	pressing_jump = 1
-	
-# Overriding the input for ai
-func get_input():
-	
-	# Move if grounded
-	if(grounded):
-		input.x = x
-		#input.y = 0
-	
-	# Get the first collision object
-	var raycast_collision = raycast.get_collider()
-	
-		
-	rng.randomize() 
-	# Detecting the ball in front to jump towards
-	if raycast_collision != null and raycast_collision.get_name() == \"Ball\":
-		pressing_jump = 1
-		emit_signal(\"aiJump\", 1)
-	else: 
-		pressing_jump = 0
-		emit_signal(\"aiJump\", 0)
-		
-		
-	return input.normalized()
-
-
-"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wb8fx"]
 radius = 120.0
@@ -411,7 +348,7 @@ bus = &"sfx"
 
 [node name="Player" type="CharacterBody2D" parent="." groups=["ground"]]
 unique_name_in_owner = true
-position = Vector2(332, 0)
+position = Vector2(882, 51)
 collision_layer = 4
 collision_mask = 5
 floor_stop_on_slope = false
@@ -456,6 +393,17 @@ bus = &"sfx"
 stream = ExtResource("10_7u3hq")
 bus = &"sfx"
 
+[node name="FrontPath" type="Area2D" parent="Player"]
+light_mask = 15
+visibility_layer = 15
+position = Vector2(-1.9233e-06, -44)
+rotation = 3.14159
+scale = Vector2(1, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/FrontPath"]
+shape = SubResource("SegmentShape2D_sy47l")
+one_way_collision_margin = 20.0
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -72)
 
@@ -498,6 +446,7 @@ polygon = PackedVector2Array(-48.0012, -128, 31.9997, -128, 31.998, -224, -16.00
 [node name="Ball" type="RigidBody2D" parent="."]
 unique_name_in_owner = true
 z_index = 1
+position = Vector2(2.08165e-12, 2.08165e-12)
 collision_layer = 2
 collision_mask = 4294967295
 script = ExtResource("3_uolrk")
@@ -532,17 +481,74 @@ one_way_collision_margin = 20.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
 shape = SubResource("CircleShape2D_0fs64")
 
+[node name="EasyAI" type="CharacterBody2D" parent="." groups=["ground"]]
+process_mode = 4
+visible = false
+position = Vector2(-386, 195)
+collision_layer = 4
+collision_mask = 5
+floor_stop_on_slope = false
+floor_block_on_wall = false
+floor_max_angle = 3.14159
+floor_snap_length = 0.0
+script = ExtResource("13_oug6g")
+speed = 750
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="EasyAI"]
+rotation = 3.14159
+scale = Vector2(2, 2)
+texture = ExtResource("9_tpjgw")
+hframes = 14
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EasyAI"]
+shape = SubResource("CircleShape2D_q4fvd")
+
+[node name="Line2D" type="Line2D" parent="EasyAI"]
+position = Vector2(-336, 248)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="EasyAI"]
+libraries = {
+"": SubResource("AnimationLibrary_utpno")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="EasyAI"]
+tree_root = SubResource("AnimationNodeStateMachine_ybv0v")
+anim_player = NodePath("../AnimationPlayer")
+
+[node name="RayCast2D" type="RayCast2D" parent="EasyAI"]
+position = Vector2(23.0194, 0.326203)
+target_position = Vector2(2.08165e-12, -2000)
+collision_mask = 3
+collide_with_areas = true
+
+[node name="JumpTimer" type="Timer" parent="EasyAI"]
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="EasyAI"]
+bus = &"sfx"
+script = ExtResource("6_wwvec")
+
+[node name="fingers" type="AudioStreamPlayer2D" parent="EasyAI/AudioPlayer"]
+stream = ExtResource("7_trcdj")
+volume_db = -6.89
+bus = &"sfx"
+
+[node name="jet" type="AudioStreamPlayer2D" parent="EasyAI/AudioPlayer"]
+stream = ExtResource("10_7u3hq")
+bus = &"sfx"
+
 [node name="NormalAI" type="CharacterBody2D" parent="." groups=["ground"]]
-position = Vector2(-334, 0)
-rotation = 0.0292804
-collision_layer = 8
-collision_mask = 9
+process_mode = 4
+visible = false
+position = Vector2(-386, 195)
+collision_layer = 4
+collision_mask = 5
 floor_stop_on_slope = false
 floor_block_on_wall = false
 floor_max_angle = 3.14159
 floor_snap_length = 0.0
 script = ExtResource("7_3ikhx")
-speed = 1000
+speed = 825
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="NormalAI"]
@@ -586,56 +592,59 @@ bus = &"sfx"
 stream = ExtResource("10_7u3hq")
 bus = &"sfx"
 
-[node name="EasyAI" type="CharacterBody2D" parent="." groups=["ground"]]
-position = Vector2(-1502, -3)
-rotation = 0.0292804
-collision_layer = 8
-collision_mask = 9
+[node name="HardAI" type="CharacterBody2D" parent="." groups=["ground"]]
+process_mode = 4
+visible = false
+position = Vector2(-386, 195)
+collision_layer = 4
+collision_mask = 5
 floor_stop_on_slope = false
 floor_block_on_wall = false
 floor_max_angle = 3.14159
 floor_snap_length = 0.0
-script = SubResource("GDScript_hk2rv")
-speed = 1000
+script = ExtResource("16_3xyxl")
+speed = 850
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="EasyAI"]
+[node name="Sprite2D" type="Sprite2D" parent="HardAI"]
 rotation = 3.14159
 scale = Vector2(2, 2)
 texture = ExtResource("9_tpjgw")
 hframes = 14
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EasyAI"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HardAI"]
 shape = SubResource("CircleShape2D_q4fvd")
 
-[node name="Line2D" type="Line2D" parent="EasyAI"]
+[node name="Line2D" type="Line2D" parent="HardAI"]
 position = Vector2(-336, 248)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="EasyAI"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HardAI"]
 libraries = {
 "": SubResource("AnimationLibrary_utpno")
 }
 
-[node name="AnimationTree" type="AnimationTree" parent="EasyAI"]
+[node name="AnimationTree" type="AnimationTree" parent="HardAI"]
 tree_root = SubResource("AnimationNodeStateMachine_ybv0v")
 anim_player = NodePath("../AnimationPlayer")
 
-[node name="RayCast2D" type="RayCast2D" parent="EasyAI"]
+[node name="RayCast2D" type="RayCast2D" parent="HardAI"]
 target_position = Vector2(2.08165e-12, -2000)
 collision_mask = 3
+collide_with_areas = true
 
-[node name="MoveTimer" type="Timer" parent="EasyAI"]
+[node name="AutoJumpTimer" type="Timer" parent="HardAI"]
 
-[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="EasyAI"]
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="HardAI"]
+volume_db = -4.492
 bus = &"sfx"
 script = ExtResource("6_wwvec")
 
-[node name="fingers" type="AudioStreamPlayer2D" parent="EasyAI/AudioPlayer"]
+[node name="fingers" type="AudioStreamPlayer2D" parent="HardAI/AudioPlayer"]
 stream = ExtResource("7_trcdj")
-volume_db = -6.89
+volume_db = -10.0
 bus = &"sfx"
 
-[node name="jet" type="AudioStreamPlayer2D" parent="EasyAI/AudioPlayer"]
+[node name="jet" type="AudioStreamPlayer2D" parent="HardAI/AudioPlayer"]
 stream = ExtResource("10_7u3hq")
 bus = &"sfx"
 
@@ -811,15 +820,19 @@ position = Vector2(2016, 0)
 color = Color(0.46, 0.685, 1, 1)
 polygon = PackedVector2Array(-1024, -224, -992, -224, -992, 224, -1024, 224)
 
+[node name="PreStartTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
 [connection signal="resetRound" from="Ball" to="." method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="GameManager" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="Player" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="Ball" method="_on_reset_round"]
-[connection signal="resetRound" from="Ball" to="NormalAI" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="EasyAI" method="_on_ball_reset_round"]
+[connection signal="resetRound" from="Ball" to="NormalAI" method="_on_ball_reset_round"]
+[connection signal="resetRound" from="Ball" to="HardAI" method="_on_ball_reset_round"]
 [connection signal="resetRound" from="Ball" to="GhostManager" method="_on_ball_reset_round"]
-[connection signal="timeout" from="NormalAI/JumpTimer" to="NormalAI" method="_on_jump_timer_timeout"]
-[connection signal="timeout" from="EasyAI/MoveTimer" to="EasyAI" method="_on_move_timer_timeout"]
+[connection signal="timeout" from="HardAI/AutoJumpTimer" to="HardAI" method="_on_move_timer_timeout"]
 [connection signal="finished" from="bgNoice/Crowd" to="." method="_on_crowd_finished"]
 [connection signal="timeout" from="RoundTimer" to="." method="_on_round_timer_timeout"]
 [connection signal="body_exited" from="BallBoundary" to="." method="_on_ball_boundary_body_exited"]
