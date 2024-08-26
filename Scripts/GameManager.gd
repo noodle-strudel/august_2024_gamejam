@@ -10,7 +10,7 @@ var aiScore = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -27,14 +27,16 @@ func _on_ball_reset_round():
 	print("You: ", playerScore, " | AI: ", aiScore)
 	$"../CanvasLayer/Score/ScoreContainer/Score/AILabelScore".text = str(aiScore)
 	$"../CanvasLayer/Score/ScoreContainer/Score/PlayerLabelScore".text = str(playerScore)
-	if playerScore > winsRequired:
+	if playerScore >= winsRequired:
 		# Do player win stuff here...
+		$WinSound.play()
 		$"../CanvasLayer/WinLoseMenu"/inGameOptions/WinLose.text = "You WON!!!"
 		$"../CanvasLayer/WinLoseMenu".visible = true
 		print("You Win")
 		pass
 	elif aiScore >= winsRequired:
 		# Player lose here...
+		$LoseSound.play()
 		$"../CanvasLayer/WinLoseMenu"/inGameOptions/WinLose.text = "You lose :("
 		$"../CanvasLayer/WinLoseMenu".visible = true
 		print("You Lose")

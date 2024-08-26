@@ -105,6 +105,12 @@ func _on_ball_reset_round():
 	inputs.append(Vector2.ZERO)
 	AIinputs.append(Vector2.ZERO)
 	
+	if timeSinceJumpChange.size() % 2 != 0:
+		timeSinceJumpChange.append(jumpTimeElapsed)
+		
+	if AItimeSinceJumpChange.size() % 2 != 0:
+		AItimeSinceJumpChange.append(AIjumpTimeElapsed)
+	
 	print("Reset ROund")
 	# record the time
 	timeBeforeInputs.append(timeElapsed)
@@ -147,6 +153,7 @@ func createGhost(ghostInputs: Array, timeSinceInputs: Array, isPlayer: bool):
 	if isPlayer:
 		ghost.startPos = %Player.startPos
 		ghost.position = %Player.startPos
+		ghost.startUpDirection = Vector2.LEFT
 		for i in ghostInputs:
 			ghost.inputs.append(i)
 			ghost.timeBeforeInputs.append(timeBeforeInputs[index])
@@ -158,12 +165,14 @@ func createGhost(ghostInputs: Array, timeSinceInputs: Array, isPlayer: bool):
 			
 		print("Player Inputs Added")
 		
-		if numOfGhosts + 4 > 32:
-			var collisionLayer = get_child(0).get_child(0).collision_layer
-			remove_child(get_child(0))
+		if numOfGhosts + 4 > 10:
+			var collisionLayer = get_child(0).collision_layer
+			print("Too many ghosts deleting ", get_child(0))
+			get_child(0).queue_free()
 			ghost.set_collision_layer_value(collisionLayer, 1)
 		else:
 			ghost.set_collision_layer_value(numOfGhosts + 4, 1)
+			
 		inputs.clear()
 		timeBeforeInputs.clear()
 		timeSinceJumpChange.clear()
@@ -171,6 +180,7 @@ func createGhost(ghostInputs: Array, timeSinceInputs: Array, isPlayer: bool):
 	else:
 		ghost.startPos = AI.startPos
 		ghost.position = AI.startPos
+		ghost.startUpDirection = Vector2.RIGHT
 		for i in ghostInputs:
 			ghost.inputs.append(i)
 			ghost.timeBeforeInputs.append(AItimeBeforeInputs[index])
@@ -181,9 +191,10 @@ func createGhost(ghostInputs: Array, timeSinceInputs: Array, isPlayer: bool):
 		
 		print("AI Inputs Added")
 		
-		if numOfGhosts + 4 > 32:
-			var collisionLayer = get_child(0).get_child(0).collision_layer
-			remove_child(get_child(0))
+		if numOfGhosts + 4 > 10:
+			var collisionLayer = get_child(0).collision_layer
+			print("Too many ghosts deleting ", get_child(0))
+			get_child(0).queue_free()
 			ghost.set_collision_layer_value(collisionLayer, 1)
 		else:
 			ghost.set_collision_layer_value(numOfGhosts + 4, 1)
@@ -192,6 +203,7 @@ func createGhost(ghostInputs: Array, timeSinceInputs: Array, isPlayer: bool):
 		AItimeBeforeInputs.clear()
 		AItimeSinceJumpChange.clear()
 	
+	ghost.up_direction = ghost.startUpDirection
 	
 func _on_aiJump(value):
 	if AI:

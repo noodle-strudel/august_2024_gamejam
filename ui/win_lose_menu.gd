@@ -82,6 +82,7 @@ func _on_settings_pressed():
 
 
 func _on_back_menu_pressed():
+	Engine.time_scale = 1
 	$ClickSFX.play()
 	get_tree().change_scene_to_file("res://ui/start_ui.tscn")
 
@@ -106,6 +107,7 @@ func _on_about_to_quit():
 
 
 func _on_restart_pressed():
+	Engine.time_scale = 1
 	$ClickSFX.play()
 	get_tree().reload_current_scene()
 

@@ -1,8 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://b5ogiy5qtmcxs"]
+[gd_scene load_steps=12 format=3 uid="uid://le27alqgb4bm"]
 
 [ext_resource type="Theme" uid="uid://lqrgxsxs2fye" path="res://ui/font and theme/base_theme.tres" id="1_ulgwu"]
 [ext_resource type="Script" path="res://Scripts/how_to_play.gd" id="2_hdbde"]
-[ext_resource type="StyleBox" uid="uid://1vibes0eg4nv" path="res://ui/font and theme/how_to_play_theme.tres" id="3_ekvai"]
+[ext_resource type="StyleBox" path="res://ui/font and theme/how_to_play_theme.tres" id="3_ekvai"]
+
+[ext_resource type="AudioStream" uid="uid://d04q3olf0jxrl" path="res://music/sfx/agreement_start.ogg" id="4_xt17c"]
+[ext_resource type="AudioStream" uid="uid://loe63u4nelqo" path="res://music/sfx/agreement_end.ogg" id="5_11l48"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7r5gc"]
 bg_color = Color(0.12, 0.32, 0.6, 0.0666667)
@@ -371,5 +374,13 @@ libraries = {
 "": SubResource("AnimationLibrary_d416d")
 }
 autoplay = "new_animation"
+
+[node name="Start_sfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_xt17c")
+bus = &"sfx"
+
+[node name="End_sfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_11l48")
+bus = &"sfx"
 
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/ConfirmAgreement" to="." method="_on_confirm_agreement_pressed"]

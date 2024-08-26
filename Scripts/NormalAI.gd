@@ -8,12 +8,20 @@ const CATCH_TIME_ERROR = 0.5
 @onready var raycast = $RayCast2D
 @onready var jumpTimer = $"JumpTimer"
 
+
 # Randomly jumps when the timer runs out
 func _on_jump_timer_timeout():
 	pressing_jump = 1
 	pass
 	
 # Just grounded
+func _ready():
+	startUpDirection = Vector2.RIGHT
+	up_direction = startUpDirection
+	if(jumpTimer as Timer != null):
+		#jump_and_restart(false)
+		pass
+
 func _on_just_grounded():
 	track_or_random_move(CHANCE_TO_CHASE_BALL)
 	var total_time = start_random_jump_timer(jumpTimer, MIN_RANDOM_JUMP_TIME, MAX_RANDOM_JUMP_TIME)
