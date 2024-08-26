@@ -32,11 +32,11 @@ func _ready():
 
 # Overriding the input for ai
 func get_input():
-	#update_awareness()
+	#s()
 	if(grounded):
-		move()
-		var catchable = can_catch_ball(raycast, ERROR_CATCH_TIME)
-		var aligned = aligned_towards_ball() 
+		choose_movement(ball)
+		var catchable = can_catch_target(ball, raycast, ERROR_CATCH_TIME)
+		var aligned = aligned_towards_target(ball) 
 		if(catchable):
 			pass
 		# Makes the player jump when it sees the ball ahead of it the even through walls 

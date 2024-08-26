@@ -32,11 +32,12 @@ func _ready():
 func get_input():
 	#While on the ground
 	if(grounded):
-		move()
-		var catchable = can_catch_ball(raycast, CATCH_TIME_ERROR)
-		var aligned = aligned_towards_ball()
+		choose_movement(ball)
+		var catchable = can_catch_target(ball, raycast, CATCH_TIME_ERROR)
+		var aligned = aligned_towards_target(ball)
+		var player_catchable = can_catch_target(player, raycast, CATCH_TIME_ERROR)
 		
-		if(catchable or aligned):
+		if(catchable or aligned or (player_catchable and (!player.grounded))):
 			pressing_jump = 1
 	else:
 		pressing_jump = 0

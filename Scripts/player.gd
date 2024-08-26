@@ -40,6 +40,8 @@ func get_input():
 	
 	return input.normalized()
 
+	
+
 func jump():
 	velocity = up_direction * speed
 	grounded = false
@@ -96,6 +98,12 @@ func handle_collisions(delta):
 	if collision:
 		if collision.get_collider().name.contains("AI"):
 			velocity += collision.get_normal()
+			if(!grounded):
+				var u = up_direction
+				up_direction *= -Vector2.ONE.normalized()
+				jump()
+				u = up_direction
+				pass
 		else:
 			# Just grounded
 			if(!grounded):
