@@ -482,6 +482,7 @@ floor_block_on_wall = false
 floor_max_angle = 3.14159
 floor_snap_length = 0.0
 script = ExtResource("13_oug6g")
+speed = 750
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="EasyAI"]
@@ -537,6 +538,7 @@ floor_block_on_wall = false
 floor_max_angle = 3.14159
 floor_snap_length = 0.0
 script = ExtResource("7_3ikhx")
+speed = 825
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="NormalAI"]
@@ -591,6 +593,7 @@ floor_block_on_wall = false
 floor_max_angle = 3.14159
 floor_snap_length = 0.0
 script = ExtResource("16_3xyxl")
+speed = 850
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="HardAI"]

@@ -123,7 +123,7 @@ func defense():
 		var player_aligned = aligned_towards_target(player)
 		var ball_aligned = aligned_towards_target(ball)
 		#print(player.grounded)
-		if ((player_catchable and !player.grounded) or ball_aligned):
+		if ((player_catchable and !player.grounded) or ball_aligned or player_aligned):
 			pressing_jump = 1
 		else: 
 			pressing_jump = 0

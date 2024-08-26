@@ -11,6 +11,7 @@ func _init():
 	speed = 750
 	accel = 10
 	grav = -500
+	pass
 	
 # References children nodes once they exist in the scene
 @onready var anim_tree = $AnimationTree
