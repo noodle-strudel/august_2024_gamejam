@@ -10,6 +10,7 @@ const DELAY_TIMER_NAME = "DELAY"
 @export var speed : int
 @export var accel : int
 var startUpDirection = Vector2.LEFT
+var start_grounded = true
 
 func _init():
 	speed = 750
@@ -38,6 +39,7 @@ var just_landed = false
 	
 func _ready():
 	up_direction = startUpDirection
+	velocity += up_direction * grav
 	
 # Movement Input
 func get_input():
@@ -59,6 +61,10 @@ func _physics_process(delta):
 # Player Input -> movement mapping
 	playerInput = get_input()
 	
+	if(start_grounded):
+		input = Vector2.ZERO
+		playerInput = Vector2.ZERO
+		rotation = 0
 	# Jump
 	if pressing_jump > 0 and grounded:
 		emit_signal("just_jumped", 1)
@@ -95,6 +101,7 @@ func _physics_process(delta):
 		$AudioPlayer/jet.stop()
 		velocity = lerp(velocity, perpendicular * speed, delta * accel)
 		velocity += up_direction * grav
+		pass
 	
 	# Check for wall and change gravity direction
 	handle_collisions(delta)
@@ -115,6 +122,7 @@ func handle_collisions(delta):
 			if(!grounded):
 				emit_signal("just_grounded")
 			grounded = true
+			start_grounded = false
 			can_save_jump = true
 			change_anim("sliding")
 			
@@ -125,24 +133,28 @@ func handle_collisions(delta):
 # Disables the AI and enables on timer elapsed
 func round_delay(timer : Timer):
 # Make AI visible but disables on start
-	self.visible = true
-	self.process_mode = Node.PROCESS_MODE_DISABLED
 	timer.start(PROCESS_DELAY)
+	up_direction = Vector2.RIGHT
+	self.process_mode = Node.PROCESS_MODE_DISABLED
 	pass
 
 func _on_ball_reset_round():
 	position = startPos
 	grounded = true
-	emit_signal("just_grounded")
-	var timer = self.get_node(DELAY_TIMER_NAME)
-	
-	print(DELAY_TIMER_NAME)
+	start_grounded = true
+	#emit_signal("just_grounded")
+	var timer : Timer
+	if(has_node(DELAY_TIMER_NAME)):
+		timer = self.get_node(DELAY_TIMER_NAME)
+	#print(DELAY_TIMER_NAME)
 	#print(self.has_node())
 	if(timer != null):
 		round_delay(timer)
 	perpendicular = Vector2(0, 0)
 	up_direction = startUpDirection
+	#rotation = 0.0
 	rotationAngle = 0.0
+	pass
 
 # changes current animation to a new animation
 func change_anim(name):

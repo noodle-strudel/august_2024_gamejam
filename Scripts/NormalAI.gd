@@ -13,14 +13,6 @@ const CATCH_TIME_ERROR = 0.5
 func _on_jump_timer_timeout():
 	pressing_jump = 1
 	pass
-	
-# Just grounded
-func _ready():
-	startUpDirection = Vector2.RIGHT
-	up_direction = startUpDirection
-	if(jumpTimer as Timer != null):
-		#jump_and_restart(false)
-		pass
 
 func _on_just_grounded():
 	track_or_random_move(CHANCE_TO_CHASE_BALL)
@@ -28,7 +20,7 @@ func _on_just_grounded():
 	#pressing_jump = 0
 	pass
 	
-func _ready():
+func _ready():	
 	track_or_random_move(CHANCE_TO_CHASE_BALL)
 	jumpTimer.timeout.connect(_on_jump_timer_timeout)
 	var total_time = start_random_jump_timer(jumpTimer, MIN_RANDOM_JUMP_TIME, MAX_RANDOM_JUMP_TIME)

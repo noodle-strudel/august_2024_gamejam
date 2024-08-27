@@ -32,12 +32,10 @@ func _ready():
 
 # Overriding the input for ai
 func get_input():
-	if(grounded):
+	if(grounded and !start_grounded):
 		choose_movement(ball)
 		var catchable = can_catch_target(ball, raycast, ERROR_CATCH_TIME)
 		var aligned = aligned_towards_target(ball) 
-		if(catchable):
-			pass
 		# Makes the player jump when it sees the ball ahead of it the even through walls 
 		if(catchable or aligned):
 			pressing_jump = 1
@@ -78,3 +76,7 @@ func get_input():
 	##pressing_jump = 1
 	#
 	#moveTimer.start(rng.randi_range(t_min, t_max))
+
+
+func _on_just_jumped(value):
+	pass # Replace with function body.

@@ -25,6 +25,8 @@ var random_direction = 0
 
 func _on_enabled_timeout():
 	self.process_mode = Node.PROCESS_MODE_INHERIT
+	up_direction = Vector2.RIGHT
+	pass
 
 
 
@@ -37,9 +39,10 @@ func _on_enabled_timeout():
 	#pass
 	
 # Runs when the Node with this script is put into the game
-func _ready():
-	ball.resetRound.connect(_on_ball_reset_round)
-	grounded = false
+#func _ready():
+	#print("HIIIII")
+	#ball.resetRound.connect(_on_ball_reset_round)
+	#grounded = true
 	#visibility_changed.connect(_on_debug)
 	#just_grounded.connect(_on_just_grounded)
 
@@ -90,12 +93,12 @@ func focus_on(target : Node2D):
 		else:
 			right = 1
 
-func round_delay(timer : Timer):
-	# Make AI visible but disables on start
-	self.visible = true
-	self.process_mode = Node.PROCESS_MODE_DISABLED
-	timer.start(PROCESS_DELAY)
-	pass
+#func round_delay(timer : Timer):
+	## Make AI visible but disables on start
+	#self.visible = true
+	#self.process_mode = Node.PROCESS_MODE_DISABLED
+	#timer.start(PROCESS_DELAY)
+	#pass
 
 
 # Moves AI towards the target

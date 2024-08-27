@@ -18,6 +18,9 @@ func start_game():
 			ai_object = get_node("NormalAI")
 		2:
 			ai_object = get_node("HardAI")
+			
+	ai_object.visible = true
+	
 	# Defines the timer after which AI will be enabled
 	var timer = Timer.new()
 	timer.name = ai_object.DELAY_TIMER_NAME

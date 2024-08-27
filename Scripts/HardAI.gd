@@ -24,7 +24,9 @@ var state = STATE.NORMAL
 
 func _ready():
 	just_grounded.connect(_on_just_grounded)
-
+	#up_direction = Vector2.RIGHT
+	pass
+	
 #func focus_on(target : Node2D):
 	#if up_direction.y < 0:
 		#angle = int(rad_to_deg((up_direction * 100).angle_to(target.global_position - global_position)))
