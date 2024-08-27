@@ -4,39 +4,47 @@ extends "res://Scripts/AI.gd"
 
 # Raycast for the ball detection
 @onready var raycast = $RayCast2D
-# The timer for the random movement
-@onready var moveTimer = $MoveTimer
 # The timer that triggers random jumpng
 @onready var jumpTimer = $JumpTimer
 
 const CHANCE_TO_CHASE_BALL = 100
-const MIN_RANDOM_JUMP_TIME = 5
-const MAX_RANDOM_JUMP_TIME = 8
-const ERROR_CATCH_TIME = 0
-
-func _ready():	
-	start_random_jump_timer(jumpTimer, MIN_RANDOM_JUMP_TIME, MAX_RANDOM_JUMP_TIME)
-	just_grounded.connect(_on_just_grounded)
-
-func _on_just_grounded():
-	track_or_random_move(CHANCE_TO_CHASE_BALL)
+const MIN_RANDOM_JUMP_TIME = 1
+const MAX_RANDOM_JUMP_TIME = 5
+const ERROR_CATCH_TIME = 0.3
 
 # Randomly jumps when the timer runs out
 func _on_jump_timer_timeout():
 	pressing_jump = 1
-	pass
+	emit_signal("ai_jump", 1)
+
+func _on_just_grounded():
+	track_or_random_move(CHANCE_TO_CHASE_BALL)
+	
+	start_random_jump_timer(jumpTimer, MIN_RANDOM_JUMP_TIME, MAX_RANDOM_JUMP_TIME)
+
+func _ready():	
+	track_or_random_move(CHANCE_TO_CHASE_BALL)
+	
+	start_random_jump_timer(jumpTimer, MIN_RANDOM_JUMP_TIME, MAX_RANDOM_JUMP_TIME)
+	jumpTimer.timeout.connect(_on_jump_timer_timeout)
+	
+	just_grounded.connect(_on_just_grounded)
+
 
 # Overriding the input for ai
 func get_input():
-	#update_awareness()
-	if(grounded):
-		move()
+	if(grounded and !start_grounded):
+		choose_movement(ball)
+		var catchable = can_catch_target(ball, raycast, ERROR_CATCH_TIME)
+		var aligned = aligned_towards_target(ball) 
 		# Makes the player jump when it sees the ball ahead of it the even through walls 
-		if(aligned_towards_ball() or can_catch_ball(raycast, ERROR_CATCH_TIME)):
+		if(catchable or aligned):
 			pressing_jump = 1
+			emit_signal("ai_jump", 1)
 			pass
 	else:
 		pressing_jump = 0
+		emit_signal("ai_jump", 0)
 	
 	## Move if grounded
 	#if(grounded):
@@ -71,3 +79,4 @@ func get_input():
 	##pressing_jump = 1
 	#
 	#moveTimer.start(rng.randi_range(t_min, t_max))
+
