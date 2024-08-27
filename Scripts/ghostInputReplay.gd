@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 var grav = -500
-@export var speed = 1000
+@export var speed = 850
 var accel = 10
 
 # References children nodes once they exist in the scene
