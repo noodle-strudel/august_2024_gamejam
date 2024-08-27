@@ -600,7 +600,7 @@ floor_block_on_wall = false
 floor_max_angle = 3.14159
 floor_snap_length = 0.0
 script = ExtResource("16_3xyxl")
-speed = 900
+speed = 925
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="HardAI"]
