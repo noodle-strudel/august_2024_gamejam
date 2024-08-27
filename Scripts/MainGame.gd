@@ -12,33 +12,40 @@ func _ready():
 
 func start_game():
 	var ai_object : CharacterBody2D
+	var timer = Timer.new()
+	var player_timer = Timer.new()
+	
 	match GlobalSettings.difficulty:
 		0:
 			ai_object = get_node("EasyAI")
+			timer.wait_time = 2
 		1:
 			ai_object = get_node("NormalAI")
+			timer.wait_time = 1.5
 		2:
 			ai_object = get_node("HardAI")
+			timer.wait_time = 0.6
 			
 	ai_object.visible = true
+	player.visible = true
 	
 	# Defines the timer after which AI will be enabled
-	var timer = Timer.new()
 	timer.name = ai_object.DELAY_TIMER_NAME
 	timer.process_mode = Node.PROCESS_MODE_ALWAYS
 	timer.one_shot = true
-	timer.wait_time = 1
 	ai_object.add_child(timer)
+	ai_object.startUpDirection = Vector2.RIGHT
 	timer.timeout.connect(ai_object._on_enabled_timeout)
 	ai_object.round_delay(timer)
 	
-	var player_timer = Timer.new()
+	# Defines the timer after which Player will be enabled
 	player_timer.name = player.DELAY_TIMER_NAME
 	player_timer.process_mode = Node.PROCESS_MODE_ALWAYS
 	player_timer.one_shot = true
 	player_timer.wait_time = 0.5
-	player_timer.timeout.connect(player._on_enabled_timeout)
 	player.add_child(player_timer)
+	player.startUpDirection = Vector2.LEFT
+	player_timer.timeout.connect(player._on_enabled_timeout)
 	player.round_delay(player_timer)
 	
 	

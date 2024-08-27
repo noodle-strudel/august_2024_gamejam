@@ -16,7 +16,6 @@ func _init():
 	speed = 750
 	accel = 10
 	grav = -500
-	pass
 	
 # References children nodes once they exist in the scene
 @onready var anim_tree = $AnimationTree
@@ -38,12 +37,8 @@ var current_anim = ""
 var just_landed = false
 	
 func _ready():
-	up_direction = startUpDirection
 	velocity += up_direction * grav
-	if(name.contains("AI")):
-		startUpDirection = Vector2.RIGHT
-	else:
-		startUpDirection = Vector2.RIGHT
+	
 	
 # Movement Input
 func get_input():
@@ -144,7 +139,6 @@ func round_delay(timer : Timer):
 
 func _on_enabled_timeout():
 	self.process_mode = Node.PROCESS_MODE_INHERIT
-	up_direction = Vector2.RIGHT
 	pass
 	
 func _on_ball_reset_round():
