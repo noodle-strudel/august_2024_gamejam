@@ -9,7 +9,7 @@ const DELAY_TIMER_NAME = "DELAY"
 @export var grav : int
 @export var speed : int
 @export var accel : int
-var startUpDirection = Vector2.LEFT
+var startUpDirection : Vector2
 var start_grounded = true
 
 func _init():
@@ -40,6 +40,10 @@ var just_landed = false
 func _ready():
 	up_direction = startUpDirection
 	velocity += up_direction * grav
+	if(name.contains("AI")):
+		startUpDirection = Vector2.RIGHT
+	else:
+		startUpDirection = Vector2.RIGHT
 	
 # Movement Input
 func get_input():
@@ -131,15 +135,16 @@ func handle_collisions(delta):
 			velocity += (up_direction * (speed / 1.2) )
 
 # Disables the AI and enables on timer elapsed
-func round_delay(timer : Timer, upDirection : Vector2):
+func round_delay(timer : Timer):
 # Make AI visible but disables on start
 	timer.start(timer.wait_time)
-	up_direction = upDirection
 	self.process_mode = Node.PROCESS_MODE_DISABLED
+	up_direction = startUpDirection
 	pass
 
 func _on_enabled_timeout():
 	self.process_mode = Node.PROCESS_MODE_INHERIT
+	up_direction = Vector2.RIGHT
 	pass
 	
 func _on_ball_reset_round():
@@ -153,10 +158,7 @@ func _on_ball_reset_round():
 	#print(DELAY_TIMER_NAME)
 	#print(self.has_node())
 	if(timer != null):
-		if(name.contains("AI")):
-			round_delay(timer, Vector2.RIGHT)
-		else:
-			round_delay(timer, Vector2.LEFT)
+		round_delay(timer)
 	perpendicular = Vector2(0, 0)
 	up_direction = startUpDirection
 	#rotation = 0.0

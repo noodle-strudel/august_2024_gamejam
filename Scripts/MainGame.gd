@@ -30,7 +30,7 @@ func start_game():
 	timer.wait_time = 1
 	ai_object.add_child(timer)
 	timer.timeout.connect(ai_object._on_enabled_timeout)
-	ai_object.round_delay(timer, Vector2.RIGHT)
+	ai_object.round_delay(timer)
 	
 	var player_timer = Timer.new()
 	player_timer.name = player.DELAY_TIMER_NAME
@@ -39,7 +39,7 @@ func start_game():
 	player_timer.wait_time = 0.5
 	player_timer.timeout.connect(player._on_enabled_timeout)
 	player.add_child(player_timer)
-	player.round_delay(player_timer, Vector2.LEFT)
+	player.round_delay(player_timer)
 	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
