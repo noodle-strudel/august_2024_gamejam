@@ -25,12 +25,6 @@ var right = 1
 # THe current random direction of AI's movement
 var random_direction = 0
 
-func _on_enabled_timeout():
-	self.process_mode = Node.PROCESS_MODE_INHERIT
-	up_direction = Vector2.RIGHT
-	pass
-
-
 
 #func _init():
 	#start_delay.process_mode = Node.PROCESS_MODE_ALWAYS

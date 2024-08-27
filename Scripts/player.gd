@@ -131,13 +131,17 @@ func handle_collisions(delta):
 			velocity += (up_direction * (speed / 1.2) )
 
 # Disables the AI and enables on timer elapsed
-func round_delay(timer : Timer):
+func round_delay(timer : Timer, upDirection : Vector2):
 # Make AI visible but disables on start
-	timer.start(PROCESS_DELAY)
-	up_direction = Vector2.RIGHT
+	timer.start(timer.wait_time)
+	up_direction = upDirection
 	self.process_mode = Node.PROCESS_MODE_DISABLED
 	pass
 
+func _on_enabled_timeout():
+	self.process_mode = Node.PROCESS_MODE_INHERIT
+	pass
+	
 func _on_ball_reset_round():
 	position = startPos
 	grounded = true
@@ -149,7 +153,10 @@ func _on_ball_reset_round():
 	#print(DELAY_TIMER_NAME)
 	#print(self.has_node())
 	if(timer != null):
-		round_delay(timer)
+		if(name.contains("AI")):
+			round_delay(timer, Vector2.RIGHT)
+		else:
+			round_delay(timer, Vector2.LEFT)
 	perpendicular = Vector2(0, 0)
 	up_direction = startUpDirection
 	#rotation = 0.0

@@ -348,6 +348,7 @@ bus = &"sfx"
 
 [node name="Player" type="CharacterBody2D" parent="." groups=["ground"]]
 unique_name_in_owner = true
+process_mode = 4
 position = Vector2(327, 2.08165e-12)
 collision_layer = 4
 collision_mask = 5
@@ -355,6 +356,7 @@ floor_stop_on_slope = false
 floor_block_on_wall = false
 floor_max_angle = 3.14159
 floor_snap_length = 0.0
+platform_wall_layers = 4194304
 script = ExtResource("1_ti4d2")
 speed = 1000
 metadata/_edit_group_ = true
@@ -483,6 +485,7 @@ shape = SubResource("CircleShape2D_0fs64")
 
 [node name="EasyAI" type="CharacterBody2D" parent="." groups=["ground"]]
 process_mode = 4
+visible = false
 position = Vector2(-327, 2.08165e-12)
 collision_layer = 2
 floor_stop_on_slope = false
@@ -537,6 +540,7 @@ bus = &"sfx"
 
 [node name="NormalAI" type="CharacterBody2D" parent="." groups=["ground"]]
 process_mode = 4
+visible = false
 position = Vector2(-327, 2.08165e-12)
 collision_layer = 2
 floor_stop_on_slope = false
@@ -590,6 +594,7 @@ bus = &"sfx"
 
 [node name="HardAI" type="CharacterBody2D" parent="." groups=["ground"]]
 process_mode = 4
+visible = false
 position = Vector2(-327, 2.08165e-12)
 collision_layer = 2
 floor_stop_on_slope = false
