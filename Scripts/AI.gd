@@ -1,5 +1,7 @@
 extends "res://Scripts/player.gd"
 
+signal ai_jump 
+
 @onready var ball = $"/root/MainGame/Ball" as RigidBody2D
 @onready var player = $"/root/MainGame/Player" as CharacterBody2D
 

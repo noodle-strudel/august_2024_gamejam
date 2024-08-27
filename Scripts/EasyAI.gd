@@ -15,6 +15,7 @@ const ERROR_CATCH_TIME = 0.3
 # Randomly jumps when the timer runs out
 func _on_jump_timer_timeout():
 	pressing_jump = 1
+	emit_signal("ai_jump", 1)
 
 func _on_just_grounded():
 	track_or_random_move(CHANCE_TO_CHASE_BALL)
@@ -39,9 +40,11 @@ func get_input():
 		# Makes the player jump when it sees the ball ahead of it the even through walls 
 		if(catchable or aligned):
 			pressing_jump = 1
+			emit_signal("ai_jump", 1)
 			pass
 	else:
 		pressing_jump = 0
+		emit_signal("ai_jump", 0)
 	
 	## Move if grounded
 	#if(grounded):
@@ -77,6 +80,3 @@ func get_input():
 	#
 	#moveTimer.start(rng.randi_range(t_min, t_max))
 
-
-func _on_just_jumped(value):
-	pass # Replace with function body.

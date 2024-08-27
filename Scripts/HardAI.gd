@@ -112,8 +112,10 @@ func normal():
 		
 		if (catchable or aligned):
 			pressing_jump = 1
+			emit_signal("ai_jump", 1)
 		else: 
 			pressing_jump = 0
+			emit_signal("ai_jump", 0)
 		
 func defense():
 	#print("up direction: ", up_direction)
@@ -127,8 +129,10 @@ func defense():
 		#print(player.grounded)
 		if ((player_catchable and !player.grounded) or ball_aligned or player_aligned):
 			pressing_jump = 1
+			emit_signal("ai_jump", 1)
 		else: 
 			pressing_jump = 0
+			emit_signal("ai_jump", 0)
 
 func _offense_Timeout():
 	jump()

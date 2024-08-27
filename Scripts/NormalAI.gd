@@ -12,6 +12,7 @@ const CATCH_TIME_ERROR = 0.5
 # Randomly jumps when the timer runs out
 func _on_jump_timer_timeout():
 	pressing_jump = 1
+	emit_signal("ai_jump", 1)
 	pass
 
 func _on_just_grounded():
@@ -39,8 +40,12 @@ func get_input():
 		
 		if(catchable or aligned or (player_catchable and (!player.grounded))):
 			pressing_jump = 1
+			#emit_signal("just_jumped", 1)
+			emit_signal("ai_jump", 1)
 	else:
 		pressing_jump = 0
+		emit_signal("ai_jump", 0)
+		#emit_signal("just_jumped", 0)
 			
 		#var angle = rad_to_deg(ball.position.angle_to_point(position)) - 90 + rotation_degrees #rad_to_deg(position.angle_to(ball.position))
 		#
