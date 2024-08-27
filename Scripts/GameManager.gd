@@ -24,7 +24,7 @@ func _process(delta):
 
 
 func _on_ball_reset_round():
-	print("You: ", playerScore, " | AI: ", aiScore)
+	#print("You: ", playerScore, " | AI: ", aiScore)
 	$"../CanvasLayer/Score/ScoreContainer/Score/AILabelScore".text = str(aiScore)
 	$"../CanvasLayer/Score/ScoreContainer/Score/PlayerLabelScore".text = str(playerScore)
 	if playerScore >= winsRequired:
@@ -32,14 +32,14 @@ func _on_ball_reset_round():
 		$WinSound.play()
 		$"../CanvasLayer/WinLoseMenu"/inGameOptions/WinLose.text = "You WON!!!"
 		$"../CanvasLayer/WinLoseMenu".visible = true
-		print("You Win")
+		#print("You Win")
 		pass
 	elif aiScore >= winsRequired:
 		# Player lose here...
 		$LoseSound.play()
 		$"../CanvasLayer/WinLoseMenu"/inGameOptions/WinLose.text = "You lose :("
 		$"../CanvasLayer/WinLoseMenu".visible = true
-		print("You Lose")
+		#print("You Lose")
 		pass
 
 

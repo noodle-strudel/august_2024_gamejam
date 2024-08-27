@@ -67,8 +67,8 @@ func ai_get_input():
 	AIinput = AI.input
 		
 	if (AIinput != AIlastInput) and AIinput != null:
-		print("saved input: ", AIinput, " at ", AItimeElapsed)
-		print("Ai current: ", AIinput, " AI Last ", AIlastInput)
+		#print("saved input: ", AIinput, " at ", AItimeElapsed)
+		#print("Ai current: ", AIinput, " AI Last ", AIlastInput)
 		AIinputs.append(AIinput)
 		AItimeBeforeInputs.append(AItimeElapsed)
 		AItimeElapsed = 0
@@ -111,14 +111,14 @@ func _on_ball_reset_round():
 	if AItimeSinceJumpChange.size() % 2 != 0:
 		AItimeSinceJumpChange.append(AIjumpTimeElapsed)
 	
-	print("Reset ROund")
+	#print("Reset ROund")
 	# record the time
 	timeBeforeInputs.append(timeElapsed)
 	AItimeBeforeInputs.append(timeElapsed)
 	
-	print("AI STUFF: ")
-	print(AItimeBeforeInputs)
-	print(AIinputs)
+	#print("AI STUFF: ")
+	#print(AItimeBeforeInputs)
+	#print(AIinputs)
 	
 	createGhost(inputs, timeBeforeInputs, true)
 	await get_tree().process_frame
@@ -163,11 +163,11 @@ func createGhost(ghostInputs: Array, timeSinceInputs: Array, isPlayer: bool):
 		for i in timeSinceJumpChange:
 			ghost.timeToSwapJump.append(i)
 			
-		print("Player Inputs Added")
+		#print("Player Inputs Added")
 		
 		if numOfGhosts + 4 > 10:
 			var collisionLayer = get_child(0).collision_layer
-			print("Too many ghosts deleting ", get_child(0))
+			#print("Too many ghosts deleting ", get_child(0))
 			get_child(0).queue_free()
 			ghost.set_collision_layer_value(collisionLayer, 1)
 		else:
@@ -189,11 +189,11 @@ func createGhost(ghostInputs: Array, timeSinceInputs: Array, isPlayer: bool):
 		for i in AItimeSinceJumpChange:
 			ghost.timeToSwapJump.append(i)
 		
-		print("AI Inputs Added")
+		#print("AI Inputs Added")
 		
 		if numOfGhosts + 4 > 10:
 			var collisionLayer = get_child(0).collision_layer
-			print("Too many ghosts deleting ", get_child(0))
+			#print("Too many ghosts deleting ", get_child(0))
 			get_child(0).queue_free()
 			ghost.set_collision_layer_value(collisionLayer, 1)
 		else:

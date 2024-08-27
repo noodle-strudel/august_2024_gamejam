@@ -105,7 +105,7 @@ func normal():
 	if(grounded):
 		focus_on(ball)
 		move(ball)
-		print(angle)
+		#print(angle)
 			
 		var catchable = can_catch_target(ball, raycast)
 		var aligned = aligned_towards_target(ball)
@@ -136,4 +136,4 @@ func defense():
 
 func _offense_Timeout():
 	jump()
-	print("timer timed out, now must jump")
+	#print("timer timed out, now must jump")
