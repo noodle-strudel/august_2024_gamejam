@@ -348,7 +348,7 @@ bus = &"sfx"
 
 [node name="Player" type="CharacterBody2D" parent="." groups=["ground"]]
 unique_name_in_owner = true
-position = Vector2(800, 50)
+position = Vector2(327, 2.08165e-12)
 collision_layer = 4
 collision_mask = 5
 floor_stop_on_slope = false
@@ -483,8 +483,7 @@ shape = SubResource("CircleShape2D_0fs64")
 
 [node name="EasyAI" type="CharacterBody2D" parent="." groups=["ground"]]
 process_mode = 4
-visible = false
-position = Vector2(-800, 50)
+position = Vector2(-327, 2.08165e-12)
 collision_layer = 2
 floor_stop_on_slope = false
 floor_block_on_wall = false
@@ -538,8 +537,7 @@ bus = &"sfx"
 
 [node name="NormalAI" type="CharacterBody2D" parent="." groups=["ground"]]
 process_mode = 4
-visible = false
-position = Vector2(-800, 50)
+position = Vector2(-327, 2.08165e-12)
 collision_layer = 2
 floor_stop_on_slope = false
 floor_block_on_wall = false
@@ -592,8 +590,7 @@ bus = &"sfx"
 
 [node name="HardAI" type="CharacterBody2D" parent="." groups=["ground"]]
 process_mode = 4
-visible = false
-position = Vector2(-800, 50)
+position = Vector2(-327, 2.08165e-12)
 collision_layer = 2
 floor_stop_on_slope = false
 floor_block_on_wall = false
